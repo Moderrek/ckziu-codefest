@@ -1,8 +1,6 @@
-import Image from "next/image";
 import Navbar from "@/components/navbar"
 import Homepage from "@/components/homepage";
 import ArticleSection from "@/components/articles";
-
 
 export default function Home() {
   return (

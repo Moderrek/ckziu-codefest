@@ -1,4 +1,6 @@
-export default function Article(props: unknown) {
+import {ApiArticleData} from "@/lib/api_responses";
+
+export default function Article(props: { article: ApiArticleData }) {
   // @ts-ignore
   return (
     <div className="card w-96 h-100 bg-base-100 shadow-xl">
