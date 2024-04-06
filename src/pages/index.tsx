@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar"
+import Navbar from "@/components/ui/navbar"
 import Homepage from "@/components/homepage";
 import ArticleSection from "@/components/articles";
 
@@ -10,6 +10,7 @@ export default function Home() {
         <div className="m-auto">
           <div className="flex flex-wrap justify-center mt-10">
             <ArticleSection/>
+
           </div>
         </div>
       </div>
