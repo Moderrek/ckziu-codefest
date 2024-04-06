@@ -1,7 +1,6 @@
 import {ThemeProvider} from 'next-themes'
 import {ReactNode, useEffect, useState} from "react";
-import {fontSans} from "@/lib/fonts";
-import {cn} from "@/lib/utils";
+import {Toaster} from "@/components/ui/toaster";
 
 export default function Layout({children}: { children: ReactNode }) {
   const [isClient, setIsClient] = useState(false)
@@ -15,16 +14,9 @@ export default function Layout({children}: { children: ReactNode }) {
   }
 
   return (
-    <html suppressHydrationWarning>
-    <head/>
-    <body
-      className={cn(
-        "min-h-screen bg-background font-sans antialiased",
-        fontSans.variable
-      )}
-    >
-    <ThemeProvider>{children}</ThemeProvider>
-    </body>
-    </html>
+    <>
+      <ThemeProvider>{children}</ThemeProvider>
+      <Toaster/>
+    </>
   )
 }

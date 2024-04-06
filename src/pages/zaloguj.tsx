@@ -1,13 +1,20 @@
 import LoginForm from "@/components/login_form";
+import Navbar from "@/components/ui/navbar";
+import {Footer} from "@/components/component/Footer";
 
-export default function ZalogujPage() {
+export default function LoginPage() {
 
   return (<>
-    <div className="flex min-h-screen w-full flex-col items-center justify-center">
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <LoginForm/>
-      </main>
+    <Navbar/>
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-auto">
+        <div className="flex w-full flex-col items-center justify-center justify-self-center">
+          <LoginForm/>
+        </div>
+      </div>
+      <div className="flex-none h-14">
+        <Footer/>
+      </div>
     </div>
-
   </>);
 }
