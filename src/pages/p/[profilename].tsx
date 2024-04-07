@@ -6,6 +6,7 @@ import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Tooltip } from '@material-tailwind/react';
 
 export default function Page() {
   const router = useRouter();
@@ -75,16 +76,20 @@ export default function Page() {
           <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
           <div className="flex flex-row items-center justify-center space-x-1">
             <label htmlFor="my_modal_7">
+              <Tooltip content="Uczestnik konkursu CKZiUCodeFest2024">
               <img
                 src="/images/badges/cc.png"
                 className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
               ></img>
+              </Tooltip>
             </label>
             <label htmlFor="my_modal_8">
+              <Tooltip content="Administrator strony">
               <img
-                src="/images/badges/cc.png"
+                src="/images/badges/admin_badge.png"
                 className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
               ></img>
+              </Tooltip>
             </label>
           </div>
           <div className="divider divider-neutral dark:divider-default m-2 rounded-full"></div>
