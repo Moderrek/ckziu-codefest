@@ -14,8 +14,10 @@ import {
   User,
   UserPlus,
   Users,
-} from "lucide-react"
-import {Button} from "@/components/ui/button"
+} from 'lucide-react';
+import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,88 +30,90 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 
 export default function DropdownMenuDemo() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline"><CircleUser/></Button>
+        <Button variant='outline'>
+          <CircleUser />
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className='w-56'>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4"/>
-            <a href="/zaloguj">Profile</a>
+            <User className='mr-2 h-4 w-4' />
+            <Link href='/zaloguj'>Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4"/>
+            <CreditCard className='mr-2 h-4 w-4' />
             <span>Billing</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4"/>
+            <Settings className='mr-2 h-4 w-4' />
             <span>Settings</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Keyboard className="mr-2 h-4 w-4"/>
+            <Keyboard className='mr-2 h-4 w-4' />
             <span>Keyboard shortcuts</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Users className="mr-2 h-4 w-4"/>
+            <Users className='mr-2 h-4 w-4' />
             <span>Team</span>
           </DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <UserPlus className="mr-2 h-4 w-4"/>
+              <UserPlus className='mr-2 h-4 w-4' />
               <span>Invite users</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem>
-                  <Mail className="mr-2 h-4 w-4"/>
+                  <Mail className='mr-2 h-4 w-4' />
                   <span>Email</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <MessageSquare className="mr-2 h-4 w-4"/>
+                  <MessageSquare className='mr-2 h-4 w-4' />
                   <span>Message</span>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator/>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <PlusCircle className="mr-2 h-4 w-4"/>
+                  <PlusCircle className='mr-2 h-4 w-4' />
                   <span>More...</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuItem>
-            <Plus className="mr-2 h-4 w-4"/>
+            <Plus className='mr-2 h-4 w-4' />
             <span>New Team</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Github className="mr-2 h-4 w-4"/>
+          <Github className='mr-2 h-4 w-4' />
           <span>GitHub</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <LifeBuoy className="mr-2 h-4 w-4"/>
+          <LifeBuoy className='mr-2 h-4 w-4' />
           <span>Support</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
-          <Cloud className="mr-2 h-4 w-4"/>
+          <Cloud className='mr-2 h-4 w-4' />
           <span>API</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4"/>
+          <LogOut className='mr-2 h-4 w-4' />
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://ckziucodefest.pl
+
+# Sitemaps
+Sitemap: https://ckziucodefest.pl/sitemap.xml

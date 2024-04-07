@@ -1,19 +1,25 @@
-import {Footer} from "@/components/component/Footer";
-import LoginForm from "@/components/login_form";
+import { Footer } from '@/components/component/Footer';
+import LoginForm from '@/components/login_form';
+import Seo from '@/components/Seo';
+import { NextPage } from 'next';
 
-export default function LoginPage() {
-
-  return (<>
-    {/*<Navbar/>*/}
-    <div className="flex flex-col min-h-screen">
-      <div className="flex-auto">
-        <div className="flex w-full flex-col items-center justify-center justify-self-center">
-          <LoginForm/>
+const LoginPage: NextPage = (): JSX.Element => {
+  return (
+    <>
+      <Seo templateTitle='Zaloguj się' />
+      {/*<Navbar/>*/}
+      <div className='flex min-h-screen flex-col'>
+        <div className='flex-auto'>
+          <div className='flex w-full flex-col items-center justify-center justify-self-center'>
+            <LoginForm />
+          </div>
+        </div>
+        <div className='h-14 flex-none'>
+          <Footer />
         </div>
       </div>
-      <div className="flex-none h-14">
-        <Footer/>
-      </div>
-    </div>
-  </>);
-}
+    </>
+  );
+};
+
+export default LoginPage;

@@ -1,18 +1,24 @@
-import ArticleSection from "@/components/articles";
-import Homepage from "@/components/homepage";
+import { NextPage } from 'next';
 
-export default function Home() {
+import ArticleSection from '@/components/articles';
+import Homepage from '@/components/homepage';
+import Seo from '@/components/Seo';
+
+const Index: NextPage = (): JSX.Element => {
   return (
     <>
+      <Seo templateTitle='Strona główna' />
       {/*<Navbar/>*/}
-      <div className="flex h-screen flex-col">
-        <div className="m-auto">
-          <div className="flex flex-wrap justify-center mt-10">
-            <ArticleSection/>
+      <div className='flex h-screen flex-col'>
+        <div className='m-auto'>
+          <div className='mt-10 flex flex-wrap justify-center'>
+            <ArticleSection />
           </div>
         </div>
       </div>
-      <Homepage/>
+      <Homepage />
     </>
   );
-}
+};
+
+export default Index;
