@@ -27,7 +27,9 @@ export default function Page() {
       <input type="checkbox" id="my_modal_7" className="modal-toggle" />
       <div className="modal" role="dialog">
         <div className="modal-box p-0">
-          <img src="/images/badges/cc.png" className="h-[500px]"></img>
+          <div className="w-full h-1/3">
+          <img src="/images/badges/cc.png" className="w-1/3"></img>
+          </div>
           <p className="py-4">This modal works with a hidden checkboxaaa!</p>
         </div>
         <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
