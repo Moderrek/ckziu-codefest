@@ -36,7 +36,7 @@ export default function Page() {
           </div>
           <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
           <div className='align-items-center flex h-1/3 w-full justify-center'>
-            <p className='py-4'>1</p>
+            <p className='py-4'>Uczestnik konkursu CKZiUCodeFest 2024</p>
           </div>
         </div>
         <label className='modal-backdrop' htmlFor='my_modal_7'>
@@ -54,7 +54,7 @@ export default function Page() {
             </div>
             <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
             <div className='align-items-center flex h-1/3 w-full justify-center'>
-              <p className='py-4'>2</p>
+              <p className='py-4'>Administrator Strony CKZiUCodeFest.pl</p>
             </div>
           </div>
           <label className='modal-backdrop' htmlFor='my_modal_8'>
@@ -76,7 +76,7 @@ export default function Page() {
           <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
           <div className="flex flex-row items-center justify-center space-x-1">
             <label htmlFor="my_modal_7">
-              <Tooltip content="Uczestnik konkursu CKZiUCodeFest2024">
+              <Tooltip content="Uczestnik konkursu 2024">
               <img
                 src="/images/badges/cc.png"
                 className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
@@ -99,8 +99,8 @@ export default function Page() {
               target="_blank"
               className="flex flex-row items-center"
             >
-              <FontAwesomeIcon icon={faGithub} className='left-2 h-7 w-7' />
-              <span className=' text-middle'>Profil Github</span>
+              <FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />
+              <span className=' text-middle pl-1 pt-0.5'>Profil Github</span>
             </UnstyledLink>
           </div>
         </div>

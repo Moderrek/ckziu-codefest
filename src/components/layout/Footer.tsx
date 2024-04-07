@@ -17,16 +17,6 @@ function Footer() {
               <FontAwesomeIcon icon={faDiscord} />
             </a>
           </Tooltip>
-          <Tooltip content='Facebook Moderrkowo'>
-            <a href='https://www.facebook.com/moderrkowo'>
-              <FontAwesomeIcon icon={faFacebook} />
-            </a>
-          </Tooltip>
-          <Tooltip content='Instagram Moderrkowo'>
-            <a href='https://instagram.com/moderrkowo/'>
-              <FontAwesomeIcon icon={faInstagram} />
-            </a>
-          </Tooltip>
         </div>
         <p className='mt-2 text-center text-gray-900 dark:text-gray-300'>
           Copyright &copy; 2024-{new Date().getFullYear()} ckziucodefest.pl.
