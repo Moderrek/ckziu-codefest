@@ -9,7 +9,7 @@ const defaultMeta = {
   url: 'https://ckziucodefest.pl',
   type: 'website',
   robots: 'follow, index',
-  image: 'https://ckziucodefest.pl/images/large-og.png',
+  image: 'https://ckziucodefest.pl/images/ckziu_thumbnail.png',
 };
 
 type SeoProps = {
@@ -46,7 +46,6 @@ export default function Seo(props: SeoProps) {
       <meta name='image' property='og:image' content={meta.image} />
       {/* Twitter */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:site' content='@ModerrkowoPL' />
       <meta name='twitter:title' content={meta.title} />
       <meta name='twitter:description' content={meta.description} />
       <meta name='twitter:image' content={meta.image} />

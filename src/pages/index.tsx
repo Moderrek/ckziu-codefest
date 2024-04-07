@@ -1,9 +1,9 @@
+import { TerminalIcon } from 'lucide-react';
 import { NextPage } from 'next';
 
-import ArticleSection from '@/components/articles';
-import { Countdown } from '@/components/Countdown';
+import ArticleSection from '@/components/fetchable/articles';
+import { Projects } from '@/components/fetchable/Projects';
 import DefaultLayout from '@/components/layout/DefaultLayout';
-import { Projects } from '@/components/Projects';
 import Seo from '@/components/Seo';
 
 const Index: NextPage = (): JSX.Element => {
@@ -21,28 +21,22 @@ const Index: NextPage = (): JSX.Element => {
          ODLICZANIE DO GLOSOWANIE
          TIME LINE
          */}
-        <section className='py-20'>
-          <div className='container mx-auto'>
-            <Countdown />
-          </div>
-        </section>
+        {/*<Timeline/>*/}
+        {/*<section className='py-20'>*/}
+        {/*  <div className='container mx-auto'>*/}
+        {/*<Countdown />*/}
+        {/*</div>*/}
+        {/*</section>*/}
 
         {/* TRENDING PROJECTS */}
         <section className='py-20'>
-          <div className='container mx-auto'>
-            <div className='mx-auto px-2 sm:w-3/4 lg:w-5/12'>
-              <h1
-                id='popularne'
-                className='mt-4 text-center text-3xl text-amber-500'
-              >
-                Projekty na czasie
+          <div className='container mx-auto rounded-2xl bg-gray-200 dark:bg-gray-900 shadow pt-4 pb-8'>
+            <div className='px-2 sm:w-3/4 lg:w-5/12'>
+              <h1 id='popularne' className='text-3xl text-amber-700 text-center justify-center flex flex-row'>
+                <TerminalIcon /> Projekty na czasie
               </h1>
-              <p className='mt-4 text-center text-gray-600'>
-                Tutaj znajdziesz najpopularniesze projekty na naszym serwisie
-                tworzone przez uczniów CKZiU.
-              </p>
             </div>
-            <div className='mx-auto mt-12 flex flex-wrap gap-4'>
+            <div className='mx-auto flex flex-wrap gap-4 justify-center'>
               {/* PROJEKT */}
               <Projects />
             </div>
