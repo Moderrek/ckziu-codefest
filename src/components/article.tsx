@@ -1,7 +1,6 @@
 import {ApiArticleData} from "@/lib/api_responses";
 
 export default function Article(props: { article: ApiArticleData }) {
-  // @ts-ignore
   return (
     <div className="card w-96 glass">
       <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="car!"/></figure>

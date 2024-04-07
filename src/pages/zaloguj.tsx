@@ -1,6 +1,5 @@
-import LoginForm from "@/components/login_form";
-// import Navbar from "@/components/ui/navbar";
 import {Footer} from "@/components/component/Footer";
+import LoginForm from "@/components/login_form";
 
 export default function LoginPage() {
 

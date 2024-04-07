@@ -1,8 +1,10 @@
 import useSWR from 'swr'
-import ArticleEmpty from "@/components/emptyarticle";
-import Article from "@/components/article";
-import {ApiArticlesData} from "@/lib/api_responses";
+
 import {API_URL} from "@/lib/api";
+import {ApiArticlesData} from "@/lib/api_responses";
+
+import Article from "@/components/article";
+import ArticleEmpty from "@/components/emptyarticle";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 

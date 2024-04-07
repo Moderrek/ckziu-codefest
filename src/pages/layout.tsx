@@ -1,5 +1,6 @@
 import {ThemeProvider} from 'next-themes'
 import {ReactNode, useEffect, useState} from "react";
+
 import {Toaster} from "@/components/ui/toaster";
 
 export default function Layout({children}: { children: ReactNode }) {

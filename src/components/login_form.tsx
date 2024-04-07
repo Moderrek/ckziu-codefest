@@ -1,14 +1,16 @@
 "use client";
 
+import {Loader2, Mail} from "lucide-react";
+import {useState} from 'react';
+
+import {authentication} from "@/lib/api";
+
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
-import {authentication} from "@/lib/api";
-import {useState} from 'react';
-import {useToast} from "@/components/ui/use-toast";
 import {ToastAction} from "@/components/ui/toast";
-import {Loader2, Mail} from "lucide-react";
+import {useToast} from "@/components/ui/use-toast";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -64,7 +66,6 @@ export default function LoginForm() {
             Zaloguj sie
           </>}</Button>
       </CardFooter>
-      {/*{<p className="text-center">{response}</p>}*/}
     </Card>
   )
 }
