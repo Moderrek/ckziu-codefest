@@ -1,14 +1,7 @@
-import { Slash } from 'lucide-react';
 import { useRouter } from 'next/router';
 
+import DefaultLayout from '@/components/layout/DefaultLayout';
 import Seo from '@/components/Seo';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 
 export default function Page() {
   const router = useRouter();
@@ -25,23 +18,8 @@ export default function Page() {
   }
 
   return (
-    <>
+    <DefaultLayout>
       <Seo templateTitle={`Profil ${profileName}`} />
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/'>Strona główna</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <Slash />
-          </BreadcrumbSeparator>
-          <BreadcrumbItem>
-            <BreadcrumbLink href={`/p/${profileName}`}>
-              {profileName}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-    </>
+    </DefaultLayout>
   );
 }

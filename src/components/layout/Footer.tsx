@@ -10,7 +10,7 @@ import { Tooltip } from '@material-tailwind/react';
 function Footer() {
   return (
     <>
-      <footer className='border-blue-gray-50 bottom-0 mx-auto mt-20 w-full rounded-t-lg border-t bg-amber-400 py-8 text-white lg:mt-60'>
+      <footer className='border-blue-gray-50 sticky bottom-0 mx-auto w-full rounded-t-lg border-t bg-amber-400 py-8 text-white dark:bg-amber-600'>
         <div className='container mx-auto'>
           <div className='mx-auto sm:w-3/4 lg:w-2/4'>
             <div className='mt-8 flex flex-row items-center justify-center gap-6 sm:flex-row'>
