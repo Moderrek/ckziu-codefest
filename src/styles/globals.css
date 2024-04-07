@@ -5,11 +5,12 @@
 @layer components {
   #__next {
     @apply flex h-full flex-col;
+    @apply bg-background;
   }
 
   html,
   body {
-    @apply h-full bg-white;
+    @apply h-full bg-background min-h-full !important;
     font-family: sans-serif;
   }
 }

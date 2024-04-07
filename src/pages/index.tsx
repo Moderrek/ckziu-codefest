@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 
 import ArticleSection from '@/components/articles';
-import Homepage from '@/components/homepage';
+import { Countdown } from '@/components/Countdown';
 import DefaultLayout from '@/components/layout/DefaultLayout';
-import NextImage from '@/components/NextImage';
+import { Projects } from '@/components/Projects';
 import Seo from '@/components/Seo';
 
 const Index: NextPage = (): JSX.Element => {
@@ -12,7 +12,20 @@ const Index: NextPage = (): JSX.Element => {
       <DefaultLayout>
         <Seo templateTitle='Strona główna' />
 
-        <Homepage />
+        {/*<Homepage />*/}
+
+        {/*
+        INFORMACJE O KONKURSIE
+         REGULAMIN
+         ZGLOS SIE DO KONKURSU
+         ODLICZANIE DO GLOSOWANIE
+         TIME LINE
+         */}
+        <section className='py-20'>
+          <div className='container mx-auto'>
+            <Countdown />
+          </div>
+        </section>
 
         {/* TRENDING PROJECTS */}
         <section className='py-20'>
@@ -31,26 +44,7 @@ const Index: NextPage = (): JSX.Element => {
             </div>
             <div className='mx-auto mt-12 flex flex-wrap gap-4'>
               {/* PROJEKT */}
-
-              <div className='max-w-sm overflow-hidden rounded shadow-lg'>
-                <NextImage
-                  src='/images/ckziu_thumbnail.png'
-                  alt='ckziu_thumbnail'
-                  width={1140}
-                  height={760}
-                  className='min-w-fill'
-                />
-                <div className='px-6 py-4'>
-                  <div className='mb-2 text-xl font-bold'>Nazwa projektu</div>
-                  <p className='text-base text-gray-700'>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Voluptatibus quia, nulla! Maiores et perferendis eaque,
-                    exercitationem praesentium nihil.
-                  </p>
-                </div>
-              </div>
-
-              <div className='relative flex w-full max-w-[26rem] flex-col rounded-xl bg-clip-border text-gray-700 shadow-lg'></div>
+              <Projects />
             </div>
           </div>
         </section>

@@ -3,6 +3,15 @@ const nextConfig = {
     eslint: {
         dirs: ['src'],
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "*",
+                port: ""
+            }
+        ]
+    },
 
     reactStrictMode: true,
     swcMinify: true,
