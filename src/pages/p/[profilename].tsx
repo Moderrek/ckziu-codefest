@@ -24,19 +24,44 @@ export default function Page() {
   return (
     <DefaultLayout>
       <Seo templateTitle={`Profil ${profileName}`} />
-      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-      <div className="modal" role="dialog">
-        <div className="modal-box p-0">
-          <div className="w-full h-1/3">
-          <img src="/images/badges/cc.png" className="w-1/3"></img>
+      <input type='checkbox' id='my_modal_7' className='modal-toggle' />
+      <div className='modal' role='dialog'>
+        <div className='modal-box p-0'>
+          <div className='align-items-center flex h-1/3 w-full justify-center'>
+            <img
+              src='/images/badges/cc.png'
+              className='mt-5 h-[100px] w-[100px] rounded-full'
+            ></img>
           </div>
-          <p className="py-4">This modal works with a hidden checkboxaaa!</p>
+          <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
+          <div className='align-items-center flex h-1/3 w-full justify-center'>
+            <p className='py-4'>1</p>
+          </div>
         </div>
-        <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
+        <label className='modal-backdrop' htmlFor='my_modal_7'>
+          Close
+        </label>
+      </div>
+        <input type='checkbox' id='my_modal_8' className='modal-toggle' />
+        <div className='modal' role='dialog'>
+          <div className='modal-box p-0'>
+            <div className='align-items-center flex h-1/3 w-full justify-center'>
+              <img
+                src='/images/badges/cc.png'
+                className='mt-5 h-[100px] w-[100px] rounded-full'
+              ></img>
+            </div>
+            <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
+            <div className='align-items-center flex h-1/3 w-full justify-center'>
+              <p className='py-4'>2</p>
+            </div>
+          </div>
+          <label className='modal-backdrop' htmlFor='my_modal_8'>
+            Close
+          </label>
       </div>
       <div className='absolute h-1/3 w-1/6 bg-red-400 dark:bg-red-900'></div>
-      <div
-        className='border-gradient-to-r  left-0 m-0 min-h-full w-1/6 bg-white/30 from-indigo-500 backdrop-blur-2xl dark:bg-transparent'>
+      <div className='border-gradient-to-r  left-0 m-0 min-h-full w-1/6 bg-white/30 from-indigo-500 backdrop-blur-2xl dark:bg-transparent'>
         <div className='container mx-auto pt-4'>
           <div className='flex flex-col items-center justify-center'>
             <Avatar className='h-2/3 w-2/3 select-none'>
@@ -47,13 +72,27 @@ export default function Page() {
               {profileName}
             </h1>
           </div>
-          <div className='divider m-2 divider-neutral dark:divider-default-neutral'></div>
-          <label htmlFor="my_modal_7"><img src="/images/badges/cc.png" className="w-8 rounded-full active:scale-75 transition-transform hover:cursor-pointer"></img></label>
-          <div className='divider m-2 rounded-full divider-neutral dark:divider-default'></div>
+          <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
+          <div className="flex flex-row items-center justify-center space-x-1">
+            <label htmlFor="my_modal_7">
+              <img
+                src="/images/badges/cc.png"
+                className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
+              ></img>
+            </label>
+            <label htmlFor="my_modal_8">
+              <img
+                src="/images/badges/cc.png"
+                className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
+              ></img>
+            </label>
+          </div>
+          <div className="divider divider-neutral dark:divider-default m-2 rounded-full"></div>
           <div>
             <UnstyledLink
               href={'https://github.com/' + profileName}
-              className='flex flex-row items-center'
+              target="_blank"
+              className="flex flex-row items-center"
             >
               <FontAwesomeIcon icon={faGithub} className='left-2 h-7 w-7' />
               <span className=' text-middle'>Profil Github</span>
