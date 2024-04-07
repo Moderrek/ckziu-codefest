@@ -8,7 +8,7 @@ const LoginPage: NextPage = (): JSX.Element => {
   return (
     <DefaultLayout>
       <Seo templateTitle='Zaloguj się' />
-      <div className='align-center flex justify-center'>
+      <div className='align-center flex justify-center pt-10'>
         <LoginForm />
       </div>
     </DefaultLayout>

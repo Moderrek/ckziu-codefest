@@ -12,7 +12,7 @@ export default function Page() {
     return (
       <>
         <Seo templateTitle='Ładowanie profilu..' />
-        <p>Loading...</p>
+        <p>Ładowanie...</p>
       </>
     );
   }
@@ -20,6 +20,7 @@ export default function Page() {
   return (
     <DefaultLayout>
       <Seo templateTitle={`Profil ${profileName}`} />
+      <div className='m-0 min-h-full bg-amber-700'></div>
     </DefaultLayout>
   );
 }

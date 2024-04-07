@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export default function DropdownMenuDemo() {
+  const loggedin = false;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,7 +47,7 @@ export default function DropdownMenuDemo() {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <User className='mr-2 h-4 w-4' />
-            <Link href='/zaloguj'>Profile</Link>
+            <Link href={loggedin ? '/p/' : '/zaloguj/'}>Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCard className='mr-2 h-4 w-4' />
