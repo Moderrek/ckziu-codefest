@@ -1,25 +1,37 @@
-"use client";
+'use client';
 
-import {Loader2, Mail} from "lucide-react";
-import {useState} from 'react';
+import { Fingerprint, Loader2, Mail } from 'lucide-react';
+import { useState } from 'react';
 
-import {authentication} from "@/lib/api";
+import { API_URL, authentication } from '@/lib/api';
 
-import {Button} from "@/components/ui/button"
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card"
-import {Input} from "@/components/ui/input"
-import {Label} from "@/components/ui/label"
-import {ToastAction} from "@/components/ui/toast";
-import {useToast} from "@/components/ui/use-toast";
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from '@/components/ui/input-otp';
+import axios from 'axios';
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [response, setResponse] = useState("");
+  const { toast } = useToast();
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-  const {toast} = useToast();
-  const [otp, setLoggedin] = useState("");
+  const [waitingForOtp, setWaitingForOtp] = useState(false);
 
   return (
     <Card className='w-full max-w-sm '>
@@ -35,17 +47,16 @@ export default function LoginForm() {
           <Input
             id='email'
             type='email'
-            disabled={loading}
+            disabled={loading || waitingForOtp}
             placeholder='nazwa@ckziu.elodz.edu.pl'
             required
             value={email}
             onChange={(data) => setEmail(data.target.value)}
           />
         </div>
-        {sent ? (
-          <div className='grid gap-4'>
-            <InputOTP maxLength={6} value={otp}
-                      onChange={(otp) => setLoggedin(otp)}>
+        {waitingForOtp ? (
+          <div className='flex flex-col justify-center'>
+            <InputOTP maxLength={6} value={otp} onChange={(otp) => setOtp(otp)}>
               <InputOTPGroup>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />
@@ -68,32 +79,38 @@ export default function LoginForm() {
           className='w-full'
           disabled={loading}
           onClick={async () => {
-            setResponse('Logowanie...');
             setLoading(true);
-            const res = await authentication(email);
-            setLoading(false);
-            const success: boolean = res.token;
-
-            if (!success) {
+            let otp_request;
+            try {
+              otp_request = await axios.post(API_URL + '/auth/otp', {
+                email: email,
+              });
+              setLoading(false);
+            } catch (error) {
+              console.log(error);
+              setLoading(false);
               toast({
                 variant: 'destructive',
                 title: 'O nie! Logowanie nie powiodło sie!',
-                description: res.message,
-                action: (
-                  <ToastAction altText='Spróbuj ponownie'>
-                    Spróbuj ponownie
-                  </ToastAction>
-                ),
+                description: 'Nie udało się zweryfikować danych logowania',
               });
-            } else {
-              toast({
-                variant: 'default',
-                title: 'Wysłano kod na twoją pocztę!',
-                description: "Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.",
-              });
-              setSent(true);
+              return;
             }
-            setResponse(res.message);
+            if (!otp_request.data.success) {
+              toast({
+                variant: 'destructive',
+                title: 'O nie! Logowanie nie powiodło sie!',
+                description: 'Nie udało się zweryfikować danych logowania',
+              });
+              return;
+            }
+            toast({
+              variant: 'default',
+              title: 'Wysłano kod na twoją pocztę!',
+              description:
+                'Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.',
+            });
+            setWaitingForOtp(true);
           }}
         >
           {loading ? (
@@ -103,7 +120,11 @@ export default function LoginForm() {
             </>
           ) : (
             <>
-              <Mail className='mr-2 h-4 w-4' />
+              {waitingForOtp ? (
+                <Fingerprint className='mr-2 h-4 w-4' />
+              ) : (
+                <Mail className='mr-2 h-4 w-4' />
+              )}
               Zaloguj sie
             </>
           )}
