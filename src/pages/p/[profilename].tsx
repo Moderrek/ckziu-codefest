@@ -1,17 +1,21 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
+import {useState} from 'react';
 
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip } from '@material-tailwind/react';
+import TextareaDemo from '@/components/Textarea';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Page() {
   const router = useRouter();
-
+  const [edit, setEdit] = useState(false);
   const profileName: string = router.query.profilename as string;
+  const isOwner: boolean = profileName === "drakvlaa"
 
   if (!profileName) {
     return (
@@ -61,8 +65,8 @@ export default function Page() {
             Close
           </label>
       </div>
-      <div className='absolute h-1/3 w-1/6 bg-red-400 dark:bg-red-900'></div>
-      <div className='border-gradient-to-r  left-0 m-0 min-h-full w-1/6 bg-white/30 from-indigo-500 backdrop-blur-2xl dark:bg-transparent'>
+      <div className='absolute h-1/3 w-full md:w-1/6 lg:1/4 bg-red-400 dark:bg-red-900'></div>
+      <div className='border-gradient-to-r  left-0 m-0 min-h-full w-full md:w-1/6 lg:1/4 bg-white/30 from-indigo-500 backdrop-blur-2xl dark:bg-transparent'>
         <div className='container mx-auto pt-4'>
           <div className='flex flex-col items-center justify-center'>
             <Avatar className='h-2/3 w-2/3 select-none'>
@@ -77,18 +81,18 @@ export default function Page() {
           <div className="flex flex-row items-center justify-center space-x-1">
             <label htmlFor="my_modal_7">
               <Tooltip content="Uczestnik konkursu 2024">
-              <img
-                src="/images/badges/cc.png"
-                className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
-              ></img>
+                <img
+                  src="/images/badges/cc.png"
+                  className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
+                ></img>
               </Tooltip>
             </label>
             <label htmlFor="my_modal_8">
               <Tooltip content="Administrator strony">
-              <img
-                src="/images/badges/admin_badge.png"
-                className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
-              ></img>
+                <img
+                  src="/images/badges/admin_badge.png"
+                  className="w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75"
+                ></img>
               </Tooltip>
             </label>
           </div>
@@ -103,6 +107,17 @@ export default function Page() {
               <span className=' text-middle pl-1 pt-0.5'>Profil Github</span>
             </UnstyledLink>
           </div>
+          <div className="divider divider-neutral dark:divider-default m-2 rounded-full"></div>
+          <Textarea placeholder= "biografia" className="mt-3 resize-none overflow-hidden" disabled = {!edit}/>
+          {isOwner ? <button className="btn p-1 mt-2 ml-36 btn-ghost btn-sm" onClick={() => setEdit(!edit)}>
+            edit
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 className="lucide lucide-pencil">
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+              <path d="m15 5 4 4" />
+            </svg>
+          </button> : (<></>)}
         </div>
       </div>
     </DefaultLayout>

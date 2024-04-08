@@ -45,7 +45,7 @@ export default function DropdownMenuDemo() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href={loggedin ? '/p/' : '/zaloguj/'}>
+            <Link href={/*loggedin ? '/p/' : '/zaloguj/'*/"/p/drakvlaa"}>
               <div className="flex flex-row"><User
               className="mr-2 h-4 w-4" />Profile
           </div>

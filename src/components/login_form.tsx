@@ -19,6 +19,7 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const {toast} = useToast();
+  const [otp, setLoggedin] = useState("");
 
   return (
     <Card className='w-full max-w-sm '>
@@ -43,7 +44,8 @@ export default function LoginForm() {
         </div>
         {sent ? (
           <div className='grid gap-4'>
-            <InputOTP maxLength={6}>
+            <InputOTP maxLength={6} value={otp}
+                      onChange={(otp) => setLoggedin(otp)}>
               <InputOTPGroup>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />
