@@ -30,13 +30,16 @@ const Index: NextPage = (): JSX.Element => {
 
         {/* TRENDING PROJECTS */}
         <section className='py-20'>
-          <div className='container mx-auto rounded-2xl bg-gray-200 dark:bg-gray-900 shadow pt-4 pb-8'>
+          <div className='container mx-auto rounded-2xl bg-gray-200 pb-8 pt-4 shadow dark:bg-gray-900'>
             <div className='px-2 sm:w-3/4 lg:w-5/12'>
-              <h1 id='popularne' className='text-3xl text-amber-700 text-center justify-center flex flex-row'>
+              <h1
+                id='popularne'
+                className='flex flex-row justify-center text-center text-3xl text-amber-700'
+              >
                 <TerminalIcon /> Projekty na czasie
               </h1>
             </div>
-            <div className='mx-auto flex flex-wrap gap-4 justify-center'>
+            <div className='mx-auto flex flex-wrap justify-center gap-4'>
               {/* PROJEKT */}
               <Projects />
             </div>

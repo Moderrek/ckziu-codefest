@@ -1,7 +1,7 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "CKZiU CodeFest",
+  name: 'CKZiU CodeFest',
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
-}
+    'Beautifully designed components built with Radix UI and Tailwind CSS.',
+};

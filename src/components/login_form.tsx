@@ -1,9 +1,10 @@
 'use client';
 
+import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { useState } from 'react';
 
-import { API_URL, authentication } from '@/lib/api';
+import { API_URL } from '@/lib/api';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,16 +16,14 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ToastAction } from '@/components/ui/toast';
-import { useToast } from '@/components/ui/use-toast';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
-import axios from 'axios';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function LoginForm() {
   const { toast } = useToast();
@@ -32,6 +31,86 @@ export default function LoginForm() {
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [waitingForOtp, setWaitingForOtp] = useState(false);
+
+  async function requestOTP() {
+    if (loading) return;
+    if (waitingForOtp) return;
+    setLoading(true);
+    let otp_request;
+    try {
+      otp_request = await axios.post(API_URL + '/auth/otp', {
+        email: email,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast({
+        variant: 'destructive',
+        title: 'Błąd po stronie serwera',
+        description:
+          'Przepraszamy! Nie udało się zweryfikować danych logowania',
+      });
+      return;
+    }
+    if (!otp_request.data.success) {
+      toast({
+        variant: 'destructive',
+        title: 'O nie! Logowanie nie powiodło sie!',
+        description:
+          'Podano nieprawidłowe dane logowania. ' + otp_request.data.message,
+      });
+      return;
+    }
+    toast({
+      variant: 'default',
+      title: 'Wysłano kod na twoją pocztę!',
+      description:
+        otp_request.data.message +
+        ' Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.',
+    });
+    setWaitingForOtp(true);
+  }
+
+  async function requestLogin() {
+    if (loading) return;
+    if (!waitingForOtp) return;
+    setLoading(true);
+    let login_request;
+    try {
+      login_request = await axios.post(API_URL + '/auth/login', {
+        email: email,
+        otp: otp,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast({
+        variant: 'destructive',
+        title: 'Błąd po stronie serwera',
+        description:
+          'Przepraszamy! Nie udało się zweryfikować danych logowania',
+      });
+      return;
+    }
+    if (!login_request.data.success) {
+      toast({
+        variant: 'destructive',
+        title: 'O nie! Logowanie nie powiodło sie!',
+        description: 'Podano nieprawidłowe dane logowania',
+      });
+      return;
+    }
+    toast({
+      variant: 'default',
+      title: 'Pomyślnie zalogowano!',
+      description:
+        'Autoryzowano za pomocą szyfrowanego jednorazowego hasła wysłanego na pocztę szkolną.',
+    });
+    setWaitingForOtp(true);
+    console.log(login_request.data.token);
+  }
 
   return (
     <Card className='w-full max-w-sm '>
@@ -79,38 +158,11 @@ export default function LoginForm() {
           className='w-full'
           disabled={loading}
           onClick={async () => {
-            setLoading(true);
-            let otp_request;
-            try {
-              otp_request = await axios.post(API_URL + '/auth/otp', {
-                email: email,
-              });
-              setLoading(false);
-            } catch (error) {
-              console.log(error);
-              setLoading(false);
-              toast({
-                variant: 'destructive',
-                title: 'O nie! Logowanie nie powiodło sie!',
-                description: 'Nie udało się zweryfikować danych logowania',
-              });
-              return;
+            if (waitingForOtp) {
+              await requestLogin();
+            } else {
+              await requestOTP();
             }
-            if (!otp_request.data.success) {
-              toast({
-                variant: 'destructive',
-                title: 'O nie! Logowanie nie powiodło sie!',
-                description: 'Nie udało się zweryfikować danych logowania',
-              });
-              return;
-            }
-            toast({
-              variant: 'default',
-              title: 'Wysłano kod na twoją pocztę!',
-              description:
-                'Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.',
-            });
-            setWaitingForOtp(true);
           }}
         >
           {loading ? (

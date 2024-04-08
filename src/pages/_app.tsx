@@ -8,22 +8,25 @@ import '@/styles/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 
 import Layout from '@/pages/layout';
+import { SessionProvider } from 'next-auth/react';
 
 config.autoAddCss = false;
 
 const CodeFestApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <MaterialThemeProvider>
-      <ThemeProvider
-        attribute='class'
-        defaultTheme='light'
-        enableSystem={false}
-      >
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </MaterialThemeProvider>
+    <SessionProvider>
+      <MaterialThemeProvider>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='light'
+          enableSystem={false}
+        >
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </MaterialThemeProvider>
+    </SessionProvider>
   );
 };
 
