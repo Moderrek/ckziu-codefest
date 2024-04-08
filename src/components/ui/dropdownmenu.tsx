@@ -1,5 +1,4 @@
 import { CircleUser, LogOut, User } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -10,9 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function DropdownMenuDemo() {
-  const loggedin = false;
+  const session = useSession();
+  const loggedIn = session.status == "authenticated";
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,21 +23,36 @@ export default function DropdownMenuDemo() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-45'>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Moje konto {session.data?.user?.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href={/*loggedin ? '/p/' : '/zaloguj/'*/ '/p/drakvlaa'}>
+        {loggedIn ? (
+          <DropdownMenuItem>
+            <Link href='/p/moderr'>
+              <div className='flex flex-row'>
+                <User className='mr-2 h-4 w-4' />
+                Profil
+              </div>
+            </Link>
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={() => signIn()}>
             <div className='flex flex-row'>
               <User className='mr-2 h-4 w-4' />
-              Profile
+              Zaloguj się
             </div>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut className='mr-2 h-4 w-4' />
-          <span>Log out</span>
-        </DropdownMenuItem>
+          </DropdownMenuItem>
+        )}
+        {loggedIn ? (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogOut className='mr-2 h-4 w-4' />
+              <span onClick={() => signOut()}>Wyloguj się</span>
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <></>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

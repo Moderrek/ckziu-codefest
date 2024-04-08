@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
-import { useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 
 import { API_URL } from '@/lib/api';
 
@@ -24,6 +24,8 @@ import {
 } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export default function LoginForm() {
   const { toast } = useToast();
@@ -31,6 +33,7 @@ export default function LoginForm() {
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [waitingForOtp, setWaitingForOtp] = useState(false);
+  const router = useRouter();
 
   async function requestOTP() {
     if (loading) return;
@@ -71,6 +74,22 @@ export default function LoginForm() {
     });
     setWaitingForOtp(true);
   }
+
+  const handleLogin: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    const response = await signIn('credentials', {
+      email: email,
+      password: otp,
+      redirect: true,
+    });
+    if (response?.status === 200) {
+      await router.push('/');
+      return;
+    }
+    if (response?.error) {
+      console.log(response?.error);
+    }
+  };
 
   async function requestLogin() {
     if (loading) return;
@@ -120,68 +139,73 @@ export default function LoginForm() {
           Wpisz swojego emaila szkolnego aby zalogować się na twoje konto.
         </CardDescription>
       </CardHeader>
-      <CardContent className='grid gap-4'>
-        <div className='grid gap-2'>
-          <Label htmlFor='email'>Email</Label>
-          <Input
-            id='email'
-            type='email'
-            disabled={loading || waitingForOtp}
-            placeholder='nazwa@ckziu.elodz.edu.pl'
-            required
-            value={email}
-            onChange={(data) => setEmail(data.target.value)}
-          />
-        </div>
-        {waitingForOtp ? (
-          <div className='flex flex-col justify-center'>
-            <InputOTP maxLength={6} value={otp} onChange={(otp) => setOtp(otp)}>
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-              </InputOTPGroup>
-              <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
+      <form onSubmit={waitingForOtp ? handleLogin : undefined}>
+        <CardContent className='grid gap-4'>
+          <div className='grid gap-2'>
+            <Label htmlFor='email'>Email</Label>
+            <Input
+              id='email'
+              name={'email'}
+              type='email'
+              disabled={loading || waitingForOtp}
+              placeholder='nazwa@ckziu.elodz.edu.pl'
+              required
+              value={email}
+              onChange={(data) => setEmail(data.target.value)}
+            />
           </div>
-        ) : (
-          <></>
-        )}
-      </CardContent>
-      <CardFooter>
-        <Button
-          className='w-full'
-          disabled={loading}
-          onClick={async () => {
-            if (waitingForOtp) {
-              await requestLogin();
-            } else {
-              await requestOTP();
-            }
-          }}
-        >
-          {loading ? (
-            <>
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-              Logowanie...
-            </>
+          {waitingForOtp ? (
+            <div className='flex flex-col justify-center'>
+              <InputOTP
+                maxLength={6}
+                value={otp}
+                onChange={(otp) => setOtp(otp)}
+                name={'otp'}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
           ) : (
-            <>
-              {waitingForOtp ? (
-                <Fingerprint className='mr-2 h-4 w-4' />
-              ) : (
-                <Mail className='mr-2 h-4 w-4' />
-              )}
-              Zaloguj sie
-            </>
+            <></>
           )}
-        </Button>
-      </CardFooter>
+        </CardContent>
+        <CardFooter>
+          <Button
+            type={waitingForOtp ? 'submit' : 'button'}
+            className='w-full'
+            disabled={loading}
+            onClick={async () => {
+              if (!waitingForOtp) await requestOTP();
+            }}
+          >
+            {loading ? (
+              <>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                Logowanie...
+              </>
+            ) : (
+              <>
+                {waitingForOtp ? (
+                  <Fingerprint className='mr-2 h-4 w-4' />
+                ) : (
+                  <Mail className='mr-2 h-4 w-4' />
+                )}
+                Zaloguj sie
+              </>
+            )}
+          </Button>
+        </CardFooter>
+      </form>
     </Card>
   );
 }
