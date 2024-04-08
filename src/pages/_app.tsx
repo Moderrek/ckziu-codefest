@@ -12,9 +12,9 @@ import { SessionProvider } from 'next-auth/react';
 
 config.autoAddCss = false;
 
-const CodeFestApp = ({ Component, pageProps }: AppProps) => {
+const CodeFestApp = ({ Component, pageProps: { session, ...pageProps} }: AppProps) => {
   return (
-    <SessionProvider>
+    <SessionProvider session={session}>
       <MaterialThemeProvider>
         <ThemeProvider
           attribute='class'
