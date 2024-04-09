@@ -9,12 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function DropdownMenuDemo() {
-  const session = useSession();
-  const loggedIn = session.status == "authenticated";
+  const loggedIn = false;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,7 +21,7 @@ export default function DropdownMenuDemo() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-45'>
-        <DropdownMenuLabel>Moje konto {session.data?.user?.email}</DropdownMenuLabel>
+        <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {loggedIn ? (
           <DropdownMenuItem>
@@ -35,19 +33,21 @@ export default function DropdownMenuDemo() {
             </Link>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem onClick={() => signIn()}>
-            <div className='flex flex-row'>
-              <User className='mr-2 h-4 w-4' />
-              Zaloguj się
-            </div>
-          </DropdownMenuItem>
+          <Link href={'/zaloguj'}>
+            <DropdownMenuItem>
+              <div className='flex flex-row'>
+                <User className='mr-2 h-4 w-4' />
+                Zaloguj się
+              </div>
+            </DropdownMenuItem>
+          </Link>
         )}
         {loggedIn ? (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogOut className='mr-2 h-4 w-4' />
-              <span onClick={() => signOut()}>Wyloguj się</span>
+              <span>Wyloguj się</span>
             </DropdownMenuItem>
           </>
         ) : (

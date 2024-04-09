@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
-import { API_URL } from '@/lib/api';
+import { API_URL } from '@/lib/api/api';
 
 import { Button } from '@/components/ui/button';
 import {

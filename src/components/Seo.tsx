@@ -10,11 +10,14 @@ const defaultMeta = {
   type: 'website',
   robots: 'follow, index',
   image: 'https://ckziucodefest.pl/images/ckziu_thumbnail.png',
+  keywords:
+    'ckziu, lodz, łódź, szkoła, zawodowe, zawod, programista, centrum, kształcenia, zawodowego, ustawicznego, łodzi, codefest, konkurs, cez, programowanie, witryny, technik, informatyk, informatyka, strona internetowa, witryna, plan lekcji, plan zajęć, hegemonstudio, żeromskiego, zeromskiego, politechnika, technikum nr 19',
 };
 
 type SeoProps = {
   date?: string;
   templateTitle?: string;
+  keywords?: string;
 } & Partial<typeof defaultMeta>;
 
 export default function Seo(props: SeoProps) {
@@ -38,6 +41,7 @@ export default function Seo(props: SeoProps) {
         name='author'
         content='Co-authored by Tymon Woźniak, Filip Sobczuk'
       />
+      <meta name='keywords' content={meta.keywords} />
       {/* Open Graph */}
       <meta property='og:type' content={meta.type} />
       <meta property='og:site_name' content={meta.siteName} />

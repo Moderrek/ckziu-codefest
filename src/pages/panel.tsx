@@ -4,6 +4,9 @@ import DefaultLayout from '@/components/layout/DefaultLayout';
 import Seo from '@/components/Seo';
 
 const LoginPage: NextPage = (): JSX.Element => {
+  // const session = useSession();
+  // session.user.name
+
   return (
     <DefaultLayout>
       <Seo templateTitle='Zaloguj się' />

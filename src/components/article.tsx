@@ -1,4 +1,4 @@
-import { ApiArticleData } from '@/lib/api_responses';
+import { ApiArticleData } from '@/lib/api/api_responses';
 
 export default function Article(props: { article: ApiArticleData }) {
   return (

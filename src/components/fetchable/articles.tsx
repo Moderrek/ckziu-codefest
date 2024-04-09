@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 
-import { API_URL } from '@/lib/api';
-import { ApiArticlesData } from '@/lib/api_responses';
+import { API_URL } from '@/lib/api/api';
+import { ApiArticlesData } from '@/lib/api/api_responses';
 
 import Article from '@/components/article';
 import ArticleEmpty from '@/components/emptyarticle';

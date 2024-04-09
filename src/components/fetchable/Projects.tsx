@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import useSWR from 'swr';
 
-import { API_URL } from '@/lib/api';
-import { ApiProjectData, ApiProjectsData } from '@/lib/api_responses';
+import { API_URL } from '@/lib/api/api';
+import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   HoverCard,
