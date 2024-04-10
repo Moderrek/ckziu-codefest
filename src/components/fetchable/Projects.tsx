@@ -1,18 +1,19 @@
 import { Tooltip } from '@material-tailwind/react';
 import { CalendarDays, Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import useSWR from 'swr';
 
 import { API_URL } from '@/lib/api/api';
 import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import Link from 'next/link';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

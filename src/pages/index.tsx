@@ -1,9 +1,12 @@
+import { Button } from '@material-tailwind/react';
 import { TerminalIcon } from 'lucide-react';
 import { NextPage } from 'next';
 
 import ArticleSection from '@/components/fetchable/articles';
 import { Projects } from '@/components/fetchable/Projects';
+import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
+import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
 
 const Index: NextPage = (): JSX.Element => {
@@ -13,6 +16,40 @@ const Index: NextPage = (): JSX.Element => {
         <Seo templateTitle='Strona główna' />
 
         {/*<Homepage />*/}
+        <section className='container mx-auto flex flex-col items-center'>
+          <CkziuLogo width={100} height={100} />
+          <h1 className='text-center text-4xl text-black'>
+            CKZiU
+            <br />
+            CodeFest 2024
+          </h1>
+          <Button variant='gradient' color='indigo'>
+            Weź udział
+          </Button>
+          <p>
+            Organizowany przez prof. Marka Bułę, Tymona Woźniaka i Filipa
+            Sobczuka
+          </p>
+          <p>Konkurs polega ...</p>
+        </section>
+
+        <section className='container mx-auto flex flex-col  items-center'>
+          <h1 className='text-3xl'>Nagrody</h1>
+          <section className='container flex flex-row flex-wrap justify-center gap-2 lg:gap-8'>
+            <RewardCard
+              thumbnail='https://cdn-icons-png.freepik.com/512/5372/5372002.png'
+              rewardName='Myszka'
+            />
+            <RewardCard
+              thumbnail='https://cdn2.iconfinder.com/data/icons/keyboard-15/500/vab890_10_digital_keyboard_isometric_cartoon_woman_business_computer-512.png'
+              rewardName='Klawiatura'
+            />
+            <RewardCard
+              thumbnail='https://static.vecteezy.com/system/resources/previews/009/315/251/original/3d-winners-minimal-with-golden-cup-gold-winners-stars-on-podium-background-award-ceremony-concept-on-pedestal-with-cartoon-style-3d-render-isolated-on-background-png.png'
+              rewardName='Unikatowa odznaka profilu'
+            />
+          </section>
+        </section>
 
         {/*
         INFORMACJE O KONKURSIE
