@@ -51,7 +51,7 @@ export default function Page() {
         <div className='modal-box p-0'>
           <div className='align-items-center flex h-1/3 w-full justify-center'>
             <img
-              src='/images/badges/cc.png'
+              src='/images/badges/admin_badge.png'
               className='mt-5 h-[100px] w-[100px] rounded-full'
             ></img>
           </div>

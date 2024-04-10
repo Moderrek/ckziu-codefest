@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 export default function LoginForm() {
@@ -75,61 +74,61 @@ export default function LoginForm() {
     setWaitingForOtp(true);
   }
 
-  const handleLogin: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-    const response = await signIn('credentials', {
-      email: email,
-      password: otp,
-      redirect: true,
-    });
-    if (response?.status === 200) {
-      await router.push('/');
-      return;
-    }
-    if (response?.error) {
-      console.log(response?.error);
-    }
-  };
-
-  async function requestLogin() {
-    if (loading) return;
-    if (!waitingForOtp) return;
-    setLoading(true);
-    let login_request;
-    try {
-      login_request = await axios.post(API_URL + '/auth/login', {
-        email: email,
-        otp: otp,
-      });
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      toast({
-        variant: 'destructive',
-        title: 'Błąd po stronie serwera',
-        description:
-          'Przepraszamy! Nie udało się zweryfikować danych logowania',
-      });
-      return;
-    }
-    if (!login_request.data.success) {
-      toast({
-        variant: 'destructive',
-        title: 'O nie! Logowanie nie powiodło sie!',
-        description: 'Podano nieprawidłowe dane logowania',
-      });
-      return;
-    }
-    toast({
-      variant: 'default',
-      title: 'Pomyślnie zalogowano!',
-      description:
-        'Autoryzowano za pomocą szyfrowanego jednorazowego hasła wysłanego na pocztę szkolną.',
-    });
-    setWaitingForOtp(true);
-    console.log(login_request.data.token);
-  }
+  // const handleLogin: FormEventHandler<HTMLFormElement> = async (event) => {
+  //   event.preventDefault();
+  //   const response = await signIn('credentials', {
+  //     email: email,
+  //     password: otp,
+  //     redirect: true,
+  //   });
+  //   if (response?.status === 200) {
+  //     await router.push('/');
+  //     return;
+  //   }
+  //   if (response?.error) {
+  //     console.log(response?.error);
+  //   }
+  // };
+  //
+  // async function requestLogin() {
+  //   if (loading) return;
+  //   if (!waitingForOtp) return;
+  //   setLoading(true);
+  //   let login_request;
+  //   try {
+  //     login_request = await axios.post(API_URL + '/auth/login', {
+  //       email: email,
+  //       otp: otp,
+  //     });
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+  //     toast({
+  //       variant: 'destructive',
+  //       title: 'Błąd po stronie serwera',
+  //       description:
+  //         'Przepraszamy! Nie udało się zweryfikować danych logowania',
+  //     });
+  //     return;
+  //   }
+  //   if (!login_request.data.success) {
+  //     toast({
+  //       variant: 'destructive',
+  //       title: 'O nie! Logowanie nie powiodło sie!',
+  //       description: 'Podano nieprawidłowe dane logowania',
+  //     });
+  //     return;
+  //   }
+  //   toast({
+  //     variant: 'default',
+  //     title: 'Pomyślnie zalogowano!',
+  //     description:
+  //       'Autoryzowano za pomocą szyfrowanego jednorazowego hasła wysłanego na pocztę szkolną.',
+  //   });
+  //   setWaitingForOtp(true);
+  //   console.log(login_request.data.token);
+  // }
 
   return (
     <Card className='w-full max-w-sm '>
@@ -139,7 +138,7 @@ export default function LoginForm() {
           Wpisz swojego emaila szkolnego aby zalogować się na twoje konto.
         </CardDescription>
       </CardHeader>
-      <form onSubmit={waitingForOtp ? handleLogin : undefined}>
+      <form>
         <CardContent className='grid gap-4'>
           <div className='grid gap-2'>
             <Label htmlFor='email'>Email</Label>
