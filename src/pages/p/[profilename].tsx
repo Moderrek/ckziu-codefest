@@ -9,6 +9,7 @@ import Seo from '@/components/Seo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip } from '@material-tailwind/react';
 import { Textarea } from '@/components/ui/textarea';
+import NextImage from '@/components/NextImage';
 
 export default function Page() {
   const router = useRouter();
@@ -32,10 +33,13 @@ export default function Page() {
       <div className='modal' role='dialog'>
         <div className='modal-box p-0'>
           <div className='align-items-center flex h-1/3 w-full justify-center'>
-            <img
+            <NextImage
               src='/images/badges/cc.png'
               className='mt-5 h-[100px] w-[100px] rounded-full'
-            ></img>
+              alt="cc_badge"
+              width={100}
+              height={100}
+            />
           </div>
           <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
           <div className='align-items-center flex h-1/3 w-full justify-center'>
@@ -48,24 +52,27 @@ export default function Page() {
       </div>
       <input type='checkbox' id='my_modal_8' className='modal-toggle' />
       <div className='modal' role='dialog'>
-        <div className='modal-box p-0'>
+        <div className='modal-box p-0 bg-white/30 backdrop-blur-3xl'>
           <div className='align-items-center flex h-1/3 w-full justify-center'>
-            <img
-              src='/images/badges/admin_badge.png'
-              className='mt-5 h-[100px] w-[100px] rounded-full'
-            ></img>
+              <NextImage
+                src='/images/badges/admin_badge.png'
+                className='mt-5 h-[100px] w-[100px] rounded-full'
+                alt="cc_badge"
+                width={100}
+                height={100}
+                />
           </div>
           <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
-          <div className='align-items-center flex h-1/3 w-full justify-center'>
-            <p className='py-4'>Administrator Strony CKZiUCodeFest.pl</p>
+          <div className='align-items-center flex h-1/3 w-full justify-center dark:'>
+            <p className='py-4 dark:text-white text-black'>Administrator Strony CKZiUCodeFest.pl</p>
           </div>
         </div>
         <label className='modal-backdrop' htmlFor='my_modal_8'>
           Close
         </label>
       </div>
-      <div className='lg:1/4 absolute h-1/3 w-full bg-red-400 md:w-1/6 dark:bg-red-900'></div>
-      <div className='border-gradient-to-r  lg:1/4 left-0 m-0 min-h-full w-full bg-white/30 from-indigo-500 backdrop-blur-2xl md:w-1/6 dark:bg-transparent'>
+      <div className='lg:1/4 absolute h-1/3 w-full dark:bg-red-900 bg-red-700 md:w-1/6'></div>
+      <div className='border-gradient-to-r  lg:1/4 left-0 m-0 min-h-full w-full from-indigo-500 backdrop-blur-2xl md:w-1/6 dark:bg-transparent'>
         <div className='container mx-auto pt-4'>
           <div className='flex flex-col items-center justify-center'>
             <Avatar className='h-2/3 w-2/3 select-none'>

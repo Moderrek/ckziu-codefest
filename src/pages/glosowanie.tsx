@@ -3,7 +3,6 @@ import { NextPage } from 'next';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import Seo from '@/components/Seo';
 import { Button, Tooltip } from '@material-tailwind/react';
-import { ApiProjectData } from '@/lib/api/api_responses';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
