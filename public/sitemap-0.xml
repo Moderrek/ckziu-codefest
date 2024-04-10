@@ -5,18 +5,36 @@
         <loc>https://ckziucodefest.pl</loc>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
-        <lastmod>2024-04-07T09:22:25.143Z</lastmod>
+        <lastmod>2024-04-10T09:08:03.246Z</lastmod>
+    </url>
+    <url>
+        <loc>https://ckziucodefest.pl/glosowanie</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <lastmod>2024-04-10T09:08:03.247Z</lastmod>
     </url>
     <url>
         <loc>https://ckziucodefest.pl/layout</loc>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
-        <lastmod>2024-04-07T09:22:25.145Z</lastmod>
+        <lastmod>2024-04-10T09:08:03.247Z</lastmod>
+    </url>
+    <url>
+        <loc>https://ckziucodefest.pl/panel</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <lastmod>2024-04-10T09:08:03.247Z</lastmod>
+    </url>
+    <url>
+        <loc>https://ckziucodefest.pl/test</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <lastmod>2024-04-10T09:08:03.247Z</lastmod>
     </url>
     <url>
         <loc>https://ckziucodefest.pl/zaloguj</loc>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
-        <lastmod>2024-04-07T09:22:25.145Z</lastmod>
+        <lastmod>2024-04-10T09:08:03.247Z</lastmod>
     </url>
 </urlset>
