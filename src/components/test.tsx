@@ -7,5 +7,6 @@ const url = (name: string, wrap = false) =>
 
 export default function TestApp() {
   const parallax = useRef<IParallax>(null!)
-  return <Parallax ref={parallax} pages={1} children={}></Parallax>;
+  // return <Parallax ref={parallax} pages={1} children={}></Parallax>;
+  return <></>;
 }

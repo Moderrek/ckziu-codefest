@@ -169,11 +169,15 @@ const ProfilePage = (props: { profileName: string }) => {
         <main className='flex h-full w-full flex-col items-center justify-center p-10'>
           <Tabs defaultValue='projects' className='bg-card w-full'>
             <TabsList>
+              <TabsTrigger value='posts'>Posty</TabsTrigger>
               <TabsTrigger value='projects'>Projekty</TabsTrigger>
               <TabsTrigger value='liked_projects'>
                 Polubione projekty
               </TabsTrigger>
             </TabsList>
+            <TabsContent value='posts'>
+              <h2>Profile Posts</h2>
+            </TabsContent>
             <TabsContent value='projects'>
               <div className='flex flex-row flex-wrap justify-center gap-4'>
                 <Projects />
@@ -181,6 +185,7 @@ const ProfilePage = (props: { profileName: string }) => {
             </TabsContent>
             <TabsContent value='liked_projects'></TabsContent>
           </Tabs>
+          <h2 className='text-center text-bold text-black'>Ostatnia aktywność</h2>
         </main>
       </div>
     </DefaultLayout>
