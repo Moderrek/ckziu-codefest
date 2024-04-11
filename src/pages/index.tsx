@@ -15,7 +15,6 @@ import { NextPage } from 'next';
 
 import { useCountdown } from '@/lib/useCountdown';
 
-import ArticleSection from '@/components/fetchable/articles';
 import { Projects } from '@/components/fetchable/Projects';
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
@@ -145,19 +144,20 @@ const Index: NextPage = () => {
         </h2>
         <section className='container mb-5 mt-5 flex flex-row flex-wrap justify-center gap-2 lg:gap-8'>
           <RewardCard
-            thumbnail='https://cdn-icons-png.freepik.com/512/5372/5372002.png'
-            rewardName='Myszka'
+            thumbnail='https://dharmamerchantservices.com/wp-content/uploads/2015/04/Question-mark-blackandwhite.png'
+            rewardName='Więcej informacji niedługo'
           />
           <RewardCard
-            thumbnail='https://cdn2.iconfinder.com/data/icons/keyboard-15/500/vab890_10_digital_keyboard_isometric_cartoon_woman_business_computer-512.png'
-            rewardName='Klawiatura'
+            thumbnail='https://dharmamerchantservices.com/wp-content/uploads/2015/04/Question-mark-blackandwhite.png'
+            rewardName='Więcej informacji niedługo'
           />
           <RewardCard
-            thumbnail='https://static.vecteezy.com/system/resources/previews/009/315/251/original/3d-winners-minimal-with-golden-cup-gold-winners-stars-on-podium-background-award-ceremony-concept-on-pedestal-with-cartoon-style-3d-render-isolated-on-background-png.png'
-            rewardName='Unikatowa odznaka profilu'
+            thumbnail='https://dharmamerchantservices.com/wp-content/uploads/2015/04/Question-mark-blackandwhite.png'
+            rewardName='Więcej informacji niedługo'
           />
         </section>
-        <p>
+        <p className='font-bold'>Więcej informacji niedługo...</p>
+        <p className='mt-5'>
           Każdy uczestnik konkursu otrzyma unikatową odznakę uczestnictwa na
           profilu.
         </p>
@@ -255,8 +255,7 @@ const Index: NextPage = () => {
             <AccordionItem value='item-2'>
               <AccordionTrigger>Jak zgłosić pracę?</AccordionTrigger>
               <AccordionContent>
-                Yes. It comes with default styles that matches the other
-                components&apos; aesthetic.
+                Jeszcze nie można zgłaszać prac.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value='item-3'>
@@ -301,44 +300,38 @@ const Index: NextPage = () => {
       {/*</section>*/}
 
       {/* TRENDING PROJECTS */}
-      <section className='py-20'>
-        <div className='container mx-auto rounded-2xl bg-gray-200 pb-8 pt-4 shadow dark:bg-gray-900'>
-          <div className='px-2 sm:w-3/4 lg:w-5/12'>
-            <h1
-              id='popularne'
-              className='flex flex-row justify-center text-center text-3xl text-amber-700'
-            >
-              <TerminalIcon /> Projekty na czasie
-            </h1>
-          </div>
-          <div className='mx-auto flex flex-wrap justify-center gap-4'>
-            {/* PROJEKT */}
-            <Projects />
-          </div>
+      <section className='container mx-auto mt-10 lg:mb-60'>
+        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
+          <TerminalIcon />
+          Najbardziej popularne projekty
+        </h2>
+        <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
+          {/* PROJEKT */}
+          <Projects />
         </div>
       </section>
 
       {/* ARTICLES SECTION */}
-      <section className='bg-blue-gray-50 mt-20 py-20 lg:mt-60'>
-        <div className='container mx-auto'>
-          <div className='mx-auto px-2 sm:w-3/4 lg:w-5/12'>
-            <h1
-              id='wiadomosci'
-              className='mt-4 text-center text-3xl text-amber-500'
-            >
-              Najnowsze aktualności
-            </h1>
-            <p className='mt-4 text-center text-gray-600'>
-              Tutaj znajdziesz odpowiedzi na często zadawane pytania. Jeżeli nie
-              znajdziesz odpowiedzi na swój problem zadaj pytanie na naszym
-              Discordzie.
-            </p>
-          </div>
-          <div className='mx-auto mt-12 flex flex-wrap gap-4'>
-            <ArticleSection />
-          </div>
-        </div>
-      </section>
+      {/*<section className='bg-blue-gray-50 mt-20 py-20 lg:mt-60'>*/}
+      {/*  <div className='container mx-auto'>*/}
+      {/*    <div className='mx-auto px-2 sm:w-3/4 lg:w-5/12'>*/}
+      {/*      <h1*/}
+      {/*        id='wiadomosci'*/}
+      {/*        className='mt-4 text-center text-3xl text-amber-500'*/}
+      {/*      >*/}
+      {/*        Najnowsze aktualności*/}
+      {/*      </h1>*/}
+      {/*      <p className='mt-4 text-center text-gray-600'>*/}
+      {/*        Tutaj znajdziesz odpowiedzi na często zadawane pytania. Jeżeli nie*/}
+      {/*        znajdziesz odpowiedzi na swój problem zadaj pytanie na naszym*/}
+      {/*        Discordzie.*/}
+      {/*      </p>*/}
+      {/*    </div>*/}
+      {/*    <div className='mx-auto mt-12 flex flex-wrap gap-4'>*/}
+      {/*      <ArticleSection />*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
       {/*<section className='py-20'>*/}
       {/*  <div className='container mx-auto'>*/}

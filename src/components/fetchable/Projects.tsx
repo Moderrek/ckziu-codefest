@@ -8,6 +8,7 @@ import useSWR from 'swr';
 import { API_URL } from '@/lib/api/api';
 import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
 
+import Skeleton from '@/components/Skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   HoverCard,
@@ -106,6 +107,32 @@ const Project = (props: { project: ApiProjectData }) => {
   );
 };
 
+const SkeletonProject = () => {
+  return (
+    <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
+      <Skeleton className='min-w-fill rounded-b-lg shadow' />
+      <div className='px-6 py-4'>
+        <div className='flex flex-row justify-between text-2xl font-bold'>
+          <div className='h-10 w-10 rounded-full bg-slate-700'></div>
+          <div className='ml-5 flex cursor-pointer select-none flex-row justify-between text-right'>
+            <div className='h-10 w-10 rounded-full bg-slate-700'></div>
+          </div>
+        </div>
+        <p className='text-base font-bold'>
+          <div className='flex flex-row items-center '>
+            <div className='h-10 w-10 rounded-full bg-slate-700'></div>
+          </div>
+        </p>
+        <div className='mt-2'>
+          <p className='text-base text-gray-700 dark:text-gray-200'>
+            <div className='h-10 w-10 rounded-full bg-slate-700'></div>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Projects = () => {
   const { data, error } = useSWR<ApiProjectsData, Error>(
     API_URL + '/trending/projects',
@@ -113,7 +140,12 @@ const Projects = () => {
   );
 
   // Show empty skeleton articles while loading or error.
-  if (!data || error) return <></>;
+  if (!data || error)
+    return (
+      <>
+        <p>Nie znaleziono żadnych projektów.</p>
+      </>
+    );
 
   // Render articles
   return (
