@@ -1,7 +1,16 @@
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Tooltip } from '@material-tailwind/react';
-import { Book, CircleHelp, Plus, TerminalIcon, Trophy } from 'lucide-react';
+import {
+  Book,
+  CalendarDays,
+  Circle,
+  CircleCheck,
+  CircleHelp,
+  Plus,
+  TerminalIcon,
+  Trophy,
+} from 'lucide-react';
 import { NextPage } from 'next';
 
 import { useCountdown } from '@/lib/useCountdown';
@@ -70,7 +79,7 @@ const Index: NextPage = () => {
           </div>
         </div>
 
-        <div className='mt-5 flex flex-row gap-4'>
+        <div className='mt-5 flex flex-row flex-wrap justify-center gap-4'>
           <Tooltip content='Zgłoś swoją pracę do konkursu.'>
             <Button
               variant='gradient'
@@ -79,6 +88,7 @@ const Index: NextPage = () => {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
               className='flex flex-row items-center justify-center gap-1'
+              disabled={true}
             >
               <Plus /> Weź udział
             </Button>
@@ -92,6 +102,7 @@ const Index: NextPage = () => {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
               className='flex flex-row items-center justify-center gap-1'
+              disabled={true}
             >
               <FontAwesomeIcon icon={faDiscord} /> Dołącz Discord
             </Button>
@@ -112,7 +123,7 @@ const Index: NextPage = () => {
             </UnstyledLink>
           </Tooltip>
         </div>
-        <div className='w-1/2'>
+        <div className='md:w-1/2'>
           <p className='mt-5'>
             Konkurs polega wyłonieniu najlepszego twórcy stron internetowych w
             Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.
@@ -153,6 +164,76 @@ const Index: NextPage = () => {
         <p>
           Nagrody będą wybrane przez zwycięzców po kolei od pierwszego miejsca.
         </p>
+      </section>
+
+      <section className='container mx-auto mt-10 flex flex-col items-center'>
+        <h2
+          id='etapy'
+          className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'
+        >
+          <CalendarDays />
+          Etapy konkursu
+        </h2>
+        <ul className='timeline timeline-vertical'>
+          <li>
+            <div className='timeline-start'>
+              1 kwiecień
+              <br />
+              <b>Ogłoszenie konkursu</b>
+            </div>
+            <div className='timeline-middle'>
+              <CircleCheck className='text-green-600' />
+            </div>
+            <hr className='bg-primary' />
+          </li>
+          <li>
+            <hr className='bg-primary' />
+            <div className='timeline-middle'>
+              <Circle />
+            </div>
+            <div className='timeline-end'>
+              1 maja
+              <br />
+              <b>Zgłaszanie prac</b>
+            </div>
+            <hr className='bg-primary' />
+          </li>
+          <li>
+            <hr className='bg-primary' />
+            <div className='timeline-start'>
+              1 czerwca
+              <br />
+              <b>Koniec zgłaszania prac</b>
+            </div>
+            <div className='timeline-middle'>
+              <Circle />
+            </div>
+            <hr />
+          </li>
+          <li>
+            <hr />
+            <div className='timeline-middle'>
+              <Circle />
+            </div>
+            <div className='timeline-end'>
+              2 czerwa
+              <br />
+              <b>Rozpoczęcia głosowania na projekty</b>
+            </div>
+            <hr />
+          </li>
+          <li>
+            <hr />
+            <div className='timeline-start'>
+              7 czerwca
+              <br />
+              <b>Koniec głosowania i ogłoszenie wyników</b>
+            </div>
+            <div className='timeline-middle'>
+              <Circle />
+            </div>
+          </li>
+        </ul>
       </section>
 
       <section className='container mx-auto mt-10'>
