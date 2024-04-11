@@ -1,6 +1,8 @@
+import { faDiscord, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@material-tailwind/react';
+import { CalendarDays, MailIcon } from 'lucide-react';
 import { ReactElement, useState } from 'react';
 
 import { Projects } from '@/components/fetchable/Projects';
@@ -10,7 +12,6 @@ import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/textarea';
 
 const Modal = () => {
   return (
@@ -50,89 +51,96 @@ const ProfileLink = (props: {
   );
 };
 
+const ProfileAvatar = (props: { profileName: string }) => {
+  const { profileName } = props;
+  return (
+    <Avatar className='h-28 w-28 select-none lg:h-40 lg:w-40'>
+      <AvatarImage src='https://avatars.githubusercontent.com/u/66324421?v=4' />
+      <AvatarFallback>{profileName}</AvatarFallback>
+    </Avatar>
+  );
+};
+
 const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
   const [editMode, setEditMode] = useState(false);
   const { profileName, isOwner } = props;
+  const profileDisplayName = 'Tymon Woźniak';
+
+  const badges = [
+    {
+      image: '/images/badges/cc.png',
+      name: 'Uczestnik konkursu CC 2024',
+    },
+    {
+      image: '/images/badges/admin_badge.png',
+      name: 'Administrator serwisu',
+    },
+  ];
+
   return (
-    <div className='border-gradient-to-r  left-0 m-0 min-h-full w-full from-indigo-500 backdrop-blur-2xl md:w-40 lg:w-80 dark:bg-transparent'>
+    <div className='border-gradient-to-r  left-0 m-0 min-h-full w-full from-indigo-500 shadow-xl backdrop-blur-2xl md:w-40 lg:w-80 dark:bg-transparent'>
       <div className='container mx-auto mt-10'>
         <div className='flex flex-col items-center justify-center'>
-          <Avatar className='h-28 w-28 select-none lg:h-40 lg:w-40'>
-            <AvatarImage src='https://avatars.githubusercontent.com/u/66324421?v=4' />
-            <AvatarFallback>{profileName}</AvatarFallback>
-          </Avatar>
+          <ProfileAvatar profileName={profileName} />
           <h1 className='mt-2 text-center font-mono text-2xl text-black dark:text-white'>
-            {profileName}
+            {profileDisplayName}
           </h1>
+          <p className='text-muted-foreground text-sm'>@{profileName}</p>
         </div>
-        <div className='divider divider-neutral dark:divider-default-neutral m-2'></div>
-        <div className='flex flex-row items-center justify-center space-x-1'>
-          <label htmlFor='my_modal_7'>
-            <Tooltip content='Uczestnik konkursu 2024'>
-              <img
-                src='/images/badges/cc.png'
-                className='w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75'
-              ></img>
-            </Tooltip>
-          </label>
-          <label htmlFor='my_modal_8'>
-            <Tooltip content='Administrator strony'>
-              <img
-                src='/images/badges/admin_badge.png'
-                className='w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75'
-              ></img>
-            </Tooltip>
-          </label>
+        <div className='mt-2'>
+          <p>
+            Biografia użytkownika {profileName}. Tutaj będzie możliwość
+            edytowania biografii
+          </p>
         </div>
-        <div className='divider divider-neutral dark:divider-default m-2 rounded-full'></div>
-        <ProfileLink
-          href={'https://github.com/' + profileName}
-          label='GitHub'
-          icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}
-        />
-        <ProfileLink
-          href={'https://github.com/' + profileName}
-          label='GitHub'
-          icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}
-        />
-        <ProfileLink
-          href={'https://github.com/' + profileName}
-          label='GitHub'
-          icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}
-        />
-        <ProfileLink
-          href={'https://github.com/' + profileName}
-          label='GitHub'
-          icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}
-        />
-        <div className='divider divider-neutral dark:divider-default m-2 rounded-full'></div>
-        <Textarea
-          placeholder='biografia'
-          className='mt-3 resize-none overflow-hidden'
-          disabled={!editMode}
-        />
-        {isOwner ? (
-          <button
-            className='btn btn-ghost btn-sm ml-36 mt-2 p-1'
-            onClick={() => setEditMode(!editMode)}
-          >
-            edit
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='16'
-              height='16'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              className='lucide lucide-pencil'
-            >
-              <path d='M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z' />
-              <path d='m15 5 4 4' />
-            </svg>
-          </button>
-        ) : (
-          <></>
-        )}
+        <section className='mt-5 flex flex-row flex-wrap items-center justify-center space-x-1'>
+          {badges.map((badge) => {
+            return (
+              <Tooltip content={badge.name} key={badge.name}>
+                <NextImage
+                  useSkeleton={true}
+                  src={badge.image}
+                  alt={badge.name}
+                  width={32}
+                  height={32}
+                  className='w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75'
+                />
+              </Tooltip>
+            );
+          })}
+        </section>
+        <section className='mt-5'>
+          <div className='flex flex-row'>
+            <CalendarDays />
+            Dołączył kwiecień 2024
+          </div>
+          <ProfileLink
+            href={'https://github.com/' + profileName}
+            label='GitHub'
+            icon={
+              <FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />
+            }
+          />
+          <ProfileLink
+            href={'https://github.com/' + profileName}
+            label='Facebook'
+            icon={
+              <FontAwesomeIcon icon={faFacebook} className='left-2 h-5 w-5' />
+            }
+          />
+          <ProfileLink
+            href={'https://github.com/' + profileName}
+            label='Discord'
+            icon={
+              <FontAwesomeIcon icon={faDiscord} className='left-2 h-5 w-5' />
+            }
+          />
+          <ProfileLink
+            href={'https://github.com/' + profileName}
+            label='t.wozniak@ckziu.elodz.edu.pl'
+            icon={<MailIcon className='left-2 h-5 w-5' />}
+          />
+        </section>
       </div>
     </div>
   );
@@ -145,7 +153,7 @@ const ProfilePage = (props: { profileName: string }) => {
   return (
     <DefaultLayout>
       <Seo templateTitle={`Profil ${profileName}`} />
-      <div className='flex flex-col md:flex-row lg:flex-row'>
+      <div className='flex min-h-full flex-col md:flex-row lg:flex-row'>
         {/* SIDEBAR */}
         <ProfileSidebar isOwner={isOwner} profileName={profileName} />
         {/* MAIN CONTENT */}
