@@ -1,6 +1,10 @@
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Tooltip } from '@material-tailwind/react';
 import { Book, CircleHelp, Plus, TerminalIcon, Trophy } from 'lucide-react';
 import { NextPage } from 'next';
+
+import { useCountdown } from '@/lib/useCountdown';
 
 import ArticleSection from '@/components/fetchable/articles';
 import { Projects } from '@/components/fetchable/Projects';
@@ -17,6 +21,10 @@ import {
 } from '@/components/ui/accordion';
 
 const Index: NextPage = () => {
+  const [days, hours, minutes, seconds] = useCountdown(
+    Date.parse('01 May 2024 12:00:00 GMT+1')
+  );
+
   return (
     <DefaultLayout>
       <Seo templateTitle='Strona główna' />
@@ -32,6 +40,36 @@ const Index: NextPage = () => {
           </h1>
         </div>
 
+        <div className='mt-5'>
+          <p className='text-center'>Możliwość zgłaszania prac za:</p>
+          <div className='grid auto-cols-max grid-flow-col gap-5 text-center'>
+            <div className='flex flex-col'>
+              <span className='countdown font-mono text-5xl'>
+                <span style={{ '--value': days }}></span>
+              </span>
+              dni
+            </div>
+            <div className='flex flex-col'>
+              <span className='countdown font-mono text-5xl'>
+                <span style={{ '--value': hours }}></span>
+              </span>
+              godz
+            </div>
+            <div className='flex flex-col'>
+              <span className='countdown font-mono text-5xl'>
+                <span style={{ '--value': minutes }}></span>
+              </span>
+              min
+            </div>
+            <div className='flex flex-col'>
+              <span className='countdown font-mono text-5xl'>
+                <span style={{ '--value': seconds }}></span>
+              </span>
+              sek
+            </div>
+          </div>
+        </div>
+
         <div className='mt-5 flex flex-row gap-4'>
           <Tooltip content='Zgłoś swoją pracę do konkursu.'>
             <Button
@@ -43,6 +81,19 @@ const Index: NextPage = () => {
               className='flex flex-row items-center justify-center gap-1'
             >
               <Plus /> Weź udział
+            </Button>
+          </Tooltip>
+
+          <Tooltip content='Dołącz do discorda CKZiU CodeFest.'>
+            <Button
+              variant='gradient'
+              color='indigo'
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+              className='flex flex-row items-center justify-center gap-1'
+            >
+              <FontAwesomeIcon icon={faDiscord} /> Dołącz Discord
             </Button>
           </Tooltip>
 
@@ -61,10 +112,16 @@ const Index: NextPage = () => {
             </UnstyledLink>
           </Tooltip>
         </div>
-        <p className='mt-5'>Konkurs polega ...</p>
-        <p className='mt-5'>
-          Organizowany przez prof. Marka Bułę, Tymona Woźniaka i Filipa Sobczuka
-        </p>
+        <div className='w-1/2'>
+          <p className='mt-5'>
+            Konkurs polega wyłonieniu najlepszego twórcy stron internetowych w
+            Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.
+          </p>
+          <p className='mt-5'>
+            Organizowany przez CKZiU w Łodzi, nauczyciela Marka Bułę, Tymona
+            Woźniaka i Filipa Sobczuka
+          </p>
+        </div>
       </section>
 
       <section className='container mx-auto mt-10 flex flex-col items-center'>
