@@ -6,7 +6,7 @@ import { Button, Tooltip } from '@material-tailwind/react';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CalendarDays, Check, Star, Vote } from 'lucide-react';
+import { CalendarDays, Check, FileQuestion, Star, Vote } from 'lucide-react';
 import {
   HoverCard,
   HoverCardContent,
@@ -22,27 +22,36 @@ type Project = {
   totalVotes: number;
 };
 
-const Project = (props: { project: Project }) => {
-  const project: Project = props.project;
+const Project = (props: { project: Project; canVote: boolean }) => {
+  const { project, canVote } = props;
 
   const [liked, setLiked] = useState(false);
   const [select, setSelect] = useState(false);
   const [likes, setLikes] = useState(project.totalVotes);
 
   return (
-    <div className='relative inline-flex w-fit'>
-      {select ? (
+    <div className='relative inline-flex w-fit hover:animate-select'>
+      {canVote ? (
         <div className='relative inline-flex'>
-          <div className='absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-1/4  whitespace-nowrap rounded-full bg-indigo-500 p-1 text-center align-baseline text-xs font-bold leading-none text-white'>
+          { select ? (
+          <div className='absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-1/4  whitespace-nowrap rounded-full border-2 border-green-400 bg-green-500 p-1 text-center align-baseline text-xs font-bold leading-none text-white'>
             <Check />
           </div>
+          ) : (
+          <div className='absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-1/4  whitespace-nowrap rounded-full border-4 border-indigo-500 p-1 text-center align-baseline text-xs font-bold leading-none text-white'>
+            <Check className='invisible' />
+          </div>
+          )
+          }
         </div>
       ) : (
         <></>
       )}
       <div
         className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'
-        onClick={() => setSelect(!select)}
+        onClick={() => {
+          if (canVote) setSelect(!select);
+        }}
       >
         <Link href={`/p/${project.ownerName}/${project.name}`}>
           <Image
@@ -79,47 +88,45 @@ const Project = (props: { project: Project }) => {
               {likes}
             </div>
           </div>
-          <p className='text-base font-bold'>
-            <div className='flex flex-row items-center '>
-              <HoverCard openDelay={1}>
-                <HoverCardTrigger asChild>
-                  <Link
-                    href={`/p/${project.ownerName}`}
-                    className='flex flex-row items-center hover:underline'
-                  >
-                    <Avatar className='h-8 w-8'>
-                      <AvatarImage src={project.thumbnailUrl} />
-                      <AvatarFallback>VC</AvatarFallback>
-                    </Avatar>
-                    <span className='ml-1'>@{project.ownerName}</span>
-                  </Link>
-                </HoverCardTrigger>
-                <HoverCardContent className='w-80'>
-                  <div className='flex justify-between space-x-4'>
-                    <Avatar>
-                      <AvatarImage src={project.thumbnailUrl} />
-                      <AvatarFallback>VC</AvatarFallback>
-                    </Avatar>
-                    <div className='space-y-1'>
-                      <h4 className='text-sm font-semibold'>
-                        @{project.ownerName}
-                      </h4>
-                      <p className='text-sm'>Autor serwisu CKZiU CodeFest</p>
-                      <div className='flex items-center pt-2'>
-                        <CalendarDays className='mr-2 h-4 w-4 opacity-70' />{' '}
-                        <span className='text-muted-foreground text-xs'>
-                          Dołączył kwiecień 2024
-                        </span>
-                      </div>
+          <div className='flex flex-row items-center text-base font-bold '>
+            <HoverCard openDelay={1}>
+              <HoverCardTrigger asChild>
+                <Link
+                  href={`/p/${project.ownerName}`}
+                  className='flex flex-row items-center hover:underline'
+                >
+                  <Avatar className='h-8 w-8'>
+                    <AvatarImage src={project.thumbnailUrl} />
+                    <AvatarFallback>VC</AvatarFallback>
+                  </Avatar>
+                  <span className='ml-1'>@{project.ownerName}</span>
+                </Link>
+              </HoverCardTrigger>
+              <HoverCardContent className='w-80'>
+                <div className='flex justify-between space-x-4'>
+                  <Avatar>
+                    <AvatarImage src={project.thumbnailUrl} />
+                    <AvatarFallback>VC</AvatarFallback>
+                  </Avatar>
+                  <div className='space-y-1'>
+                    <h4 className='text-sm font-semibold'>
+                      @{project.ownerName}
+                    </h4>
+                    <p className='text-sm'>Autor serwisu CKZiU CodeFest</p>
+                    <div className='flex items-center pt-2'>
+                      <CalendarDays className='mr-2 h-4 w-4 opacity-70' />{' '}
+                      <span className='text-muted-foreground text-xs'>
+                        Dołączył kwiecień 2024
+                      </span>
                     </div>
                   </div>
-                </HoverCardContent>
-              </HoverCard>
-            </div>
-          </p>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
+          </div>
           <div className='mt-2'>
             <p className='text-base text-gray-700 dark:text-gray-200'>
-              {project.name}
+              {project.name} {canVote ? 'GLOSOWANIE' : 'Kliknij zaglosuj'}
             </p>
           </div>
         </div>
@@ -184,7 +191,16 @@ const VotingPage: NextPage = (): JSX.Element => {
       ownerName: 'moderr',
       totalVotes: 40,
     },
+    {
+      name: 'lawkalocalizator',
+      displayName: 'Lokalizator Ławek',
+      ownerName: 'CKZiU',
+      thumbnailUrl: '/images/park.jpg',
+      totalVotes: 420,
+    },
   ];
+
+  const [voteing, setVoteing] = useState(false);
 
   return (
     <DefaultLayout>
@@ -224,6 +240,9 @@ const VotingPage: NextPage = (): JSX.Element => {
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          onClick={() => {
+            setVoteing(!voteing);
+          }}
         >
           <div className='flex flex-row items-center justify-center'>
             <Vote /> Zagłosuj
@@ -233,7 +252,7 @@ const VotingPage: NextPage = (): JSX.Element => {
       <section className='container mx-auto flex flex-row flex-wrap justify-center gap-8'>
         {/*  PROJECTS */}
         {projects.map((project, idx) => {
-          return <Project key={idx} project={project} />;
+          return <Project key={idx} project={project} canVote={voteing} />;
         })}
       </section>
     </DefaultLayout>

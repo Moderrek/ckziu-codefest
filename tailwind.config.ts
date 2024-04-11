@@ -1,5 +1,6 @@
 import withMT from '@material-tailwind/react/utils/withMT';
 import { fontFamily } from 'tailwindcss/defaultTheme';
+import { scale } from 'style-value-types';
 
 const config = withMT({
   darkMode: ['class'],
@@ -74,8 +75,14 @@ const config = withMT({
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'select': {
+          from: { transform: 'scale(1.0)' },
+          to: { transform: 'scale(1.1)'},
+        }
       },
       animation: {
+        'hover-logo': 'spin 3s linear',
+        'select': 'select 0.2s forwards',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },

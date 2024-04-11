@@ -8,6 +8,7 @@ const CkziuLogo = (props: { width: number; height: number }) => {
       src='/images/ckziu_logo.png'
       width={props.width}
       height={props.height}
+      className='hover:animate-hover-logo'
     />
   );
 };

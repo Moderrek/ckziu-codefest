@@ -16,16 +16,33 @@ const Index: NextPage = (): JSX.Element => {
         <Seo templateTitle='Strona główna' />
 
         {/*<Homepage />*/}
-        <section className='container mx-auto flex flex-col items-center'>
+        <section className='container mx-auto mt-10 flex flex-col items-center'>
           <CkziuLogo width={100} height={100} />
-          <h1 className='text-center text-4xl text-black'>
+          <h1 className='text-center text-4xl font-bold hover:text-black'>
             CKZiU
             <br />
             CodeFest 2024
           </h1>
-          <Button variant='gradient' color='indigo'>
-            Weź udział
-          </Button>
+          <div className='flex flex-row gap-4'>
+            <Button
+              variant='gradient'
+              color='indigo'
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            >
+              Weź udział
+            </Button>
+            <Button
+              variant='gradient'
+              color='red'
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            >
+              Regulamin
+            </Button>
+          </div>
           <p>
             Organizowany przez prof. Marka Bułę, Tymona Woźniaka i Filipa
             Sobczuka
@@ -49,6 +66,14 @@ const Index: NextPage = (): JSX.Element => {
               rewardName='Unikatowa odznaka profilu'
             />
           </section>
+          <p>
+            Każdy uczestnik konkursu otrzyma unikatową odznakę uczestnictwa na
+            profilu.
+          </p>
+          <p>
+            Nagrody będą wybrane przez zwycięzców po kolei od pierwszego
+            miejsca.
+          </p>
         </section>
 
         {/*
