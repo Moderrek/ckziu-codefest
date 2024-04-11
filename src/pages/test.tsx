@@ -4,6 +4,7 @@ import { useRequiredLogin } from '@/lib/auth';
 
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import useToken from '@/lib/auth/useToken';
+import MyComponent from '@/components/test';
 
 export default function TestPage() {
   const [token, setToken] = useToken();
@@ -18,28 +19,6 @@ export default function TestPage() {
 
   // Authorized user page
   return (
-    <DefaultLayout>
-      <Button
-        variant='filled'
-        color='red'
-        onClick={() => {
-          console.log(token);
-        }}
-      >
-        Get Token
-      </Button>
-      <Button
-        variant='gradient'
-        color='indigo'
-        onClick={() => {
-          setToken('token ' + Math.random());
-        }}
-      >
-        Set Token
-      </Button>
-      {/*<p>The token is = {token ? token : ''} CAUSES HYDRATION ERROR</p>*/}
-      {/*  Causes hydration error because server pre-renders page when server doesnt have WINDOW.LOCALSTORAGE*/}
-      {/*  TODO next day 10.04.2024 */}
-    </DefaultLayout>
+  <MyComponent></MyComponent>
   );
 }
