@@ -38,7 +38,11 @@ const Modal = () => {
   );
 };
 
-const ProfileLink = (props: { href: string, label: string, icon: JSX.Element }) => {
+const ProfileLink = (props: {
+  href: string;
+  label: string;
+  icon: JSX.Element;
+}) => {
   return (
     <div>
       <UnstyledLink
@@ -104,10 +108,34 @@ export default function Page() {
               </label>
             </div>
             <div className='divider divider-neutral dark:divider-default m-2 rounded-full'></div>
-            <ProfileLink href={"https://github.com/" + profileName} label="GitHub" icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}/>
-            <ProfileLink href={"https://github.com/" + profileName} label="GitHub" icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}/>
-            <ProfileLink href={"https://github.com/" + profileName} label="GitHub" icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}/>
-            <ProfileLink href={"https://github.com/" + profileName} label="GitHub" icon={<FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />}/>
+            <ProfileLink
+              href={'https://github.com/' + profileName}
+              label='GitHub'
+              icon={
+                <FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />
+              }
+            />
+            <ProfileLink
+              href={'https://github.com/' + profileName}
+              label='GitHub'
+              icon={
+                <FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />
+              }
+            />
+            <ProfileLink
+              href={'https://github.com/' + profileName}
+              label='GitHub'
+              icon={
+                <FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />
+              }
+            />
+            <ProfileLink
+              href={'https://github.com/' + profileName}
+              label='GitHub'
+              icon={
+                <FontAwesomeIcon icon={faGithub} className='left-2 h-5 w-5' />
+              }
+            />
             <div className='divider divider-neutral dark:divider-default m-2 rounded-full'></div>
             <Textarea
               placeholder='biografia'

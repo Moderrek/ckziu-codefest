@@ -1,18 +1,19 @@
+import { Button, Tooltip } from '@material-tailwind/react';
+import { CalendarDays, Check, Star, Vote } from 'lucide-react';
 import { NextPage } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
+import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import Seo from '@/components/Seo';
-import { Button, Tooltip } from '@material-tailwind/react';
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { CalendarDays, Check, FileQuestion, Star, Vote } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type Project = {
   name: string;
@@ -30,19 +31,18 @@ const Project = (props: { project: Project; canVote: boolean }) => {
   const [likes, setLikes] = useState(project.totalVotes);
 
   return (
-    <div className='relative inline-flex w-fit hover:animate-select'>
+    <div className='hover:animate-select relative inline-flex w-fit'>
       {canVote ? (
         <div className='relative inline-flex'>
-          { select ? (
-          <div className='absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-1/4  whitespace-nowrap rounded-full border-2 border-green-400 bg-green-500 p-1 text-center align-baseline text-xs font-bold leading-none text-white'>
-            <Check />
-          </div>
+          {select ? (
+            <div className='absolute -right-5 -top-5 z-10 rounded-full border-2 border-green-400 bg-green-500 p-1 text-white'>
+              <Check />
+            </div>
           ) : (
-          <div className='absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-1/4  whitespace-nowrap rounded-full border-4 border-indigo-500 p-1 text-center align-baseline text-xs font-bold leading-none text-white'>
-            <Check className='invisible' />
-          </div>
-          )
-          }
+            <div className='absolute -right-5 -top-5 z-10 rounded-full border-2 border-indigo-500 bg-none p-1 text-white'>
+              <Check className='invisible' />
+            </div>
+          )}
         </div>
       ) : (
         <></>
@@ -209,29 +209,37 @@ const VotingPage: NextPage = (): JSX.Element => {
         description='Głosowanie na projekty w konkursie CKZiU CodeFest 2024'
       />
 
+      <section className='container mx-auto mt-10 flex flex-col items-center'>
+        <CkziuLogo width={100} height={100} />
+        <h1 className='text-center text-4xl font-semibold hover:underline'>
+          CKZiU
+          <br />
+          CodeFest 2024
+        </h1>
+      </section>
       <section className='mt-4 flex items-center justify-center lg:mt-10'>
         {/*STATS*/}
         <div className='stats stats-horizontal left-0 select-none  bg-indigo-500 text-white shadow'>
-          <div className='stat rounded-t-none rounded-bl-none text-black dark:text-white'>
-            <div className='stat-title'>Downloads</div>
-            <div className='stat-value'>31K</div>
-            <div className='stat-desc'>Jan 1st - Feb 1st</div>
+          <div className='stat rounded-t-none rounded-bl-none text-white'>
+            <div className='stat-title'>Projektów</div>
+            <div className='stat-value'>16</div>
+            <div className='stat-desc'>Kwiecień 1st - Czerwiec 1st</div>
           </div>
 
-          <div className='stat text-black dark:text-white'>
-            <div className='stat-title'>New Users</div>
+          <div className='stat text-white'>
+            <div className='stat-title'>Oddanych głosów</div>
             <div className='stat-value'>4,200</div>
-            <div className='stat-desc'>↗︎ 400 (22%)</div>
+            <div className='stat-desc text-green-400'>↗︎ 400 (22%)</div>
           </div>
 
-          <div className='stat text-black dark:text-white'>
+          <div className='stat text-white'>
             <div className='stat-title'>New Registers</div>
             <div className='stat-value'>1,200</div>
-            <div className='stat-desc'>↘︎ 90 (14%)</div>
+            <div className='stat-desc text-red-400'>↘︎ 90 (14%)</div>
           </div>
         </div>
       </section>
-      <section className='mt-4 flex items-center justify-center lg:mt-10'>
+      <section className='mt-4 flex flex-col items-center justify-center lg:mt-10'>
         {/* VOTING */}
         <Button
           variant='gradient'
@@ -245,11 +253,12 @@ const VotingPage: NextPage = (): JSX.Element => {
           }}
         >
           <div className='flex flex-row items-center justify-center'>
-            <Vote /> Zagłosuj
+            <Vote /> {voteing ? 'Głosowanie..' : 'Zagłosuj'}
           </div>
         </Button>
+        <p>Kliknij zagłosuj aby zaznaczyć prace na, które chcesz zagłosować.</p>
       </section>
-      <section className='container mx-auto flex flex-row flex-wrap justify-center gap-8'>
+      <section className='container mx-auto mb-10 mt-10 flex flex-row flex-wrap justify-center gap-8'>
         {/*  PROJECTS */}
         {projects.map((project, idx) => {
           return <Project key={idx} project={project} canVote={voteing} />;
