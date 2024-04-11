@@ -1,4 +1,5 @@
 import { CircleUser, LogOut, User } from 'lucide-react';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -9,7 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import Link from 'next/link';
 
 export default function DropdownMenuDemo() {
   const loggedIn = false;
@@ -33,7 +33,7 @@ export default function DropdownMenuDemo() {
             </Link>
           </DropdownMenuItem>
         ) : (
-          <Link href={'/zaloguj'}>
+          <Link href='/zaloguj'>
             <DropdownMenuItem>
               <div className='flex flex-row'>
                 <User className='mr-2 h-4 w-4' />

@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { API_URL } from '@/lib/api/api';
@@ -24,7 +25,6 @@ import {
 } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/router';
 
 export default function LoginForm() {
   const { toast } = useToast();
@@ -144,7 +144,7 @@ export default function LoginForm() {
             <Label htmlFor='email'>Email</Label>
             <Input
               id='email'
-              name={'email'}
+              name='email'
               type='email'
               disabled={loading || waitingForOtp}
               placeholder='nazwa@ckziu.elodz.edu.pl'
@@ -159,7 +159,7 @@ export default function LoginForm() {
                 maxLength={6}
                 value={otp}
                 onChange={(otp) => setOtp(otp)}
-                name={'otp'}
+                name='otp'
               >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />

@@ -1,7 +1,7 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@material-tailwind/react';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 
 import { Projects } from '@/components/fetchable/Projects';
 import DefaultLayout from '@/components/layout/DefaultLayout';
@@ -11,7 +11,6 @@ import Seo from '@/components/Seo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { satisfies } from 'semver';
 
 const Modal = () => {
   return (
@@ -41,19 +40,13 @@ const Modal = () => {
 const ProfileLink = (props: {
   href: string;
   label: string;
-  icon: JSX.Element;
+  icon: ReactElement;
 }) => {
   return (
-    <div>
-      <UnstyledLink
-        href={props.href}
-        target='_blank'
-        className='flex flex-row items-center'
-      >
-        {props.icon}
-        <span className=' text-middle pl-1 pt-0.5'>{props.label}</span>
-      </UnstyledLink>
-    </div>
+    <UnstyledLink href={props.href} className='flex flex-row items-center'>
+      {props.icon}
+      <span className='text-middle pl-1 pt-0.5'>{props.label}</span>
+    </UnstyledLink>
   );
 };
 
@@ -61,14 +54,14 @@ const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
   const [editMode, setEditMode] = useState(false);
   const { profileName, isOwner } = props;
   return (
-    <div className='border-gradient-to-r  lg:1/4 left-0 m-0 min-h-full w-full from-indigo-500 backdrop-blur-2xl md:w-1/4 dark:bg-transparent'>
-      <div className='container mx-auto pt-4'>
+    <div className='border-gradient-to-r  left-0 m-0 min-h-full w-full from-indigo-500 backdrop-blur-2xl md:w-40 lg:w-80 dark:bg-transparent'>
+      <div className='container mx-auto mt-10'>
         <div className='flex flex-col items-center justify-center'>
-          <Avatar className='h-2/3 w-2/3 select-none'>
+          <Avatar className='h-28 w-28 select-none lg:h-40 lg:w-40'>
             <AvatarImage src='https://avatars.githubusercontent.com/u/66324421?v=4' />
-            <AvatarFallback>VC</AvatarFallback>
+            <AvatarFallback>{profileName}</AvatarFallback>
           </Avatar>
-          <h1 className='text-bold mt-2 text-center text-xl text-black dark:text-white'>
+          <h1 className='mt-2 text-center font-mono text-2xl text-black dark:text-white'>
             {profileName}
           </h1>
         </div>
@@ -147,17 +140,7 @@ const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
 
 const ProfilePage = (props: { profileName: string }) => {
   const { profileName } = props;
-  const [edit, setEdit] = useState(false);
   const isOwner: boolean = profileName === 'drakvlaa';
-
-  if (!profileName) {
-    return (
-      <>
-        <Seo templateTitle='Ładowanie profilu..' />
-        <p>Ładowanie...</p>
-      </>
-    );
-  }
 
   return (
     <DefaultLayout>
@@ -185,16 +168,20 @@ const ProfilePage = (props: { profileName: string }) => {
             </TabsContent>
             <TabsContent value='liked_projects'></TabsContent>
           </Tabs>
-          <h2 className='text-center text-bold text-black'>Ostatnia aktywność</h2>
+          <h2 className='text-bold text-center text-black'>
+            Ostatnia aktywność
+          </h2>
         </main>
       </div>
     </DefaultLayout>
   );
 };
 
-/*<CalendarPlus size={48} strokeWidth={1} />*/
-
-export async function getServerSideProps({ query } : { query: { profilename: string} }) {
+export async function getServerSideProps({
+  query,
+}: {
+  query: { profilename: string };
+}) {
   const { profilename } = query;
   return {
     props: {

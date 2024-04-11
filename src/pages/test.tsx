@@ -1,9 +1,6 @@
-import { Button } from '@material-tailwind/react';
-
 import { useRequiredLogin } from '@/lib/auth';
-
-import DefaultLayout from '@/components/layout/DefaultLayout';
 import useToken from '@/lib/auth/useToken';
+
 import MyComponent from '@/components/test';
 
 export default function TestPage() {
@@ -18,7 +15,5 @@ export default function TestPage() {
   }
 
   // Authorized user page
-  return (
-  <MyComponent></MyComponent>
-  );
+  return <MyComponent></MyComponent>;
 }
