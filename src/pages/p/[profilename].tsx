@@ -61,7 +61,7 @@ const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
   const [editMode, setEditMode] = useState(false);
   const { profileName, isOwner } = props;
   return (
-    <div className='border-gradient-to-r  lg:1/4 left-0 m-0 min-h-full w-full from-indigo-500 backdrop-blur-2xl md:w-1/6 dark:bg-transparent'>
+    <div className='border-gradient-to-r  lg:1/4 left-0 m-0 min-h-full w-full from-indigo-500 backdrop-blur-2xl md:w-1/4 dark:bg-transparent'>
       <div className='container mx-auto pt-4'>
         <div className='flex flex-col items-center justify-center'>
           <Avatar className='h-2/3 w-2/3 select-none'>
@@ -162,12 +162,12 @@ const ProfilePage = (props: { profileName: string }) => {
   return (
     <DefaultLayout>
       <Seo templateTitle={`Profil ${profileName}`} />
-      <div className='flex flex-row'>
+      <div className='flex flex-col md:flex-row lg:flex-row'>
         {/* SIDEBAR */}
         <ProfileSidebar isOwner={isOwner} profileName={profileName} />
         {/* MAIN CONTENT */}
         <main className='flex h-full w-full flex-col items-center justify-center p-10'>
-          <Tabs defaultValue='projects' className='bg-card w-full'>
+          <Tabs defaultValue='projects' className='w-full'>
             <TabsList>
               <TabsTrigger value='posts'>Posty</TabsTrigger>
               <TabsTrigger value='projects'>Projekty</TabsTrigger>
