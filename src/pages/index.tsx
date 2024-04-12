@@ -12,6 +12,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import { NextPage } from 'next';
+import { CSSProperties } from 'react';
 
 import { useCountdown } from '@/lib/useCountdown';
 
@@ -53,25 +54,25 @@ const Index: NextPage = () => {
           <div className='grid auto-cols-max grid-flow-col gap-5 text-center'>
             <div className='flex flex-col'>
               <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': days }}></span>
+                <span style={{ '--value': days } as CSSProperties}></span>
               </span>
               dni
             </div>
             <div className='flex flex-col'>
               <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': hours }}></span>
+                <span style={{ '--value': hours } as CSSProperties}></span>
               </span>
               godz
             </div>
             <div className='flex flex-col'>
               <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': minutes }}></span>
+                <span style={{ '--value': minutes } as CSSProperties}></span>
               </span>
               min
             </div>
             <div className='flex flex-col'>
               <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': seconds }}></span>
+                <span style={{ '--value': seconds } as CSSProperties}></span>
               </span>
               sek
             </div>

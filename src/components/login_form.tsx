@@ -1,7 +1,6 @@
 'use client';
 
 import axios from 'axios';
-import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -179,29 +178,32 @@ export default function LoginForm() {
           )}
         </CardContent>
         <CardFooter>
-          <Button
-            type={waitingForOtp ? 'submit' : 'button'}
-            className='w-full'
-            disabled={loading}
-            onClick={async () => {
-              if (!waitingForOtp) await requestOTP();
-            }}
-          >
-            {loading ? (
-              <>
-                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                Logowanie...
-              </>
-            ) : (
-              <>
-                {waitingForOtp ? (
-                  <Fingerprint className='mr-2 h-4 w-4' />
-                ) : (
-                  <Mail className='mr-2 h-4 w-4' />
-                )}
-                Zaloguj sie
-              </>
-            )}
+          {/*<Button*/}
+          {/*  type={waitingForOtp ? 'submit' : 'button'}*/}
+          {/*  className='w-full'*/}
+          {/*  disabled={loading}*/}
+          {/*  onClick={async () => {*/}
+          {/*    if (!waitingForOtp) await requestOTP();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  {loading ? (*/}
+          {/*    <>*/}
+          {/*      <Loader2 className='mr-2 h-4 w-4 animate-spin' />*/}
+          {/*      Logowanie...*/}
+          {/*    </>*/}
+          {/*  ) : (*/}
+          {/*    <>*/}
+          {/*      {waitingForOtp ? (*/}
+          {/*        <Fingerprint className='mr-2 h-4 w-4' />*/}
+          {/*      ) : (*/}
+          {/*        <Mail className='mr-2 h-4 w-4' />*/}
+          {/*      )}*/}
+          {/*      Zaloguj sie*/}
+          {/*    </>*/}
+          {/*  )}*/}
+          {/*</Button>*/}
+          <Button type='button' className='w-full' disabled={true}>
+            Odblokowanie niedługo..
           </Button>
         </CardFooter>
       </form>

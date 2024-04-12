@@ -137,7 +137,7 @@ const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
           />
           <ProfileLink
             href={'https://github.com/' + profileName}
-            label='t.wozniak@ckziu.elodz.edu.pl'
+            label='Mail'
             icon={<MailIcon className='left-2 h-5 w-5' />}
           />
         </section>
