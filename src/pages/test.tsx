@@ -1,7 +1,7 @@
+import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+
 import { useRequiredLogin } from '@/lib/auth';
 import useToken from '@/lib/auth/useToken';
-
-import MyComponent from '@/components/test';
 
 export default function TestPage() {
   const [token, setToken] = useToken();
@@ -15,5 +15,14 @@ export default function TestPage() {
   }
 
   // Authorized user page
-  return <MyComponent></MyComponent>;
+  return (
+    <Parallax pages={4}>
+      <ParallaxLayer speed={1}>
+        <h1>Paralaxa</h1>
+      </ParallaxLayer>
+      <ParallaxLayer offset={1} speed={0.5}>
+        <h1>Śmierdzi</h1>
+      </ParallaxLayer>
+    </Parallax>
+  );
 }

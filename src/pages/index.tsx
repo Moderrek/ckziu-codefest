@@ -7,6 +7,7 @@ import {
   Circle,
   CircleCheck,
   CircleHelp,
+  Newspaper,
   Plus,
   TerminalIcon,
   Trophy,
@@ -50,7 +51,7 @@ const Index: NextPage = () => {
         </div>
 
         <div className='mt-5'>
-          <p className='text-center'>Możliwość zgłaszania prac za:</p>
+          <p className='text-center'>Uruchomienie serwisu za:</p>
           <div className='grid auto-cols-max grid-flow-col gap-5 text-center'>
             <div className='flex flex-col'>
               <span className='countdown font-mono text-5xl'>
@@ -243,7 +244,7 @@ const Index: NextPage = () => {
           Najczęściej zadawane pytania
         </h2>
         <div className='container mx-auto flex justify-center'>
-          <Accordion type='single' collapsible className='w-1/2'>
+          <Accordion type='single' collapsible className='w-full lg:w-1/2'>
             <AccordionItem value='item-1'>
               <AccordionTrigger>
                 Kto może wziąć udział w konkursie?
@@ -301,7 +302,7 @@ const Index: NextPage = () => {
       {/*</section>*/}
 
       {/* TRENDING PROJECTS */}
-      <section className='container mx-auto mt-10 lg:mb-60'>
+      <section className='container mx-auto mt-10'>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <TerminalIcon />
           Najbardziej popularne projekty
@@ -309,6 +310,16 @@ const Index: NextPage = () => {
         <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
           {/* PROJEKT */}
           <Projects />
+        </div>
+      </section>
+
+      <section className='container mx-auto mb-20 mt-10 lg:mb-60'>
+        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
+          <Newspaper />
+          Ostatnie wiadomości
+        </h2>
+        <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
+          <p>Nie znaleziono żadnych wiadomości.</p>
         </div>
       </section>
 
