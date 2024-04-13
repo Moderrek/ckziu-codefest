@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Head, Html, Main, NextScript } from 'next/document';
 
 import { cn } from '@/lib/utils';
@@ -16,6 +17,7 @@ export default function Document() {
         )}
       >
         <Main />
+        <GoogleAnalytics gaId='G-9LCWSWF9Y8' />
         <NextScript />
       </body>
     </Html>
