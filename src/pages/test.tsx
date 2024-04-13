@@ -16,13 +16,15 @@ export default function TestPage() {
 
   // Authorized user page
   return (
-    <Parallax pages={4}>
-      <ParallaxLayer speed={1}>
-        <h1>Paralaxa</h1>
-      </ParallaxLayer>
-      <ParallaxLayer offset={1} speed={0.5}>
-        <h1>Śmierdzi</h1>
-      </ParallaxLayer>
-    </Parallax>
+    <div className='flex min-h-full w-full items-center justify-center'>
+      <Parallax pages={4}>
+        <ParallaxLayer speed={1}>
+          <h2>Paralaxa</h2>
+        </ParallaxLayer>
+        <ParallaxLayer offset={1} speed={0.5}>
+          <h2>Śmierdzi!!!</h2>
+        </ParallaxLayer>
+      </Parallax>
+    </div>
   );
 }
