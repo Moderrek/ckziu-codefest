@@ -24,6 +24,7 @@ const config = withMT({
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         mono: ['var(--font-mono)', ...fontFamily.mono],
+        title: ['"Fira Sans Extra Condensed"', ...fontFamily.mono],
       },
       colors: {
         border: 'hsl(var(--border))',

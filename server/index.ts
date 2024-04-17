@@ -7,7 +7,7 @@ import path from 'path';
 const dev = false;
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const port = process.env.PORT || 80;
+const ip = '146.59.16.212';
 
 const options = {
   key: fs.readFileSync(path.resolve(__dirname, '../ssl/ckziucodefest.key')),
@@ -21,14 +21,14 @@ const options = {
     server.all('*', (req: Request, res: Response) => {
       return handle(req, res);
     });
-    server.listen(port, (err?: any) => {
+    server.listen(80, ip, (err?: any) => {
       if (err) throw err;
       console.log(
-        `> Ready on http://ckziucodefest.pl:${port} - env ${process.env.NODE_ENV}`
+        `> Ready on http://ckziucodefest.pl:80 - env ${process.env.NODE_ENV}`
       );
     });
 
-    https.createServer(options, server).listen(443, () => {
+    https.createServer(options, server).listen(443, ip, () => {
       console.log(
         `> Ready on https://ckziucodefest.pl:443 - env ${process.env.NODE_ENV}`
       );

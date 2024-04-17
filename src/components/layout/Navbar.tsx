@@ -10,7 +10,10 @@ export default function Navbar() {
       <div className='navbar-start'></div>
       <div className='navbar-center flex'>
         <ul className='menu menu-horizontal px-1'>
-          <Link className='btn btn-ghost text-xl' href='/'>
+          <Link
+            className='btn btn-ghost font-title text-xl font-extrabold italic'
+            href='/'
+          >
             <NextImage
               useSkeleton={true}
               src='/images/ckziu_logo_64.png'
@@ -18,7 +21,7 @@ export default function Navbar() {
               height={32}
               alt='CKZiU Logo'
             />{' '}
-            CKZiU CodeFest
+            CODEFEST
           </Link>
         </ul>
       </div>

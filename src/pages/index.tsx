@@ -43,10 +43,10 @@ const Index: NextPage = () => {
       <section className='container mx-auto mt-10 flex flex-col items-center'>
         <div className='flex flex-col items-center'>
           <CkziuLogo width={100} height={100} />
-          <h1 className='text-center text-4xl font-bold'>
+          <h1 className='font-title text-center text-4xl font-bold'>
             CKZiU
             <br />
-            CodeFest 2024
+            <span className='font-title text-5xl italic'>CODEFEST24</span>
           </h1>
         </div>
 
@@ -130,8 +130,9 @@ const Index: NextPage = () => {
             Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.
           </p>
           <p className='mt-5'>
-            Organizowany przez CKZiU w Łodzi, nauczyciela Marka Bułę, Tymona
-            Woźniaka i Filipa Sobczuka
+            Organizowany przez CKZiU w Łodzi wraz z{' '}
+            <Tooltip content='Uczeń 2TP w CKZiU'>Tymonem Woźniakiem</Tooltip> i{' '}
+            <Tooltip content='Uczeń 2TP w CKZiU'>Filipem Sobczukiem</Tooltip>
           </p>
         </div>
       </section>
@@ -179,7 +180,7 @@ const Index: NextPage = () => {
         <ul className='timeline timeline-vertical'>
           <li>
             <div className='timeline-start'>
-              1 kwiecień
+              1 kwietnia
               <br />
               <b>Ogłoszenie konkursu</b>
             </div>
@@ -218,9 +219,9 @@ const Index: NextPage = () => {
               <Circle />
             </div>
             <div className='timeline-end'>
-              2 czerwa
+              2 czerwca
               <br />
-              <b>Rozpoczęcia głosowania na projekty</b>
+              <b>Rozpoczęcie głosowania na projekty</b>
             </div>
             <hr />
           </li>
@@ -279,8 +280,8 @@ const Index: NextPage = () => {
               <AccordionTrigger>Kto jest organizatorem?</AccordionTrigger>
               <AccordionContent>
                 Organizatorami konkursu CKZiU CodeFest 2024 jest Centrum
-                Kształcenia Zawodowego i Ustawicznego w Łodzi, nauczyciel Marek
-                Buła wraz z Tymonem Woźniakiem i Filipem Sobczukiem.
+                Kształcenia Zawodowego i Ustawicznego w Łodzi wraz z Tymonem
+                Woźniakiem (2TP) i Filipem Sobczukiem (2TP).
               </AccordionContent>
             </AccordionItem>
           </Accordion>
