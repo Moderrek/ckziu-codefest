@@ -15,12 +15,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Modal = () => {
   return (
-    <div className='modal' role='dialog'>
+    <div className='modal'>
       <div className='modal-box p-0'>
         <div className='align-items-center flex h-1/3 w-full justify-center'>
           <NextImage
             src='/images/badges/cc.png'
             className='mt-5 h-[100px] w-[100px] rounded-full'
+            imgClassName='rounded-full'
             alt='cc_badge'
             width={100}
             height={100}
@@ -102,7 +103,8 @@ const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
                   alt={badge.name}
                   width={32}
                   height={32}
-                  className='w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75'
+                  className='w-8 hover:cursor-pointer active:scale-75'
+                  imgClassName='w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75'
                 />
               </Tooltip>
             );
@@ -145,6 +147,14 @@ const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
   );
 };
 
+const ProfileActivity = () => {
+  return (
+    <section className='main-section'>
+      <h2 className='text-bold text-center'>Ostatnia aktywność</h2>
+    </section>
+  );
+};
+
 const ProfilePage = (props: { profileName: string }) => {
   const { profileName } = props;
   const isOwner: boolean = profileName === 'drakvlaa';
@@ -175,9 +185,7 @@ const ProfilePage = (props: { profileName: string }) => {
             </TabsContent>
             <TabsContent value='liked_projects'></TabsContent>
           </Tabs>
-          <section className='main-section'>
-            <h2 className='text-bold text-center'>Ostatnia aktywność</h2>
-          </section>
+          <ProfileActivity />
         </main>
       </div>
     </DefaultLayout>
