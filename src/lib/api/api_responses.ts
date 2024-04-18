@@ -12,5 +12,17 @@ export type ApiProjectData = {
   likes: number;
 };
 
+export type ApiServicesStatus = {
+  login_service: boolean;
+  cez_website: boolean;
+};
+
+export type ApiStatus = {
+  name: string;
+  author: string;
+  version: string;
+  services: ApiServicesStatus;
+};
+
 export type ApiArticlesData = ApiArticleData[];
 export type ApiProjectsData = ApiProjectData[];

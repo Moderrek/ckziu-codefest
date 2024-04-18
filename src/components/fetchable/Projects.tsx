@@ -3,9 +3,9 @@ import { CalendarDays, Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import useSWR from 'swr';
+import useSWRImmutable from 'swr/immutable';
 
-import { API_URL } from '@/lib/api/api';
+import { API_V1 } from '@/lib/api/api';
 import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
 
 import Skeleton from '@/components/Skeleton';
@@ -134,8 +134,8 @@ const SkeletonProject = () => {
 };
 
 const Projects = () => {
-  const { data, error } = useSWR<ApiProjectsData, Error>(
-    API_URL + '/trending/projects',
+  const { data, error } = useSWRImmutable<ApiProjectsData, Error>(
+    API_V1 + '/trending/projects',
     fetcher
   );
 
