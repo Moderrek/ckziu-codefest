@@ -17,18 +17,13 @@ import { CSSProperties } from 'react';
 
 import { useCountdown } from '@/lib/useCountdown';
 
+import FaqSection from '@/components/FaqSection';
 import { Projects } from '@/components/fetchable/Projects';
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 
 const Index: NextPage = () => {
   const [days, hours, minutes, seconds] = useCountdown(
@@ -40,7 +35,7 @@ const Index: NextPage = () => {
       <Seo templateTitle='Strona główna' />
 
       {/*<Homepage />*/}
-      <section className='container mx-auto mt-10 flex flex-col items-center'>
+      <section className='main-section'>
         <div className='flex flex-col items-center'>
           <CkziuLogo width={100} height={100} />
           <h1 className='font-title text-center text-4xl font-bold'>
@@ -50,6 +45,7 @@ const Index: NextPage = () => {
           </h1>
         </div>
 
+        {/* Uruchomienie serwisu licznik */}
         <div className='mt-5'>
           <p className='text-center'>Uruchomienie serwisu za:</p>
           <div className='grid auto-cols-max grid-flow-col gap-5 text-center'>
@@ -110,7 +106,7 @@ const Index: NextPage = () => {
           </Tooltip>
 
           <Tooltip content='Czytaj regulamin na stronie szkoły.'>
-            <UnstyledLink href='https://cez.lodz.pl/wp-content/uploads/2024/04/konkurs_codefest_2024_1.0.pdf'>
+            <UnstyledLink href='/regulamin'>
               <Button
                 variant='gradient'
                 color='red'
@@ -137,7 +133,7 @@ const Index: NextPage = () => {
         </div>
       </section>
 
-      <section className='container mx-auto mt-10 flex flex-col items-center'>
+      <section className='main-section'>
         <h2
           id='nagrody'
           className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'
@@ -169,7 +165,7 @@ const Index: NextPage = () => {
         </p>
       </section>
 
-      <section className='container mx-auto mt-10 flex flex-col items-center'>
+      <section className='main-section'>
         <h2
           id='etapy'
           className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'
@@ -211,10 +207,10 @@ const Index: NextPage = () => {
             <div className='timeline-middle'>
               <Circle />
             </div>
-            <hr />
+            <hr className='bg-primary' />
           </li>
           <li>
-            <hr />
+            <hr className='bg-primary' />
             <div className='timeline-middle'>
               <Circle />
             </div>
@@ -223,10 +219,10 @@ const Index: NextPage = () => {
               <br />
               <b>Rozpoczęcie głosowania na projekty</b>
             </div>
-            <hr />
+            <hr className='bg-primary' />
           </li>
           <li>
-            <hr />
+            <hr className='bg-primary' />
             <div className='timeline-start'>
               7 czerwca
               <br />
@@ -239,71 +235,17 @@ const Index: NextPage = () => {
         </ul>
       </section>
 
-      <section className='container mx-auto mt-10'>
+      {/*  FAQ */}
+      <section className='main-section'>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <CircleHelp />
           Najczęściej zadawane pytania
         </h2>
-        <div className='container mx-auto flex justify-center'>
-          <Accordion type='single' collapsible className='w-full lg:w-1/2'>
-            <AccordionItem value='item-1'>
-              <AccordionTrigger>
-                Kto może wziąć udział w konkursie?
-              </AccordionTrigger>
-              <AccordionContent>
-                Każdy uczeń Centrum Kształcenia Zawodowego i Ustawicznego w
-                Łodzi.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value='item-2'>
-              <AccordionTrigger>Jak zgłosić pracę?</AccordionTrigger>
-              <AccordionContent>
-                Jeszcze nie można zgłaszać prac.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value='item-3'>
-              <AccordionTrigger>
-                Czy jest możliwość zgłoszenia projektu grupowo?
-              </AccordionTrigger>
-              <AccordionContent>
-                Nie, CKZiU CodeFest 2024 jest konkursem indywidualnym lecz w
-                przyszłości nie jest to wykluczone.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value='item-4'>
-              <AccordionTrigger>Czy konkurs jest darmowy?</AccordionTrigger>
-              <AccordionContent>
-                Tak, udział w konkursie jest darmowy.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value='item-5'>
-              <AccordionTrigger>Kto jest organizatorem?</AccordionTrigger>
-              <AccordionContent>
-                Organizatorami konkursu CKZiU CodeFest 2024 jest Centrum
-                Kształcenia Zawodowego i Ustawicznego w Łodzi wraz z Tymonem
-                Woźniakiem (2TP) i Filipem Sobczukiem (2TP).
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
+        <FaqSection />
       </section>
 
-      {/*
-        INFORMACJE O KONKURSIE
-         REGULAMIN
-         ZGLOS SIE DO KONKURSU
-         ODLICZANIE DO GLOSOWANIE
-         TIME LINE
-         */}
-      {/*<Timeline/>*/}
-      {/*<section className='py-20'>*/}
-      {/*  <div className='container mx-auto'>*/}
-      {/*<Countdown />*/}
-      {/*</div>*/}
-      {/*</section>*/}
-
-      {/* TRENDING PROJECTS */}
-      <section className='container mx-auto mt-10'>
+      {/* POPULARNE PROJEKTY */}
+      <section className='main-section'>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <TerminalIcon />
           Najbardziej popularne projekty
@@ -314,7 +256,8 @@ const Index: NextPage = () => {
         </div>
       </section>
 
-      <section className='container mx-auto mb-20 mt-10 lg:mb-60'>
+      {/* WIADOMOŚCI */}
+      <section className='main-section lg:mb-60'>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <Newspaper />
           Ostatnie wiadomości
@@ -323,46 +266,6 @@ const Index: NextPage = () => {
           <p>Nie znaleziono żadnych wiadomości.</p>
         </div>
       </section>
-
-      {/* ARTICLES SECTION */}
-      {/*<section className='bg-blue-gray-50 mt-20 py-20 lg:mt-60'>*/}
-      {/*  <div className='container mx-auto'>*/}
-      {/*    <div className='mx-auto px-2 sm:w-3/4 lg:w-5/12'>*/}
-      {/*      <h1*/}
-      {/*        id='wiadomosci'*/}
-      {/*        className='mt-4 text-center text-3xl text-amber-500'*/}
-      {/*      >*/}
-      {/*        Najnowsze aktualności*/}
-      {/*      </h1>*/}
-      {/*      <p className='mt-4 text-center text-gray-600'>*/}
-      {/*        Tutaj znajdziesz odpowiedzi na często zadawane pytania. Jeżeli nie*/}
-      {/*        znajdziesz odpowiedzi na swój problem zadaj pytanie na naszym*/}
-      {/*        Discordzie.*/}
-      {/*      </p>*/}
-      {/*    </div>*/}
-      {/*    <div className='mx-auto mt-12 flex flex-wrap gap-4'>*/}
-      {/*      <ArticleSection />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
-
-      {/*<section className='py-20'>*/}
-      {/*  <div className='container mx-auto'>*/}
-      {/*    <div className='mx-auto px-2 sm:w-3/4 lg:w-5/12'>*/}
-      {/*      <h1 id='pomoc' className='text-center text-3xl text-amber-500'>*/}
-      {/*        Najnowsze wiadomości*/}
-      {/*      </h1>*/}
-      {/*      <p className='mt-4 text-center text-gray-600'>*/}
-      {/*        Tutaj znajdziesz odpowiedzi na często zadawane pytania. Jeżeli*/}
-      {/*        nie znajdziesz odpowiedzi na swój problem zadaj pytanie na*/}
-      {/*        naszym Discordzie.*/}
-      {/*      </p>*/}
-      {/*    </div>*/}
-      {/*    <div className='mx-auto mt-12 sm:w-3/4 lg:w-5/12'>*/}
-      {/*      <ArticleSection />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
     </DefaultLayout>
   );
 };

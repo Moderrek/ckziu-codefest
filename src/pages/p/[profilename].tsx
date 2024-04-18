@@ -3,7 +3,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@material-tailwind/react';
 import { CalendarDays, MailIcon } from 'lucide-react';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 
 import { Projects } from '@/components/fetchable/Projects';
 import DefaultLayout from '@/components/layout/DefaultLayout';
@@ -62,9 +62,8 @@ const ProfileAvatar = (props: { profileName: string }) => {
 };
 
 const ProfileSidebar = (props: { profileName: string; isOwner: boolean }) => {
-  const [editMode, setEditMode] = useState(false);
   const { profileName, isOwner } = props;
-  const profileDisplayName = 'Tymon Woźniak';
+  const profileDisplayName = profileName;
 
   const badges = [
     {
@@ -176,9 +175,9 @@ const ProfilePage = (props: { profileName: string }) => {
             </TabsContent>
             <TabsContent value='liked_projects'></TabsContent>
           </Tabs>
-          <h2 className='text-bold text-center text-black'>
-            Ostatnia aktywność
-          </h2>
+          <section className='main-section'>
+            <h2 className='text-bold text-center'>Ostatnia aktywność</h2>
+          </section>
         </main>
       </div>
     </DefaultLayout>

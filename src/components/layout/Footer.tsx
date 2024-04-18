@@ -1,15 +1,19 @@
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from '@material-tailwind/react';
+
+import UnstyledLink from '@/components/links/UnstyledLink';
 
 function Footer() {
   return (
     <footer className='border-blue-gray-50 bottom-0 mx-auto w-full rounded-t-lg border-t bg-amber-400 py-4 text-white dark:bg-gray-900 dark:text-gray-300'>
       <div className='container mx-auto'>
         <div className='flex flex-row items-center justify-center gap-6 sm:flex-row'>
-          {/*<Tooltip content='Discord CKZiU CodeFest'>*/}
-          {/*  <a href='https://discord.gg/mBat5Gw2na'>*/}
-          {/*    <FontAwesomeIcon icon={faDiscord} />*/}
-          {/*  </a>*/}
-          {/*</Tooltip>*/}
+          <Tooltip content='Discord CKZiU CodeFest'>
+            <UnstyledLink href='https://discord.gg/mBat5Gw2na'>
+              <FontAwesomeIcon icon={faDiscord} />
+            </UnstyledLink>
+          </Tooltip>
         </div>
         <p className='mt-2 text-center text-gray-900 dark:text-gray-300'>
           Copyright &copy; 2024-{new Date().getFullYear()} ckziucodefest.pl.
@@ -19,11 +23,15 @@ function Footer() {
         <p className='mt-2 text-center text-gray-900 dark:text-gray-300'>
           Serwis opracowany przez{' '}
           <Tooltip content='Kliknij aby zobaczyć profil GitHub'>
-            <a href='https://github.com/Moderrek'>Tymona Woźniaka</a>
+            <UnstyledLink href='https://github.com/Moderrek'>
+              Tymona Woźniaka
+            </UnstyledLink>
           </Tooltip>{' '}
           i{' '}
           <Tooltip content='Kliknij aby zobaczyć profil GitHub'>
-            <a href='https://github.com/Drakvlaa'>Filipa Sobczuka</a>
+            <UnstyledLink href='https://github.com/Drakvlaa'>
+              Filipa Sobczuka
+            </UnstyledLink>
           </Tooltip>
         </p>
       </div>

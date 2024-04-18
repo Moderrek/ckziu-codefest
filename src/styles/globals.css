@@ -12,8 +12,16 @@
 
   html,
   body {
-    @apply h-full bg-background min-h-full !important;
+    @apply h-full bg-background text-black dark:text-white min-h-full !important;
     font-family: sans-serif;
+  }
+
+  .main-section {
+    @apply container mx-auto mt-10 flex flex-col items-center;
+  }
+
+  .center {
+    @apply flex items-center justify-center;
   }
 }
 
