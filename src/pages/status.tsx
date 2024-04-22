@@ -1,15 +1,15 @@
 import { Button } from '@material-tailwind/react';
 import { LogOut } from 'lucide-react';
 
-import { API_V1 } from '@/lib/api/api';
-import { ApiStatus } from '@/lib/api/api_responses';
-
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
+import { GetAPIStatus } from '@/utils/GetAPIStatus';
+
 interface ServiceStatusProps {
+  name: string;
   operational: boolean;
 }
 
@@ -18,11 +18,17 @@ interface StatusPageProps {
   cezWebsite: boolean;
 }
 
-const ServiceStatus = ({ operational }: ServiceStatusProps) => {
-  if (operational) {
-    return <p className='text-green-400'>Uruchomione</p>;
-  }
-  return <p className='font-bold text-red-400 underline'>Nieaktywny</p>;
+const ServiceStatus = ({ name, operational }: ServiceStatusProps) => {
+  return (
+    <div className='flex w-full flex-row justify-between'>
+      <p>{name}</p>
+      {operational ? (
+        <p className='text-green-400'>Uruchomione</p>
+      ) : (
+        <p className='font-bold text-red-400 underline'>Nieaktywny</p>
+      )}
+    </div>
+  );
 };
 
 const StatusPage = ({ loginService, cezWebsite }: StatusPageProps) => {
@@ -53,14 +59,9 @@ const StatusPage = ({ loginService, cezWebsite }: StatusPageProps) => {
       </section>
       <section className='main-section'>
         <div className='bg-card flex w-full flex-col items-center gap-2 rounded border p-4 drop-shadow md:w-2/3 lg:text-xl'>
-          <div className='flex w-full flex-row justify-between'>
-            <p>Logowanie</p>
-            <ServiceStatus operational={loginService} />
-          </div>
-          <div className='flex w-full flex-row justify-between'>
-            <p>Strona szkoły</p>
-            <ServiceStatus operational={cezWebsite} />
-          </div>
+          <ServiceStatus name='Logowanie' operational={loginService} />
+          <ServiceStatus name='Profil' operational={loginService} />
+          <ServiceStatus name='Strona szkoły' operational={cezWebsite} />
         </div>
       </section>
     </DefaultLayout>
@@ -68,21 +69,12 @@ const StatusPage = ({ loginService, cezWebsite }: StatusPageProps) => {
 };
 
 export async function getServerSideProps() {
-  let loginServiceAvailable = false;
-  let cezWebsite = false;
-  try {
-    const res = await fetch(API_V1 + '/status');
-    const status: ApiStatus = await res.json();
-    loginServiceAvailable = status.services.login_service;
-    cezWebsite = status.services.cez_website;
-  } catch (error) {
-    /* empty */
-  }
+  const status = await GetAPIStatus();
 
   return {
     props: {
-      loginService: loginServiceAvailable,
-      cezWebsite: cezWebsite,
+      loginService: status.services.login_service,
+      cezWebsite: status.services.login_service,
     },
   };
 }

@@ -1,5 +1,3 @@
-'use client';
-
 import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/router';

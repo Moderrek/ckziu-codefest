@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { API_V1 } from '@/lib/api/api';
-import { ApiStatus } from '@/lib/api/api_responses';
-
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import { LoginForm } from '@/components/login/LoginForm';
 import Seo from '@/components/Seo';
 
-const LoginPage = ({ loginService }: { loginService: boolean }) => {
+import { GetAPIStatus } from '@/utils/GetAPIStatus';
+
+interface LoginPageProps {
+  loginService: boolean;
+}
+
+const LoginPage = ({ loginService }: LoginPageProps) => {
   return (
     <DefaultLayout>
       <Seo templateTitle='Zaloguj się' />
@@ -19,18 +22,11 @@ const LoginPage = ({ loginService }: { loginService: boolean }) => {
 };
 
 export async function getServerSideProps() {
-  let loginServiceAvailable = false;
-  try {
-    const res = await fetch(API_V1 + '/status');
-    const status: ApiStatus = await res.json();
-    loginServiceAvailable = status.services.login_service;
-  } catch (error) {
-    /* empty */
-  }
+  const status = await GetAPIStatus();
 
   return {
     props: {
-      loginService: loginServiceAvailable,
+      loginService: status.services.login_service,
     },
   };
 }

@@ -126,7 +126,7 @@ const Project = (props: { project: Project; canVote: boolean }) => {
           </div>
           <div className='mt-2'>
             <p className='text-base text-gray-700 dark:text-gray-200'>
-              {project.name} {canVote ? 'GLOSOWANIE' : 'Kliknij zaglosuj'}
+              {project.name} {canVote ? 'GŁOSOWANIE' : 'Kliknij zagłosuj'}
             </p>
           </div>
         </div>
