@@ -8,7 +8,7 @@ import useSWRImmutable from 'swr/immutable';
 import { API_V1 } from '@/lib/api/api';
 import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
 
-import { ProfileHoverCard } from '@/components/profile/ProfileHoverCard';
+import { UserMention } from '@/components/profile/UserMention';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -57,7 +57,7 @@ const Project = (props: { project: ApiProjectData }) => {
         </div>
         <p className='text-base font-bold'>
           <div className='flex flex-row items-center '>
-            <ProfileHoverCard userName={project.author} showAvatar={true} />
+            <UserMention userName={project.author} showAvatar={true} />
           </div>
         </p>
         <div className='mt-2'>

@@ -10,13 +10,14 @@ import {
 } from '@/components/ui/hover-card';
 
 import { FetchUser, User } from '@/utils/FetchProfile';
+import { UserCreatedDate } from '@/utils/UserCreatedDate';
 
 interface ProfileHoverCardProps {
   userName: string;
   showAvatar: boolean | undefined;
 }
 
-const ProfileHoverCard = ({ userName, showAvatar }: ProfileHoverCardProps) => {
+const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
   // Tri-state => { fetched => User | null, fetching.. => undefined }
   const [user, setUser] = useState<User | null | undefined>(undefined);
 
@@ -73,7 +74,7 @@ const ProfileHoverCard = ({ userName, showAvatar }: ProfileHoverCardProps) => {
           >
             <Avatar className='h-8 w-8'>
               <AvatarImage src='/images/ckziu_thumbnail.png' />
-              <AvatarFallback>VC</AvatarFallback>
+              <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
             <span className='ml-1'>@{user.name}</span>
           </Link>
@@ -90,7 +91,7 @@ const ProfileHoverCard = ({ userName, showAvatar }: ProfileHoverCardProps) => {
         <div className='flex justify-between space-x-4'>
           <Avatar>
             <AvatarImage src='/images/ckziu_thumbnail.png' />
-            <AvatarFallback>VC</AvatarFallback>
+            <AvatarFallback>{user.name}</AvatarFallback>
           </Avatar>
           <div className='space-y-1'>
             <Link href={profileUrl} className='hover:underline'>
@@ -100,7 +101,7 @@ const ProfileHoverCard = ({ userName, showAvatar }: ProfileHoverCardProps) => {
             <div className='flex items-center pt-2'>
               <CalendarDays className='mr-2 h-4 w-4 opacity-70' />{' '}
               <span className='text-muted-foreground text-xs'>
-                Dołączył kwiecień 2024
+                Dołączył {UserCreatedDate(user)}
               </span>
             </div>
           </div>
@@ -110,5 +111,5 @@ const ProfileHoverCard = ({ userName, showAvatar }: ProfileHoverCardProps) => {
   );
 };
 
-export { ProfileHoverCard };
+export { UserMention };
 export type { ProfileHoverCardProps };

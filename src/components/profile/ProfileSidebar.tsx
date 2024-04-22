@@ -10,6 +10,8 @@ import { ProfileAvatar } from '@/components/profile/ProfileAvatar';
 import ProfileContext from '@/components/profile/ProfileContext';
 import { ProfileLink } from '@/components/profile/ProfileLink';
 
+import { UserCreatedDate } from '@/utils/UserCreatedDate';
+
 const ProfileSidebar = () => {
   const user = useContext(ProfileContext);
 
@@ -60,7 +62,7 @@ const ProfileSidebar = () => {
         <section className='mt-5'>
           <div className='flex flex-row'>
             <CalendarDays />
-            Dołączył kwiecień 2024
+            Dołączył {UserCreatedDate(user)}
           </div>
           <ProfileLink
             href={'https://github.com/' + user.name}
