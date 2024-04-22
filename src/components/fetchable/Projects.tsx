@@ -1,5 +1,5 @@
 import { Tooltip } from '@material-tailwind/react';
-import { CalendarDays, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -8,13 +8,7 @@ import useSWRImmutable from 'swr/immutable';
 import { API_V1 } from '@/lib/api/api';
 import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
 
-import Skeleton from '@/components/Skeleton';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
+import { ProfileHoverCard } from '@/components/profile/ProfileHoverCard';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -63,69 +57,12 @@ const Project = (props: { project: ApiProjectData }) => {
         </div>
         <p className='text-base font-bold'>
           <div className='flex flex-row items-center '>
-            <HoverCard openDelay={1}>
-              <HoverCardTrigger asChild>
-                <Link
-                  href={`/p/${project.author}`}
-                  className='flex flex-row items-center hover:underline'
-                >
-                  <Avatar className='h-8 w-8'>
-                    <AvatarImage src={project.thumbnail_url} />
-                    <AvatarFallback>VC</AvatarFallback>
-                  </Avatar>
-                  <span className='ml-1'>@{project.author}</span>
-                </Link>
-              </HoverCardTrigger>
-              <HoverCardContent className='w-80'>
-                <div className='flex justify-between space-x-4'>
-                  <Avatar>
-                    <AvatarImage src={project.thumbnail_url} />
-                    <AvatarFallback>VC</AvatarFallback>
-                  </Avatar>
-                  <div className='space-y-1'>
-                    <h4 className='text-sm font-semibold'>@{project.author}</h4>
-                    <p className='text-sm'>Autor serwisu CKZiU CodeFest</p>
-                    <div className='flex items-center pt-2'>
-                      <CalendarDays className='mr-2 h-4 w-4 opacity-70' />{' '}
-                      <span className='text-muted-foreground text-xs'>
-                        Dołączył kwiecień 2024
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </HoverCardContent>
-            </HoverCard>
+            <ProfileHoverCard userName={project.author} showAvatar={true} />
           </div>
         </p>
         <div className='mt-2'>
           <p className='text-base text-gray-700 dark:text-gray-200'>
             {project.description}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SkeletonProject = () => {
-  return (
-    <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
-      <Skeleton className='min-w-fill rounded-b-lg shadow' />
-      <div className='px-6 py-4'>
-        <div className='flex flex-row justify-between text-2xl font-bold'>
-          <div className='h-10 w-10 rounded-full bg-slate-700'></div>
-          <div className='ml-5 flex cursor-pointer select-none flex-row justify-between text-right'>
-            <div className='h-10 w-10 rounded-full bg-slate-700'></div>
-          </div>
-        </div>
-        <p className='text-base font-bold'>
-          <div className='flex flex-row items-center '>
-            <div className='h-10 w-10 rounded-full bg-slate-700'></div>
-          </div>
-        </p>
-        <div className='mt-2'>
-          <p className='text-base text-gray-700 dark:text-gray-200'>
-            <div className='h-10 w-10 rounded-full bg-slate-700'></div>
           </p>
         </div>
       </div>
