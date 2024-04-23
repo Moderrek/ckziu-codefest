@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import NextImage from '@/components/NextImage';
+import CkziuLogo from '@/components/images/CkziuLogo';
 import { ThemeToggle } from '@/components/theme-toggle';
 import ProfileDropMenu from '@/components/ui/dropdownmenu';
 
@@ -14,14 +14,7 @@ export default function Navbar() {
             className='btn btn-ghost font-title text-xl font-extrabold italic'
             href='/'
           >
-            <NextImage
-              useSkeleton={true}
-              src='/images/ckziu_logo_64.png'
-              width={32}
-              height={32}
-              alt='CKZiU Logo'
-            />{' '}
-            CODEFEST
+            <CkziuLogo width={32} height={32} /> CODEFEST
           </Link>
         </ul>
       </div>

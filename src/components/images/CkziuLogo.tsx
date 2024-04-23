@@ -5,7 +5,7 @@ const CkziuLogo = (props: { width: number; height: number }) => {
     <NextImage
       useSkeleton={true}
       alt='CKZiU Logo'
-      src='/images/ckziu_logo.png'
+      src='/images/ckziu-cropped.svg'
       width={props.width}
       height={props.height}
       className='hover:animate-hover-logo'

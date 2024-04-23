@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Footer from '@/components/layout/Footer';
+import { NewFooter } from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 
 const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
@@ -10,7 +10,7 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
       <main className='sticky inset-0 block h-max w-full flex-1 flex-col'>
         {children}
       </main>
-      <Footer />
+      <NewFooter />
     </>
   );
 };

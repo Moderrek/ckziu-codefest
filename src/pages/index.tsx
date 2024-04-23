@@ -37,7 +37,7 @@ const Index: NextPage = () => {
       {/*<Homepage />*/}
       <section className='main-section'>
         <div className='flex flex-col items-center'>
-          <CkziuLogo width={100} height={100} />
+          <CkziuLogo width={150} height={150} />
           <h1 className='font-title text-center text-4xl font-bold'>
             CKZiU
             <br />
