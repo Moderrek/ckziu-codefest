@@ -21,6 +21,16 @@ const ProfilePage = ({ user }: ProfilePageProps) => {
   }
   return (
     <DefaultLayout>
+      <input type='checkbox' id='my_modal_7' className='modal-toggle' />
+      <div className='modal' role='dialog'>
+        <div className='modal-box bg-white'>
+          <div className='flex items-center justify-center'></div>
+          <p className='py-4'>This modal works with a hidden checkbox!</p>
+        </div>
+        <label className='modal-backdrop' htmlFor='my_modal_7'>
+          Close
+        </label>
+      </div>
       <Seo templateTitle={`Profil ${user.display_name}`} />
       <div className='flex min-h-full flex-col md:flex-row lg:flex-row'>
         <ProfileContext.Provider value={user}>

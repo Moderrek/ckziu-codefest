@@ -2,6 +2,12 @@ import { API_V1 } from '@/lib/api/api';
 
 const API_URL_GET_USER = (name: string) => `${API_V1}/users/${name}`;
 
+interface Badge {
+  name: string;
+  image: string;
+  description: string;
+}
+
 interface User {
   name: string;
   display_name: string;
@@ -11,6 +17,8 @@ interface User {
 
   created_at: number;
   updated_at: number;
+
+  badges: Badge[];
 
   flags: number;
 }
@@ -22,6 +30,18 @@ const FetchUser = async (name: string) => {
     if (!user.created_at) {
       return null;
     }
+    user.badges = [
+      {
+        image: '/images/badges/cc.png',
+        name: 'Uczestnik konkursu CC 2024',
+        description: 'tsfdsfsf',
+      },
+      {
+        image: '/images/badges/admin_badge.png',
+        name: 'Administrator serwisu',
+        description: 'dsfsdfsdf',
+      },
+    ];
     return user;
   } catch (_) {
     /* ignored */
