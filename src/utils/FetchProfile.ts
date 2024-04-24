@@ -2,10 +2,11 @@ import { API_V1 } from '@/lib/api/api';
 
 const API_URL_GET_USER = (name: string) => `${API_V1}/users/${name}`;
 
-interface Badge {
+export interface Badge {
   name: string;
   image: string;
   description: string;
+  id: string;
 }
 
 interface User {
@@ -35,11 +36,13 @@ const FetchUser = async (name: string) => {
         image: '/images/badges/cc.png',
         name: 'Uczestnik konkursu CC 2024',
         description: 'tsfdsfsf',
+        id: '1',
       },
       {
         image: '/images/badges/admin_badge.png',
         name: 'Administrator serwisu',
         description: 'dsfsdfsdf',
+        id: '2',
       },
     ];
     return user;

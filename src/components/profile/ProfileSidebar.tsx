@@ -12,7 +12,7 @@ import { ProfileLink } from '@/components/profile/ProfileLink';
 
 import { UserCreatedDate } from '@/utils/UserCreatedDate';
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({ setCurrentBadge }) => {
   const user = useContext(ProfileContext);
 
   return (
@@ -34,7 +34,14 @@ const ProfileSidebar = () => {
         <section className='mt-5 flex flex-row flex-wrap items-center justify-center space-x-1'>
           {user.badges.map((badge) => {
             return (
-              <label htmlFor='my_modal_7' className='btn' key={badge.name}>
+              <button
+                className='btn'
+                onClick={() => {
+                  document.getElementById('modal').showModal();
+                  setCurrentBadge(badge);
+                }}
+                key={badge.name}
+              >
                 <Tooltip content={badge.name}>
                   <NextImage
                     useSkeleton={true}
@@ -46,7 +53,7 @@ const ProfileSidebar = () => {
                     imgClassName='w-8 rounded-full transition-transform hover:cursor-pointer active:scale-75'
                   />
                 </Tooltip>
-              </label>
+              </button>
             );
           })}
         </section>
