@@ -14,6 +14,7 @@ interface ProfilePageProps {
 }
 
 const ProfilePage = ({ user }: ProfilePageProps) => {
+  console.log(user);
   const [selectedbadge, setselectedbadge] = useState<Badge | undefined>(
     undefined
   );
@@ -27,23 +28,28 @@ const ProfilePage = ({ user }: ProfilePageProps) => {
   }
   return (
     <DefaultLayout>
-      <dialog id='modal' className='modal'>
-        <div className='modal-box border border-2 bg-white/30 backdrop-blur-2xl'>
-          <div className='center flex-col'>
-            <NextImage
-              alt='badgeImage'
-              src={selectedbadge!.image}
-              width={128}
-              height={128}
-              imgClassName='rounded-full'
-            />
-            {selectedbadge?.name}
+      {selectedbadge !== undefined ? (
+        <dialog id='modal' className='modal'>
+          <div className='modal-box border-2 bg-white/30 backdrop-blur-2xl'>
+            <div className='center flex-col'>
+              <NextImage
+                alt='badgeImage'
+                src={selectedbadge.image}
+                width={128}
+                height={128}
+                imgClassName='rounded-full'
+              />
+              {selectedbadge.name}
+            </div>
           </div>
-        </div>
-        <form method='dialog' className='modal-backdrop'>
-          <button></button>
-        </form>
-      </dialog>
+          <form method='dialog' className='modal-backdrop'>
+            <button></button>
+          </form>
+        </dialog>
+      ) : (
+        <></>
+      )}
+
       <Seo templateTitle={`Profil ${user.display_name}`} />
       <div className='flex min-h-full flex-col md:flex-row lg:flex-row'>
         <ProfileContext.Provider value={user}>

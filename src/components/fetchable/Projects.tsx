@@ -2,27 +2,27 @@ import { Tooltip } from '@material-tailwind/react';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import useSWRImmutable from 'swr/immutable';
+import { useContext, useState } from 'react';
 
-import { API_V1 } from '@/lib/api/api';
-import { ApiProjectData, ApiProjectsData } from '@/lib/api/api_responses';
-
+import ProfileContext from '@/components/profile/ProfileContext';
 import { UserMention } from '@/components/profile/UserMention';
+
+import { CodefestProject } from '@/utils/FetchProfile';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const Project = (props: { project: ApiProjectData }) => {
-  const project: ApiProjectData = props.project;
+const Project = (props: { project: CodefestProject }) => {
+  const user = useContext(ProfileContext);
+  const project: CodefestProject = props.project;
 
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(project.likes);
 
   return (
     <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
-      <Link href={`/p/${project.author}/${project.display_name}`}>
+      <Link href={`/p/${user.name}/${project.name}`}>
         <Image
-          src={project.thumbnail_url}
+          src='/images/ckziu_thumbnail.png'
           alt='ckziu_thumbnail'
           width={1140}
           height={760}
@@ -32,7 +32,7 @@ const Project = (props: { project: ApiProjectData }) => {
       <div className='px-6 py-4'>
         <div className='flex flex-row justify-between text-2xl font-bold'>
           <Link
-            href={`/p/${project.author}/${project.display_name}`}
+            href={`/p/${user.name}/${project.name}`}
             className='hover:underline'
           >
             {project.display_name}
@@ -56,9 +56,7 @@ const Project = (props: { project: ApiProjectData }) => {
           </div>
         </div>
         <p className='text-base font-bold'>
-          <div className='flex flex-row items-center '>
-            <UserMention userName={project.author} showAvatar={true} />
-          </div>
+          <UserMention userName={user.name} showAvatar={true} />
         </p>
         <div className='mt-2'>
           <p className='text-base text-gray-700 dark:text-gray-200'>
@@ -71,13 +69,11 @@ const Project = (props: { project: ApiProjectData }) => {
 };
 
 const Projects = () => {
-  const { data, error } = useSWRImmutable<ApiProjectsData, Error>(
-    API_V1 + '/trending/projects',
-    fetcher
-  );
+  const user = useContext(ProfileContext);
+  const projects = user.projects;
 
   // Show empty skeleton articles while loading or error.
-  if (!data || error)
+  if (!user || !projects || !projects.length)
     return (
       <>
         <p>Nie znaleziono żadnych projektów.</p>
@@ -87,8 +83,8 @@ const Projects = () => {
   // Render articles
   return (
     <>
-      {data.map((project, idx) => {
-        return <Project key={idx} project={project} />;
+      {projects.map((project, idx) => {
+        return <Project key={project.id} project={project} />;
       })}
     </>
   );

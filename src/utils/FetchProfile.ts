@@ -1,12 +1,27 @@
 import { API_V1 } from '@/lib/api/api';
 
-const API_URL_GET_USER = (name: string) => `${API_V1}/users/${name}`;
+const API_URL_GET_USER = (name: string) => `${API_V1}/profile/${name}`;
 
 export interface Badge {
   name: string;
   image: string;
   description: string;
   id: string;
+}
+
+export interface CodefestProject {
+  id: string;
+  name: string;
+  display_name: string;
+
+  owner_id: string;
+
+  private: boolean;
+  description: string | null;
+
+  likes: number;
+  created_at: number;
+  updated_at: number;
 }
 
 interface User {
@@ -19,6 +34,7 @@ interface User {
   created_at: number;
   updated_at: number;
 
+  projects: CodefestProject[];
   badges: Badge[];
 
   flags: number;
