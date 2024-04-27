@@ -13,7 +13,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import { NextPage } from 'next';
-import { CSSProperties } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
 import { useCountdown } from '@/lib/useCountdown';
 
@@ -26,9 +26,13 @@ import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
 
 const Index: NextPage = () => {
-  const [days, hours, minutes, seconds] = useCountdown(
+  const [startDate, setStartDate] = useState(
     Date.parse('01 May 2024 12:00:00 GMT+1')
   );
+  useEffect(() => {
+    setStartDate(Date.parse('01 May 2024 12:00:00 GMT+1'));
+  }, []);
+  const [days, hours, minutes, seconds] = useCountdown(startDate);
 
   return (
     <DefaultLayout>

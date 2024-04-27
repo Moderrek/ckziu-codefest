@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { API_V1, API_V1_AUTH_OTP } from '@/lib/api/api';
 
@@ -31,15 +31,19 @@ interface LoginFormProps {
 
 enum LoginStage {
   NONE,
-  WAITING_OTP,
+  PRELOGIN,
+
   LOGGING_IN,
+
+  WAITING_OTP,
   REGISTER,
+
   SUCCESS,
 }
 
 function LoginForm({ loginService }: LoginFormProps) {
   // form fields
-  const [email, setEmail] = useState<string>('');
+  const [login, setLogin] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -53,12 +57,102 @@ function LoginForm({ loginService }: LoginFormProps) {
 
   async function requestExist() {}
 
+  function toastServerProblem() {
+    toast({
+      variant: 'destructive',
+      title: 'Błąd po stronie serwera',
+      description:
+        'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.',
+    });
+  }
+
+  async function fetchPrelogin() {
+    setStage(LoginStage.PRELOGIN);
+    setWaiting(true);
+    let prelogin_request;
+    try {
+      prelogin_request = await axios.post(API_V1 + '/auth/prelogin', {
+        login: login,
+      });
+    } catch (err) {
+      console.log(err);
+      toastServerProblem();
+    }
+    setWaiting(false);
+    if (prelogin_request.data.can_login) {
+      setStage(LoginStage.LOGGING_IN);
+    } else {
+      toast({
+        variant: 'default',
+        title: 'Wysłano kod na twoją pocztę!',
+        description: ' Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.',
+      });
+    }
+    console.log(prelogin_request.data);
+    setStage(
+      prelogin_request.data.can_login
+        ? LoginStage.LOGGING_IN
+        : LoginStage.WAITING_OTP
+    );
+  }
+
+  async function fetchLogin() {
+    setWaiting(true);
+    let login_request;
+    try {
+      login_request = await axios.post(API_V1 + '/auth/login/credentials', {
+        login: login,
+        password: password,
+      });
+      setWaiting(false);
+    } catch (err) {
+      console.log(err);
+      toastServerProblem();
+      setWaiting(false);
+      return;
+    }
+    const data = login_request.data;
+    if (!data.token) {
+      toast({
+        variant: 'destructive',
+        title: 'Błąd po stronie serwera',
+        description: 'Nie udało się zalogowoać.',
+      });
+      return;
+    }
+    const token = data.token;
+    localStorage.setItem('token', token);
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    await router.push(`/p/${data.name}`);
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token == null) {
+      return;
+    }
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    if (localStorage.getItem('cachedName') !== null) {
+      router.push(`/p/${localStorage.getItem('cachedName')}`);
+      return;
+    }
+    try {
+      axios.get(API_V1 + '/auth/info').then((response) => {
+        console.log(response.data);
+        localStorage.setItem('cachedName', response.data.name);
+        router.push(`/p/${response.data.name}`);
+      });
+    } catch (err) {
+      /* ignored */
+    }
+  }, [router]);
+
   async function requestOTP() {
     setWaiting(true);
     let otp_request;
     try {
       otp_request = await axios.post(API_V1_AUTH_OTP, {
-        email: email,
+        email: login,
       });
       setWaiting(false);
     } catch (error) {
@@ -96,8 +190,8 @@ function LoginForm({ loginService }: LoginFormProps) {
     setWaiting(true);
     let login_request;
     try {
-      login_request = await axios.post(API_V1 + '/auth/login', {
-        email: email,
+      login_request = await axios.post(API_V1 + '/auth/login/credentials', {
+        email: login,
         otp: otp,
       });
       setWaiting(false);
@@ -139,7 +233,8 @@ function LoginForm({ loginService }: LoginFormProps) {
       <CardHeader>
         <CardTitle className='text-2xl'>Logowanie</CardTitle>
         <CardDescription>
-          Wpisz swojego e-maila szkolnego, aby zalogować się na twoje konto.
+          Wpisz swojego e-maila szkolnego albo login, aby zalogować się na swoje
+          konto.
         </CardDescription>
       </CardHeader>
       <CardContent className='grid gap-4'>
@@ -151,11 +246,27 @@ function LoginForm({ loginService }: LoginFormProps) {
             type='email'
             disabled={waiting || !loginService || stage != LoginStage.NONE}
             placeholder='nazwa@ckziu.elodz.edu.pl'
-            value={email}
-            onChange={(data) => setEmail(data.target.value)}
+            value={login}
+            onChange={(data) => setLogin(data.target.value)}
             required
           />
         </div>
+        {stage == LoginStage.LOGGING_IN ? (
+          <div className='grid gap-2'>
+            <Label htmlFor='password'>Hasło</Label>
+            <Input
+              id='password'
+              name='password'
+              type='password'
+              disabled={waiting || !loginService}
+              value={password}
+              onChange={(data) => setPassword(data.target.value)}
+              required
+            />
+          </div>
+        ) : (
+          <></>
+        )}
         {stage == LoginStage.WAITING_OTP ? (
           <div className='flex flex-col justify-center'>
             <InputOTP
@@ -204,10 +315,13 @@ function LoginForm({ loginService }: LoginFormProps) {
               className='w-full'
               disabled={waiting}
               onClick={async () => {
-                if (true) {
-                  await requestOTP();
-                } else {
-                  await requestLogin();
+                if (stage == LoginStage.NONE) {
+                  await fetchPrelogin();
+                  return;
+                }
+                if (stage == LoginStage.LOGGING_IN) {
+                  await fetchLogin();
+                  return;
                 }
               }}
             >

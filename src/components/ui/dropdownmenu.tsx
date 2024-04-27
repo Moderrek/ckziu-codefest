@@ -1,5 +1,9 @@
 import { CircleUser, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+import { Authorization, isAuthorized } from '@/lib/auth/isAuthorized';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +16,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export default function DropdownMenuDemo() {
-  const loggedIn = false;
+  const router = useRouter();
+  const [auth, setAuth] = useState<Authorization>({
+    isAuthorized: false,
+    cachedName: false,
+    name: undefined,
+    token: undefined,
+  });
+
+  useEffect(() => {
+    const auth = isAuthorized();
+    setAuth(auth);
+  }, []);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,9 +39,9 @@ export default function DropdownMenuDemo() {
       <DropdownMenuContent className='w-45'>
         <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {loggedIn ? (
+        {auth.isAuthorized ? (
           <DropdownMenuItem>
-            <Link href='/p/moderr'>
+            <Link href={`/p/${auth.name}`}>
               <div className='flex flex-row'>
                 <User className='mr-2 h-4 w-4' />
                 Profil
@@ -42,10 +58,22 @@ export default function DropdownMenuDemo() {
             </DropdownMenuItem>
           </Link>
         )}
-        {loggedIn ? (
+        {auth.isAuthorized ? (
           <>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                {
+                  setAuth((state) => {
+                    state.isAuthorized = false;
+                    return state;
+                  });
+                }
+                localStorage.removeItem('token');
+                localStorage.removeItem('cachedName');
+                router.push('/zaloguj');
+              }}
+            >
               <LogOut className='mr-2 h-4 w-4' />
               <span>Wyloguj się</span>
             </DropdownMenuItem>
