@@ -2,35 +2,47 @@ function validate_name(name: string): {
   valid: boolean;
   message: Set<string>;
 } {
-  let has_spaces = false;
+  const MIN_LENGTH = 3;
+  const has_whitespace = name.trim().length !== name.length;
+
   let is_lowercase = true;
   let ends_with_line = false;
-  let valid = false;
-  const has_special = false;
-  const message = new Set<string>();
+  let has_special_chars = false;
+
+  const warnings = new Set<string>();
+
   for (let i = 0; i < name.length; i++) {
-    const c = name[i];
-    if (c != c.toLowerCase()) {
-      is_lowercase = false;
-      message.add('Nazwa nie może zawierać wielkich liter!');
+    const symbol = name[i];
+    // is char
+    if (symbol.toLowerCase() !== symbol.toUpperCase()) {
+      if (symbol != symbol.toLowerCase()) {
+        is_lowercase = false;
+        warnings.add('Nazwa nie może zawierać wielkich liter!');
+      }
+      continue;
     }
-    if (c === ' ') {
-      has_spaces = true;
-      message.add('Nazwa nie może zawierać spacji!');
-    }
+    // unknown symbol
+    has_special_chars = true;
+    warnings.add('Nazwa zawiera niedozwolone znaki!');
   }
+
   if (name[name.length - 1] === '-') {
     ends_with_line = true;
-    message.add("Nazwa użytkownika nie może kończyć się '-'!");
+    warnings.add("Nazwa użytkownika nie może kończyć się znakiem '-'!");
   }
-  if (name.length < 3) {
-    message.add('Nazwa musi być dłuższa niż 3 znaki!');
+
+  if (name.length < MIN_LENGTH) {
+    warnings.add(`Nazwa musi być zawierać minimum ${MIN_LENGTH} znaki!`);
   }
-  if (!has_spaces && is_lowercase && !ends_with_line && name.length >= 3)
-    valid = true;
+
   return {
-    valid,
-    message,
+    valid:
+      !has_whitespace &&
+      !has_special_chars &&
+      is_lowercase &&
+      !ends_with_line &&
+      name.length >= MIN_LENGTH,
+    message: warnings,
   };
 }
 
