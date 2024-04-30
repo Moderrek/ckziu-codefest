@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { API_V1 } from '@/lib/api/api';
 
@@ -64,6 +64,7 @@ function LoginForm({ loginService }: LoginFormProps) {
   const [validPassword, setValidPassword] = useState<
     ValidationResult | undefined
   >(undefined);
+  const loginPasswordRef = useRef();
   // used to redirect after success login
   const router = useRouter();
   const { toast } = useToast();
@@ -178,6 +179,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     if (prelogin_request.data.can_login) {
       setWaiting(false);
       setStage(LoginStage.LOGGING_IN);
+      loginPasswordRef.current?.focus();
     } else {
       setWaiting(true);
       setStage(LoginStage.WAITING_OTP);
@@ -302,6 +304,7 @@ function LoginForm({ loginService }: LoginFormProps) {
           <div className='grid gap-2'>
             <Label htmlFor='password'>Hasło</Label>
             <Input
+              ref={loginPasswordRef}
               id='password'
               name='password'
               type='password'
