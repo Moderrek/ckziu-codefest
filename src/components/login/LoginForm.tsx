@@ -287,6 +287,12 @@ function LoginForm({ loginService }: LoginFormProps) {
               value={login}
               onChange={(data) => setLogin(data.target.value)}
               required
+              onKeyDown={async (event) => {
+                if (event.code === 'Enter') {
+                  await buttonClick();
+                  event.preventDefault();
+                }
+              }}
             />
           </div>
         ) : (

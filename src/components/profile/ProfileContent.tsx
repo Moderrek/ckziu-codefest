@@ -42,7 +42,6 @@ export function ProfileContent({ user }: { user: User }) {
       )}
 
       <Seo templateTitle={`Profil ${user.display_name}`} />
-      <p>{owner ? 'owner' : 'not owner'}</p>
       <div className='flex min-h-full flex-col md:flex-row lg:flex-row'>
         <ProfileContext.Provider value={user}>
           {/* SIDEBAR */}
