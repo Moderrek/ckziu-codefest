@@ -214,24 +214,34 @@ function LoginForm({ loginService }: LoginFormProps) {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token == null) {
-      return;
-    }
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    if (localStorage.getItem('cachedName') !== null) {
-      router.push(`/p/${localStorage.getItem('cachedName')}`);
-      return;
-    }
-    try {
-      axios.get(API_V1 + '/auth/info').then((response) => {
-        console.log(response.data);
-        localStorage.setItem('cachedName', response.data.name);
-        router.push(`/p/${response.data.name}`);
-      });
-    } catch (err) {
-      /* ignored */
-    }
+    (async () => {
+      const token = localStorage.getItem('token');
+      if (token == null) {
+        return;
+      }
+      console.log('Logged in');
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      if (localStorage.getItem('cachedName') !== null) {
+        await router.push(`/p/${localStorage.getItem('cachedName')}`);
+        return;
+      }
+
+      try {
+        const req = await axios.get(API_V1 + '/auth/info');
+        const data = req.data;
+        localStorage.setItem('cachedName', data.name);
+        await router.push(`/p/${data.name}`);
+      } catch (err) {
+        if (err.response.status === 401) {
+          console.log('Logout..');
+          // logout
+          delete axios.defaults.headers.common['Authorization'];
+          localStorage.removeItem('cachedName');
+          localStorage.removeItem('token');
+          await router.push(`/zaloguj`);
+        }
+      }
+    })();
   }, [router]);
   useEffect(() => {
     setValidUserName(validate_name(username));
@@ -239,6 +249,22 @@ function LoginForm({ loginService }: LoginFormProps) {
   useEffect(() => {
     setValidPassword(validate_password(password, passwordAgain));
   }, [password, passwordAgain]);
+
+  async function buttonClick() {
+    if (stage == LoginStage.NONE) {
+      await fetchPrelogin();
+      return;
+    }
+    if (stage == LoginStage.LOGGING_IN) {
+      await fetchLogin();
+      return;
+    }
+    if (stage == LoginStage.WAITING_OTP) {
+      await fetchRegister();
+      return;
+    }
+  }
+
   return (
     <Card className='w-full max-w-sm'>
       <CardHeader>
@@ -277,6 +303,13 @@ function LoginForm({ loginService }: LoginFormProps) {
               value={password}
               onChange={(data) => setPassword(data.target.value)}
               required
+              maxLength={38}
+              onKeyDown={async (event) => {
+                if (event.code === 'Enter') {
+                  await buttonClick();
+                  event.preventDefault();
+                }
+              }}
             />
           </div>
         ) : (
@@ -378,18 +411,7 @@ function LoginForm({ loginService }: LoginFormProps) {
               className='w-full'
               disabled={waiting}
               onClick={async () => {
-                if (stage == LoginStage.NONE) {
-                  await fetchPrelogin();
-                  return;
-                }
-                if (stage == LoginStage.LOGGING_IN) {
-                  await fetchLogin();
-                  return;
-                }
-                if (stage == LoginStage.WAITING_OTP) {
-                  await fetchRegister();
-                  return;
-                }
+                await buttonClick();
               }}
             >
               {waiting ? (
