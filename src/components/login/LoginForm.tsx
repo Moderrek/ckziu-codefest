@@ -25,6 +25,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 
+import { validate_name } from '@/utils/Validate';
 interface LoginFormProps {
   loginService: boolean;
 }
@@ -222,7 +223,9 @@ function LoginForm({ loginService }: LoginFormProps) {
       /* ignored */
     }
   }, [router]);
-
+  useEffect(() => {
+    console.log(validate_name(username));
+  }, [username]);
   return (
     <Card className='w-full max-w-sm'>
       <CardHeader>

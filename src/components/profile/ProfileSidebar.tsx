@@ -37,7 +37,6 @@ const ProfileSidebar = ({ setCurrentBadge }) => {
               <button
                 className='btn'
                 onClick={() => {
-                  document.getElementById('modal').showModal();
                   setCurrentBadge(badge);
                 }}
                 key={badge.name}
