@@ -25,7 +25,12 @@ import {
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 
-import { validate_name } from '@/utils/Validate';
+import {
+  validate_name,
+  validate_password,
+  ValidationResult,
+} from '@/utils/Validate';
+
 interface LoginFormProps {
   loginService: boolean;
 }
@@ -53,7 +58,12 @@ function LoginForm({ loginService }: LoginFormProps) {
   const [stage, setStage] = useState<LoginStage>(LoginStage.NONE);
   // is waiting for a response
   const [waiting, setWaiting] = useState<boolean>(false);
-
+  const [validUserName, setValidUserName] = useState<
+    ValidationResult | undefined
+  >(undefined);
+  const [validPassword, setValidPassword] = useState<
+    ValidationResult | undefined
+  >(undefined);
   // used to redirect after success login
   const router = useRouter();
   const { toast } = useToast();
@@ -224,8 +234,11 @@ function LoginForm({ loginService }: LoginFormProps) {
     }
   }, [router]);
   useEffect(() => {
-    console.log(validate_name(username));
+    setValidUserName(validate_name(username));
   }, [username]);
+  useEffect(() => {
+    setValidPassword(validate_password(password, passwordAgain));
+  }, [password, passwordAgain]);
   return (
     <Card className='w-full max-w-sm'>
       <CardHeader>
@@ -301,10 +314,19 @@ function LoginForm({ loginService }: LoginFormProps) {
                 type='text'
                 disabled={waiting}
                 value={username}
+                maxLength={38}
                 onChange={(data) => setUsername(data.target.value)}
                 required
               />
             </div>
+            {Array.from(validUserName?.message).map((message, idx) => {
+              return (
+                <p key={idx} className='block text-red-400 text-sm font-bold'>
+                  {message}
+                </p>
+              );
+            })}
+
             <div className='grid gap-2'>
               <Label htmlFor='password'>Hasło</Label>
               <Input
