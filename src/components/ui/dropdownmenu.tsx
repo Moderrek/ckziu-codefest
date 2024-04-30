@@ -1,9 +1,8 @@
 import { CircleUser, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
-import { Authorization, isAuthorized } from '@/lib/auth/isAuthorized';
+import { useSession } from '@/lib/auth/useSession';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,17 +16,7 @@ import {
 
 export default function DropdownMenuDemo() {
   const router = useRouter();
-  const [auth, setAuth] = useState<Authorization>({
-    isAuthorized: false,
-    cachedName: false,
-    name: undefined,
-    token: undefined,
-  });
-
-  useEffect(() => {
-    const auth = isAuthorized();
-    setAuth(auth);
-  }, []);
+  const session = useSession();
 
   return (
     <DropdownMenu>
@@ -39,9 +28,9 @@ export default function DropdownMenuDemo() {
       <DropdownMenuContent className='w-45'>
         <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {auth.isAuthorized ? (
+        {session?.isAuthorized ? (
           <DropdownMenuItem>
-            <Link href={`/p/${auth.name}`}>
+            <Link href={`/p/${session?.name}`}>
               <div className='flex flex-row'>
                 <User className='mr-2 h-4 w-4' />
                 Profil
@@ -58,17 +47,11 @@ export default function DropdownMenuDemo() {
             </DropdownMenuItem>
           </Link>
         )}
-        {auth.isAuthorized ? (
+        {session?.isAuthorized ? (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
-                {
-                  setAuth((state) => {
-                    state.isAuthorized = false;
-                    return state;
-                  });
-                }
                 localStorage.removeItem('token');
                 localStorage.removeItem('cachedName');
                 router.push('/zaloguj');
