@@ -27,10 +27,10 @@ import Seo from '@/components/Seo';
 
 const Index: NextPage = () => {
   const [startDate, setStartDate] = useState(
-    Date.parse('01 May 2024 12:00:00 GMT+1')
+    Date.parse('07 May 2024 12:00:00 GMT+1')
   );
   useEffect(() => {
-    setStartDate(Date.parse('01 May 2024 12:00:00 GMT+1'));
+    setStartDate(Date.parse('07 May 2024 12:00:00 GMT+1'));
   }, []);
   const [days, hours, minutes, seconds] = useCountdown(startDate);
 
@@ -51,7 +51,7 @@ const Index: NextPage = () => {
 
         {/* Uruchomienie serwisu licznik */}
         <div className='mt-5'>
-          <p className='text-center'>Uruchomienie serwisu za:</p>
+          <p className='text-center'>Możliwość zgłaszania prac za:</p>
           <div className='grid auto-cols-max grid-flow-col gap-5 text-center'>
             <div className='flex flex-col'>
               <span className='countdown font-mono text-5xl'>
@@ -195,7 +195,7 @@ const Index: NextPage = () => {
               <Circle />
             </div>
             <div className='timeline-end'>
-              1 maja
+              7 maja
               <br />
               <b>Zgłaszanie prac</b>
             </div>

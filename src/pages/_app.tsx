@@ -6,6 +6,7 @@ import { ThemeProvider as NextThemeProvider } from 'next-themes';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/styles/globals.css';
 
+import { SessionContext } from '@/components/profile/SessionContext';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -20,7 +21,9 @@ const CodeFestApp = ({ Component, pageProps }: AppProps) => {
         enableSystem={false}
       >
         <NextThemeProvider>
-          <Component {...pageProps} />
+          <SessionContext.Provider value={undefined}>
+            <Component {...pageProps} />
+          </SessionContext.Provider>
           <Toaster />
         </NextThemeProvider>
       </ThemeProvider>

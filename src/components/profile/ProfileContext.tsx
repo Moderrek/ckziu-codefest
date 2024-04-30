@@ -3,6 +3,8 @@ import { createContext } from 'react';
 import { User } from '@/utils/FetchProfile';
 
 const ProfileContext = createContext<User>({
+  badges: [],
+  projects: [],
   name: '',
   display_name: '',
   id: '',

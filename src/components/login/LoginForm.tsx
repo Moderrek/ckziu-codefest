@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Fingerprint, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { API_V1 } from '@/lib/api/api';
 
@@ -64,12 +64,10 @@ function LoginForm({ loginService }: LoginFormProps) {
   const [validPassword, setValidPassword] = useState<
     ValidationResult | undefined
   >(undefined);
-  const loginPasswordRef = useRef();
+
   // used to redirect after success login
   const router = useRouter();
   const { toast } = useToast();
-
-  async function requestExist() {}
 
   function toastServerProblem() {
     toast({
@@ -179,7 +177,6 @@ function LoginForm({ loginService }: LoginFormProps) {
     if (prelogin_request.data.can_login) {
       setWaiting(false);
       setStage(LoginStage.LOGGING_IN);
-      loginPasswordRef.current?.focus();
     } else {
       setWaiting(true);
       setStage(LoginStage.WAITING_OTP);
@@ -233,7 +230,7 @@ function LoginForm({ loginService }: LoginFormProps) {
         const data = req.data;
         localStorage.setItem('cachedName', data.name);
         await router.push(`/p/${data.name}`);
-      } catch (err) {
+      } catch (err: any) {
         if (err.response.status === 401) {
           console.log('Logout..');
           // logout
@@ -304,7 +301,6 @@ function LoginForm({ loginService }: LoginFormProps) {
           <div className='grid gap-2'>
             <Label htmlFor='password'>Hasło</Label>
             <Input
-              ref={loginPasswordRef}
               id='password'
               name='password'
               type='password'
@@ -361,13 +357,17 @@ function LoginForm({ loginService }: LoginFormProps) {
                 required
               />
             </div>
-            {Array.from(validUserName?.message).map((message, idx) => {
-              return (
-                <p key={idx} className='block text-red-400 text-sm font-bold'>
-                  {message}
-                </p>
-              );
-            })}
+            {validUserName ? (
+              Array.from(validUserName.message).map((message, idx) => {
+                return (
+                  <p key={idx} className='block text-red-400 text-sm font-bold'>
+                    {message}
+                  </p>
+                );
+              })
+            ) : (
+              <></>
+            )}
 
             <div className='grid gap-2'>
               <Label htmlFor='password'>Hasło</Label>

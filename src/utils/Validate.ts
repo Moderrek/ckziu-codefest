@@ -56,7 +56,9 @@ function validate_password(
   password: string,
   passwordAgain: string
 ): ValidationResult {
-  const has_whitespace = false;
-  for (let i = 0; i < password.length; i++) {}
+  return {
+    valid: true,
+    message: new Set<string>(),
+  };
 }
 export { validate_name, validate_password };
