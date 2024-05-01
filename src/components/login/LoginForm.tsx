@@ -91,11 +91,21 @@ function LoginForm({ loginService }: LoginFormProps) {
       req = await axios.post(API_V1 + '/auth/otp', {
         email: login,
       });
-    } catch (err) {
+    } catch (err: any) {
+      console.log(err);
       setWaiting(false);
-      toastServerProblem();
+      setStage(LoginStage.NONE);
+      toast({
+        variant: 'destructive',
+        title: 'Wystąpił problem',
+        description:
+          'Wystąpił problem. ' +
+          err.response.data.message +
+          ' Upewnij się, że korzystasz z szkolnego maila.',
+      });
       return;
     }
+    setStage(LoginStage.WAITING_OTP);
     setWaiting(false);
     const data = req.data;
     if (!data.success) {
@@ -136,9 +146,14 @@ function LoginForm({ loginService }: LoginFormProps) {
         password: password,
         otp: otp,
       });
-    } catch (err) {
-      console.log(err);
-      toastServerProblem();
+    } catch (err: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Błąd po stronie serwera',
+        description:
+          'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.' +
+          err.data.message,
+      });
       setWaiting(false);
       return;
     }
@@ -179,7 +194,6 @@ function LoginForm({ loginService }: LoginFormProps) {
       setStage(LoginStage.LOGGING_IN);
     } else {
       setWaiting(true);
-      setStage(LoginStage.WAITING_OTP);
       await fetchOtp();
       return;
     }
@@ -267,10 +281,16 @@ function LoginForm({ loginService }: LoginFormProps) {
   return (
     <Card className='w-full max-w-sm'>
       <CardHeader>
-        <CardTitle className='text-2xl'>Logowanie</CardTitle>
+        <CardTitle className='text-2xl'>
+          {stage == LoginStage.LOGGING_IN
+            ? 'Logowanie'
+            : stage == LoginStage.WAITING_OTP
+            ? 'Rejestracja'
+            : 'Logowanie / Rejestracja'}
+        </CardTitle>
         <CardDescription>
-          Wpisz swojego e-maila szkolnego albo login, aby zalogować się na swoje
-          konto.
+          Wpisz swojego e-maila szkolnego albo login, aby
+          zalogować/zarejestrować się na swoje konto.
         </CardDescription>
       </CardHeader>
       <CardContent className='grid gap-4'>
