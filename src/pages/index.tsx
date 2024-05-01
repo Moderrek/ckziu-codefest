@@ -27,10 +27,10 @@ import Seo from '@/components/Seo';
 
 const Index: NextPage = () => {
   const [startDate, setStartDate] = useState(
-    Date.parse('07 May 2024 12:00:00 GMT+1')
+    Date.parse('07 May 2024 12:00:00 GMT+2')
   );
   useEffect(() => {
-    setStartDate(Date.parse('07 May 2024 12:00:00 GMT+1'));
+    setStartDate(Date.parse('07 May 2024 12:00:00 GMT+2'));
   }, []);
   const [days, hours, minutes, seconds] = useCountdown(startDate);
 
