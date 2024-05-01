@@ -52,13 +52,13 @@ function Footer() {
   return (
     <footer className='border-blue-gray-50 bottom-0 mx-auto w-full rounded-t-lg border-t bg-amber-400 py-4 text-white dark:bg-gray-900 dark:text-gray-300'>
       <div className='container mx-auto'>
-        <div className='flex flex-row items-center justify-center gap-6 sm:flex-row'>
-          <Tooltip content='Discord CKZiU CodeFest'>
-            <UnstyledLink href='https://discord.gg/mBat5Gw2na'>
-              <FontAwesomeIcon icon={faDiscord} />
-            </UnstyledLink>
-          </Tooltip>
-        </div>
+        {/*<div className='flex flex-row items-center justify-center gap-6 sm:flex-row'>*/}
+        {/*  /!*<Tooltip content='Discord CKZiU CodeFest'>*!/*/}
+        {/*  /!*  <UnstyledLink href='https://discord.gg/mBat5Gw2na'>*!/*/}
+        {/*  /!*    <FontAwesomeIcon icon={faDiscord} />*!/*/}
+        {/*  /!*  </UnstyledLink>*!/*/}
+        {/*  /!*</Tooltip>*!/*/}
+        {/*</div>*/}
         <p className='mt-2 text-center text-gray-900 dark:text-gray-300'>
           Copyright &copy; 2024-{new Date().getFullYear()} ckziucodefest.pl.
           Wszelkie prawa zastrzeżone.

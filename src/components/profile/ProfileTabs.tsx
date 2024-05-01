@@ -1,5 +1,3 @@
-import { Button } from '@material-tailwind/react';
-import { Plus } from 'lucide-react';
 import { useContext } from 'react';
 
 import { useOwner, useSession } from '@/lib/auth/useSession';
@@ -23,22 +21,24 @@ const ProfileTabs = () => {
         <h2>Profile Posts</h2>
       </TabsContent>
       <TabsContent value='projects'>
-        {owner ? (
-          <Button
-            variant='gradient'
-            color='green'
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            className='p-2 m-1 center'
-          >
-            <Plus width={16} height={16} /> Utwórz projekt
-          </Button>
-        ) : (
-          <></>
-        )}
-        <div className='flex flex-row flex-wrap justify-center gap-4'>
-          <Projects />
+        {/*{owner ? (*/}
+        {/*  <Button*/}
+        {/*    variant='gradient'*/}
+        {/*    color='green'*/}
+        {/*    placeholder={undefined}*/}
+        {/*    onPointerEnterCapture={undefined}*/}
+        {/*    onPointerLeaveCapture={undefined}*/}
+        {/*    className='p-2 m-1 center'*/}
+        {/*  >*/}
+        {/*    <Plus width={16} height={16} /> Utwórz projekt*/}
+        {/*  </Button>*/}
+        {/*) : (*/}
+        {/*  <></>*/}
+        {/*)}*/}
+        <div className='center'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-8'>
+            <Projects />
+          </div>
         </div>
       </TabsContent>
       <TabsContent value='liked_projects'></TabsContent>
