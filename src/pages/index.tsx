@@ -49,37 +49,6 @@ const Index: NextPage = () => {
           </h1>
         </div>
 
-        {/* Uruchomienie serwisu licznik */}
-        <div className='mt-5'>
-          <p className='text-center'>Możliwość zgłaszania prac za:</p>
-          <div className='grid auto-cols-max grid-flow-col gap-5 text-center'>
-            <div className='flex flex-col'>
-              <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': days } as CSSProperties}></span>
-              </span>
-              dni
-            </div>
-            <div className='flex flex-col'>
-              <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': hours } as CSSProperties}></span>
-              </span>
-              godz
-            </div>
-            <div className='flex flex-col'>
-              <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': minutes } as CSSProperties}></span>
-              </span>
-              min
-            </div>
-            <div className='flex flex-col'>
-              <span className='countdown font-mono text-5xl'>
-                <span style={{ '--value': seconds } as CSSProperties}></span>
-              </span>
-              sek
-            </div>
-          </div>
-        </div>
-
         <div className='mt-5 flex flex-row flex-wrap justify-center gap-4'>
           <Tooltip content='Zgłoś swoją pracę do konkursu.'>
             <Button
@@ -89,24 +58,24 @@ const Index: NextPage = () => {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
               className='flex flex-row items-center justify-center gap-1'
-              disabled={true}
             >
               <Plus /> Weź udział
             </Button>
           </Tooltip>
 
           <Tooltip content='Dołącz do discorda CKZiU CodeFest.'>
-            <Button
-              variant='gradient'
-              color='indigo'
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              className='flex flex-row items-center justify-center gap-1'
-              disabled={true}
-            >
-              <FontAwesomeIcon icon={faDiscord} /> Dołącz Discord
-            </Button>
+            <UnstyledLink href='/discord'>
+              <Button
+                variant='gradient'
+                color='indigo'
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+                className='flex flex-row items-center justify-center gap-1'
+              >
+                <FontAwesomeIcon icon={faDiscord} /> Dołącz Discord
+              </Button>
+            </UnstyledLink>
           </Tooltip>
 
           <Tooltip content='Czytaj regulamin na stronie szkoły.'>

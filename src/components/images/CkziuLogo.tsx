@@ -9,6 +9,7 @@ const CkziuLogo = (props: { width: number; height: number }) => {
       width={props.width}
       height={props.height}
       className='hover:animate-hover-logo'
+      fetchPriority='high'
     />
   );
 };

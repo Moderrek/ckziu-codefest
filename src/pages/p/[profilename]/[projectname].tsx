@@ -1,28 +1,50 @@
-import { useRouter } from 'next/router';
-
 import Seo from '@/components/Seo';
 
-export default function Page() {
-  const router = useRouter();
+interface ProjectPageProps {
+  username: string;
+  projectname: string;
+}
 
-  const profileName: string = router.query.profilename as string;
-  const projectName: string = router.query.projectname as string;
-
-  if (!projectName || !projectName) {
-    return (
-      <>
-        <Seo templateTitle='Ładowanie projektu..' />
-        <p>Loading...</p>
-      </>
-    );
-  }
-
+const ProjectPage = ({ username, projectname }: ProjectPageProps) => {
   return (
     <>
-      <Seo templateTitle={`Projekt ${projectName}`} />
+      <Seo templateTitle={`Projekt ${projectname}`} />
       <p>
-        Profile: {profileName} Project: {projectName}
+        User: @{username} Project: {projectname}
       </p>
     </>
   );
-}
+};
+
+const getServerSideProps = async ({
+  query,
+}: {
+  query: { profilename: string; projectname: string };
+}) => {
+  // Extract profile name and project name from query
+  // https://ckziucodefest.pl/p/PROFILE_NAME/PROJECT_NAME
+  let { profilename, projectname } = query;
+  profilename = profilename
+    .trimEnd()
+    .trimStart()
+    .replace(' ', '-')
+    .trim()
+    .toLowerCase();
+
+  projectname = projectname
+    .trimEnd()
+    .trimStart()
+    .replace(' ', '-')
+    .trim()
+    .toLowerCase();
+
+  return {
+    props: {
+      username: profilename,
+      projectname: projectname,
+    },
+  };
+};
+
+export { getServerSideProps };
+export default ProjectPage;
