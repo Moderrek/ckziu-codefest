@@ -5,6 +5,7 @@ import { useOwner, useSession } from '@/lib/auth/useSession';
 import { Projects } from '@/components/fetchable/Projects';
 import ProfileContext from '@/components/profile/ProfileContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DialogCreateProject } from '../dialog/CreateProjectDialog';
 
 const ProfileTabs = () => {
   const user = useContext(ProfileContext);
@@ -21,20 +22,11 @@ const ProfileTabs = () => {
         <h2>Profile Posts</h2>
       </TabsContent>
       <TabsContent value='projects'>
-        {/*{owner ? (*/}
-        {/*  <Button*/}
-        {/*    variant='gradient'*/}
-        {/*    color='green'*/}
-        {/*    placeholder={undefined}*/}
-        {/*    onPointerEnterCapture={undefined}*/}
-        {/*    onPointerLeaveCapture={undefined}*/}
-        {/*    className='p-2 m-1 center'*/}
-        {/*  >*/}
-        {/*    <Plus width={16} height={16} /> Utwórz projekt*/}
-        {/*  </Button>*/}
-        {/*) : (*/}
-        {/*  <></>*/}
-        {/*)}*/}
+        {owner ? (
+          <DialogCreateProject/>
+        ) : 
+          <></>
+        }
         <div className='center'>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-8'>
             <Projects />
