@@ -17,7 +17,6 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "dev:hamachi": "next dev -- -H 25.50.65.38",
     "build": "next build && next-sitemap --config next-sitemap.config.js",
     "start": "next start -p 80",
     "lint": "next lint",

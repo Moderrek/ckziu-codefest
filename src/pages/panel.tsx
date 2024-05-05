@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-export default function Panel() {
+const PanelPage = () => {
   return (
     <DefaultLayout>
       <Seo templateTitle='Panel administratora' />
@@ -111,4 +111,11 @@ export default function Panel() {
     </main>
   </DefaultLayout>
 );
-}
+};
+
+const getServerSideProps = async () => {
+  return {};
+};
+
+export { getServerSideProps };
+export default PanelPage;
