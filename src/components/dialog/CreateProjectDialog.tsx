@@ -1,6 +1,6 @@
 import { Button as MaterialButton } from '@material-tailwind/react';
 import { LockIcon, Plus, UnlockIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +16,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 import { Checkbox } from '../ui/checkbox';
+import { API_V1 } from '@/lib/api/api';
+import axios, { AxiosError } from 'axios';
+import { useToast } from '../ui/use-toast';
+import { useRouter } from 'next/router';
+import { useSession } from '@/lib/auth/useSession';
+import ProfileContext from '../profile/ProfileContext';
+import { FetchProject } from '@/utils/FetchProfile';
 
 const legalizeChars = new Map([
   [' ', '-'],
@@ -27,7 +34,7 @@ const legalizeChars = new Map([
   ['ł', 'l'],
   ['ż', 'z'],
   ['ź', 'z'],
-  ['ń', 'n']
+  ['ń', 'n'],
 ]);
 
 const legalizeName = (name: string): string => {
@@ -35,24 +42,100 @@ const legalizeName = (name: string): string => {
   const buffer = name.split('');
   for (let i = 0; i < buffer.length; i += 1) {
     const char = buffer[i];
-    if (char === ' ') {
-      buffer[i] = '-';
-    }
     if (buffer[i - 1] === '-' && buffer[i] === '-') {
-      throw Error("Invalid");
+      buffer[i] = '';
+      continue;
     }
     if (legalizeChars.has(char)) {
       buffer[i] = legalizeChars.get(char) ?? '';
+      continue;
     }
+    if (char.toUpperCase() !== char.toLowerCase()) continue;
+    buffer[i] = '';
   }
-  return buffer.join("").trim();
+  if (buffer[0] === '-') buffer[0] = '';
+  if (buffer[buffer.length - 1] === '-') buffer[buffer.length - 1] = '';
+  return buffer.join('').trim();
 };
 
 const DialogCreateProject = () => {
-  const [projectPrivate, setProjectPrivate] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
+
   const [projectName, setProjectName] = useState('');
   const [projectDisplayname, setProjectDisplayname] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
+  const [projectPrivate, setProjectPrivate] = useState(false);
+  const [projectExists, setProjectExists] = useState(false);
+
+  const [projectPublishing, setProjectPublishing] = useState(false);
+
+  const user = useContext(ProfileContext);
+
+  const publishProject = async () => {
+    setProjectPublishing(true);
+
+    const endpoint = `${API_V1}/project/create`;
+    let response;
+    try {
+      response = await axios.post(endpoint, {
+        name: projectName,
+        display_name: projectDisplayname,
+        description: projectDescription,
+        private: projectPrivate
+      });
+      setProjectPublishing(false);
+    } catch(err: any) {
+      setProjectPublishing(false);
+      // Request error or status code != 200
+      if (err.response && err.response.message) {
+        const data = err.response.data;
+        toast({
+          variant: 'destructive',
+          title: 'Wystąpił problem',
+          description: `Nie udało się opublikować projektu. ${data.message}`
+        });
+        return;
+      }
+      toast({
+        variant: 'destructive',
+        title: 'Wystąpił nieznany problem',
+        description: `Nie udało się opublikować projektu. Sprawdź dostępnośc serwerów https://ckziucodefest.pl/status`
+      });
+      return;
+    }
+    const data = response.data;
+    if (!data.success || !data.created) {
+      toast({
+        variant: 'destructive',
+        title: 'Wystąpił problem',
+        description: `Nie udało się opublikować projektu. ${data.message}`
+      });
+      return;
+    }
+
+    setProjectName('');
+    setProjectDisplayname('');
+    setProjectDescription('');
+    setProjectPrivate(false);
+
+    toast({
+      variant: 'default',
+      title: 'Sukces!',
+      description: "Pomyślnie utworzono nowy projekt!"
+    });
+
+    await router.push(`/p/${user.name}/${projectName}`);
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      const project = await FetchProject(user.name, projectName);
+      setProjectExists(project !== null);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [user.name, projectName]);
 
   return (
     <Dialog>
@@ -78,10 +161,13 @@ const DialogCreateProject = () => {
         </DialogHeader>
         <div className='grid gap-4 py-4'>
           <div className='center flex-col'>
-            <h1 className='font-title text-2xl flex flex-row gap-2 justify-center items-center'>{ projectPrivate ? <LockIcon/> : <UnlockIcon/>}{projectDisplayname}</h1>
+            <h1 className='font-title text-2xl flex flex-row gap-2 justify-center items-center'>
+              {projectPrivate ? <LockIcon /> : <UnlockIcon />}
+              {projectDisplayname}
+            </h1>
             <p className='text-center'>{projectDescription}</p>
           </div>
-          
+
           <div className='grid grid-cols-4 items-center gap-4'>
             <Label htmlFor='name' className='text-right'>
               Nazwa projektu
@@ -91,6 +177,8 @@ const DialogCreateProject = () => {
               defaultValue='Przykładowy projekt'
               className='col-span-3'
               value={projectDisplayname}
+              disabled={projectPublishing}
+              maxLength={40}
               onChange={(event) => {
                 const displayName = event.target.value;
                 setProjectName(legalizeName(displayName));
@@ -99,7 +187,8 @@ const DialogCreateProject = () => {
             />
           </div>
           <p className='w-full text-center text-sm text-muted-foreground'>
-            Projekt będzie wyświetlany pod nazwą: <b>{projectName}</b>
+            { projectExists ? <span className='text-red-400'>Nie można utworzyć projektu, ponieważ już istnieje!</span> : <span>Projekt będzie wyświetlany pod nazwą: <b className='text-green-400'>{projectName}</b></span>}
+            
           </p>
           <div className='grid grid-cols-4 items-center gap-4'>
             <Label htmlFor='description' className='text-right'>
@@ -110,6 +199,8 @@ const DialogCreateProject = () => {
               defaultValue=''
               placeholder='Przykładowy projekt napisany...'
               className='col-span-3'
+              disabled={projectPublishing}
+              maxLength={100}
               value={projectDescription}
               onChange={(event) => setProjectDescription(event.target.value)}
             />
@@ -118,11 +209,27 @@ const DialogCreateProject = () => {
             <Label htmlFor='private' className='text-right'>
               Prywatny
             </Label>
-            <Checkbox id='private' className='col-span-3' checked={projectPrivate} onClick={(_) => setProjectPrivate(!projectPrivate)} />
+            <Checkbox
+              id='private'
+              className='col-span-3'
+              checked={projectPrivate}
+              onClick={() => setProjectPrivate(!projectPrivate)}
+              disabled={projectPublishing}
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button type='submit'>Utwórz projekt</Button>
+          <MaterialButton
+            variant='outlined'
+            loading={projectPublishing}
+            disabled={projectExists}
+            onClick={async () => publishProject()}
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          >
+            {projectPublishing ? 'Publikowanie...' : 'Utwórz projekt'}
+          </MaterialButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

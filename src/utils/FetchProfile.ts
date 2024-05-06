@@ -1,6 +1,7 @@
 import { API_V1 } from '@/lib/api/api';
 
 const API_URL_GET_USER = (name: string) => `${API_V1}/profile/${name}`;
+const API_URL_GET_PROJECT = (username: string, projectname: string) => `${API_V1}/projects/${username}/${projectname}`;
 
 export interface Badge {
   name: string;
@@ -69,5 +70,20 @@ const FetchUser = async (name: string) => {
   return null;
 };
 
+const FetchProject = async (username: string, projectname: string) => {
+  try {
+    const res = await fetch(API_URL_GET_PROJECT(username, projectname));
+    const project: CodefestProject = await res.json();
+    if (!project.created_at) {
+      return null;
+    }
+    return project;
+  } catch (_) {
+    /* ignored */
+  }
+  // The default response
+  return null;
+};
+
 export type { User };
-export { API_URL_GET_USER, FetchUser };
+export { API_URL_GET_PROJECT, API_URL_GET_USER, FetchProject,FetchUser };
