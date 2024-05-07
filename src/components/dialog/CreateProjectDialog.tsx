@@ -1,8 +1,11 @@
 import { Button as MaterialButton } from '@material-tailwind/react';
+import axios from 'axios';
 import { LockIcon, Plus, UnlockIcon } from 'lucide-react';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { API_V1 } from '@/lib/api/api';
+
 import {
   Dialog,
   DialogContent,
@@ -15,14 +18,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-import { Checkbox } from '../ui/checkbox';
-import { API_V1 } from '@/lib/api/api';
-import axios, { AxiosError } from 'axios';
-import { useToast } from '../ui/use-toast';
-import { useRouter } from 'next/router';
-import { useSession } from '@/lib/auth/useSession';
-import ProfileContext from '../profile/ProfileContext';
 import { FetchProject } from '@/utils/FetchProfile';
+
+import ProfileContext from '../profile/ProfileContext';
+import { Checkbox } from '../ui/checkbox';
+import { useToast } from '../ui/use-toast';
 
 const legalizeChars = new Map([
   [' ', '-'],

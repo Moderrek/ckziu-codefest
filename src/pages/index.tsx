@@ -1,5 +1,3 @@
-import { faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Tooltip } from '@material-tailwind/react';
 import {
   Book,
@@ -13,9 +11,8 @@ import {
   Trophy,
 } from 'lucide-react';
 import { NextPage } from 'next';
-import { CSSProperties, useEffect, useState } from 'react';
 
-import { useCountdown } from '@/lib/useCountdown';
+import { useSession } from '@/lib/auth/useSession';
 
 import FaqSection from '@/components/FaqSection';
 import { Projects } from '@/components/fetchable/Projects';
@@ -26,17 +23,11 @@ import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
 
 const Index: NextPage = () => {
-  const [startDate, setStartDate] = useState(
-    Date.parse('07 May 2024 12:00:00 GMT+2')
-  );
-  useEffect(() => {
-    setStartDate(Date.parse('07 May 2024 12:00:00 GMT+2'));
-  }, []);
-  const [days, hours, minutes, seconds] = useCountdown(startDate);
+  const session = useSession();
 
   return (
     <DefaultLayout>
-      <Seo templateTitle='Strona główna' />
+      <Seo />
 
       {/*<Homepage />*/}
       <section className='main-section'>
@@ -51,6 +42,7 @@ const Index: NextPage = () => {
 
         <div className='mt-5 flex flex-row flex-wrap justify-center gap-4'>
           <Tooltip content='Zgłoś swoją pracę do konkursu.'>
+            <UnstyledLink href={ session?.isAuthorized ? `/p/${session.name}` : '/zaloguj'}>
             <Button
               variant='gradient'
               color='green'
@@ -61,21 +53,8 @@ const Index: NextPage = () => {
             >
               <Plus /> Weź udział
             </Button>
-          </Tooltip>
-
-          <Tooltip content='Dołącz do discorda CKZiU CodeFest.'>
-            <UnstyledLink href='/discord'>
-              <Button
-                variant='gradient'
-                color='indigo'
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-                className='flex flex-row items-center justify-center gap-1'
-              >
-                <FontAwesomeIcon icon={faDiscord} /> Dołącz Discord
-              </Button>
             </UnstyledLink>
+
           </Tooltip>
 
           <Tooltip content='Czytaj regulamin na stronie szkoły.'>
@@ -88,7 +67,7 @@ const Index: NextPage = () => {
                 onPointerLeaveCapture={undefined}
                 className='flex flex-row items-center justify-center gap-1'
               >
-                <Book /> Regulamin
+                <Book /> Regulamin konkursu
               </Button>
             </UnstyledLink>
           </Tooltip>
@@ -99,9 +78,10 @@ const Index: NextPage = () => {
             Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.
           </p>
           <p className='mt-5'>
-            Organizowany przez CKZiU w Łodzi wraz z{' '}
-            <Tooltip content='Uczeń 2TP w CKZiU'>Tymonem Woźniakiem</Tooltip> i{' '}
-            <Tooltip content='Uczeń 2TP w CKZiU'>Filipem Sobczukiem</Tooltip>
+            Organizowany przez <b>CKZiU w Łodzi</b> wraz z twórcą serwisu 
+            <UnstyledLink href='https://github.com/Moderrek'>
+            <Tooltip content='Kliknij aby zobaczyć profil GitHub'><b>Tymonem Woźniakiem</b></Tooltip>
+              </UnstyledLink>
           </p>
         </div>
       </section>

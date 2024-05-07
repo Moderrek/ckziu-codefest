@@ -36,12 +36,6 @@ const NewFooter = () => {
           <UnstyledLink href='https://github.com/Moderrek'>
             Tymona Woźniaka
           </UnstyledLink>
-        </Tooltip>{' '}
-        i{' '}
-        <Tooltip content='Kliknij aby zobaczyć profil GitHub'>
-          <UnstyledLink href='https://github.com/Drakvlaa'>
-            Filipa Sobczuka
-          </UnstyledLink>
         </Tooltip>
       </p>
     </footer>
@@ -69,12 +63,6 @@ function Footer() {
           <Tooltip content='Kliknij aby zobaczyć profil GitHub'>
             <UnstyledLink href='https://github.com/Moderrek'>
               Tymona Woźniaka
-            </UnstyledLink>
-          </Tooltip>{' '}
-          i{' '}
-          <Tooltip content='Kliknij aby zobaczyć profil GitHub'>
-            <UnstyledLink href='https://github.com/Drakvlaa'>
-              Filipa Sobczuka
             </UnstyledLink>
           </Tooltip>
         </p>

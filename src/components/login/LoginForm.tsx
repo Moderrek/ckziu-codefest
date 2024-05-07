@@ -105,10 +105,10 @@ function LoginForm({ loginService }: LoginFormProps) {
       });
       return;
     }
-    setStage(LoginStage.WAITING_OTP);
     setWaiting(false);
     const data = req.data;
     if (!data.success) {
+      setStage(LoginStage.NONE);
       toast({
         variant: 'destructive',
         title: 'Wystąpił problem',
@@ -116,6 +116,7 @@ function LoginForm({ loginService }: LoginFormProps) {
       });
       return;
     }
+    setStage(LoginStage.WAITING_OTP);
     toast({
       variant: 'default',
       title: 'Wysłano kod na twoją pocztę!',
@@ -232,7 +233,6 @@ function LoginForm({ loginService }: LoginFormProps) {
       if (token == null) {
         return;
       }
-      console.log('Logged in');
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
       if (localStorage.getItem('cachedName') !== null) {
         await router.push(`/p/${localStorage.getItem('cachedName')}`);
@@ -246,7 +246,6 @@ function LoginForm({ loginService }: LoginFormProps) {
         await router.push(`/p/${data.name}`);
       } catch (err: any) {
         if (err.response.status === 401) {
-          console.log('Logout..');
           // logout
           delete axios.defaults.headers.common['Authorization'];
           localStorage.removeItem('cachedName');

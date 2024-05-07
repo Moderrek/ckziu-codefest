@@ -25,6 +25,6 @@ export const FAQ: Faq[] = [
   {
     title: 'Kto jest organizatorem konkursu?',
     content:
-      'Organizatorami konkursu CKZiU CodeFest 2024 jest Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi wraz z Tymonem Woźniakiem (2TP) i Filipem Sobczukiem (2TP).',
+      'Organizatorem konkursu CKZiU CodeFest 2024 jest Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.',
   },
 ];

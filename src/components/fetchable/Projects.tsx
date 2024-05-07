@@ -37,7 +37,7 @@ const Project = (props: { project: CodefestProject }) => {
           >
             {project.display_name}
           </Link>
-          <div
+          {/* <div
             className='ml-5 flex cursor-pointer select-none flex-row justify-between text-right'
             onClick={() => {
               setLiked(!liked);
@@ -53,7 +53,7 @@ const Project = (props: { project: CodefestProject }) => {
               />
             </Tooltip>
             {likes}
-          </div>
+          </div> */}
         </div>
         <p className='text-base font-bold'>
           <UserMention userName={user.name} showAvatar={true} />

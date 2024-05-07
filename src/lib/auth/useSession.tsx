@@ -8,7 +8,6 @@ function useSession() {
   useEffect(() => {
     if (window.session === undefined) {
       (async () => {
-        console.log('Getting session.');
         const res = await getSession();
         setSession(res);
       })();
