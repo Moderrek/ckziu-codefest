@@ -51,7 +51,7 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
   }
   return (
     <DefaultLayout>
-      <Seo templateTitle={`Projekt ${projectname}`} />
+      <Seo templateTitle={`Projekt ${projectname}`} description={project.description ?? `Projekt ${project.display_name} stworzony przez ${username}`} date={new Date(project.created_at).toISOString()} />
       <div className='container mx-auto'>
         <div className='rounded drop-shadow-xl border-t-4 border-red-400 mt-0 lg:mt-10 bg-primary-foreground min-h-[80vh]'>
           <div className='flex flex-col md:flex-row min-h-[80vh]'>
