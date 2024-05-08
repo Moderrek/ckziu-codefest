@@ -1,7 +1,7 @@
 export type ApiArticleData = {
-  author: string;
   title: string;
   description: string;
+  url: string;
 };
 
 export type ApiProjectData = {

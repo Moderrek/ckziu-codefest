@@ -94,8 +94,140 @@
     @apply border-border;
   }
 
+  .markdown ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-end: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+
+  .markdown {
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .markdown h2 {
+    padding-bottom: .3em;
+    font-size: 1.5em;
+    @apply border-b-[1px] border-muted-foreground;
+  }
+
+  .markdown h1 {
+    padding-bottom: .3em;
+    font-size: 2em;
+    @apply border-b-[1px] border-muted-foreground;
+  }
+
+  .markdown h3 {
+    padding-bottom: .3em;
+    font-size: 1.25em;
+  }
+
+  .markdown h4 {
+    padding-bottom: .3em;
+    font-size: 1em;
+  }
+
+  .markdown h5 {
+    padding-bottom: .3em;
+    font-size: .875em;
+  }
+
+  .markdown pre > div {
+    @apply bg-muted !important;
+    @apply text-foreground !important;
+    text-shadow: var(--background) 0px 0px !important;
+    @apply p-0 m-0 !important;
+  }
+
+  .markdown pre > div > code {
+    @apply text-foreground !important;
+  
+    text-shadow: var(--background) 0px 0px !important;
+  }
+
+  .markdown pre {
+    @apply bg-muted;
+    margin-bottom: 16px;
+    min-height: 52px;
+    padding: 16px;
+    overflow: auto;
+    line-height: 1.45;
+    font-size: 85%;
+    border-radius: 6px;
+  }
+
+
+  .markdown p {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 16px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  .markdown a {
+    text-underline-offset: .2rem;
+    text-decoration: underline !important;
+    color: #4493f8;
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  .markdown table,th,td {
+    @apply border-foreground;
+    border-width: 1px;
+  }
+
+  .markdown td {
+    display: table-cell;
+    vertical-align: inherit;
+    padding: 6px 14px;
+  }
+
+  .markdown th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: center;
+    @apply bg-gray-100 dark:bg-gray-900;
+    padding: 6px 14px;
+  }
+
+  .markdown tr {
+    display: table-row;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    border-color: inherit;
+  }
+
+  .markdown tr:nth-child(2n) {
+    @apply bg-gray-100 dark:bg-gray-900;
+  }
+
+  .markdown img {
+    display: inline-block;
+  }
+
+  .markdown tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+  }
+
+  .markdown table {
+    display: table;
+    border-spacing: 2;
+    border-collapse: collapse;
   }
 
 }

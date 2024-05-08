@@ -1,16 +1,15 @@
 import useSWR from 'swr';
 
-import { API_URL } from '@/lib/api/api';
+import { API_V1 } from '@/lib/api/api';
 import { ApiArticlesData } from '@/lib/api/api_responses';
 
 import Article from '@/components/article';
-import ArticleEmpty from '@/components/emptyarticle';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ArticleSection() {
   const { data, error } = useSWR<ApiArticlesData, Error>(
-    API_URL + '/article',
+    API_V1 + '/ckziu/news',
     fetcher
   );
 
@@ -18,11 +17,16 @@ export default function ArticleSection() {
   if (!data || error)
     return (
       <>
-        <ArticleEmpty />
-        <ArticleEmpty />
-        <ArticleEmpty />
-        <ArticleEmpty />
-        <ArticleEmpty />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
+        <Article article={null} />
       </>
     );
 

@@ -21,6 +21,7 @@ import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
+import ArticleSection from '@/components/fetchable/articles';
 
 const Index: NextPage = () => {
   const session = useSession();
@@ -210,15 +211,23 @@ const Index: NextPage = () => {
       </section>
 
       {/* WIADOMOŚCI */}
-      <section className='main-section lg:mb-60'>
+      <section className='main-section lg:mb-60 relative'>
+      {/* <svg className='invisible lg:visible absolute -scale-50' viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#8A3FFC" d="M28.8,-39.3C38.3,-32.7,47.6,-25.6,48.8,-17C50,-8.4,43,1.6,40.4,14.2C37.8,26.7,39.5,41.7,33.5,49.2C27.4,56.7,13.7,56.7,0,56.8C-13.8,56.8,-27.6,56.9,-33.6,49.4C-39.6,41.9,-37.7,26.8,-39.6,14.4C-41.6,2,-47.2,-7.6,-49.1,-20.3C-51,-33.1,-49.1,-49.1,-40.3,-55.9C-31.5,-62.8,-15.7,-60.7,-3.1,-56.5C9.6,-52.3,19.3,-46,28.8,-39.3Z" transform="translate(100 100)" />
+</svg>
+<svg className='invisible lg:visible absolute translate-x-[-20%] translate-y-[-20%] -scale-50' viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#0F62FE" d="M60.7,-53.7C77,-44.3,87.6,-22.2,84.7,-2.9C81.8,16.4,65.5,32.8,49.1,46.9C32.8,61.1,16.4,73.1,1.9,71.2C-12.5,69.2,-25.1,53.4,-32.1,39.3C-39.2,25.1,-40.7,12.5,-38.7,2C-36.7,-8.5,-31,-16.9,-24,-26.3C-16.9,-35.7,-8.5,-46,6.8,-52.8C22.2,-59.7,44.3,-63.1,60.7,-53.7Z" transform="translate(100 100)" />
+</svg> */}
+      {/* <svg className='absolute translate-y-full' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,96L17.1,106.7C34.3,117,69,139,103,154.7C137.1,171,171,181,206,160C240,139,274,85,309,69.3C342.9,53,377,75,411,96C445.7,117,480,139,514,176C548.6,213,583,267,617,277.3C651.4,288,686,256,720,208C754.3,160,789,96,823,96C857.1,96,891,160,926,186.7C960,213,994,203,1029,197.3C1062.9,192,1097,192,1131,186.7C1165.7,181,1200,171,1234,165.3C1268.6,160,1303,160,1337,181.3C1371.4,203,1406,245,1423,266.7L1440,288L1440,320L1422.9,320C1405.7,320,1371,320,1337,320C1302.9,320,1269,320,1234,320C1200,320,1166,320,1131,320C1097.1,320,1063,320,1029,320C994.3,320,960,320,926,320C891.4,320,857,320,823,320C788.6,320,754,320,720,320C685.7,320,651,320,617,320C582.9,320,549,320,514,320C480,320,446,320,411,320C377.1,320,343,320,309,320C274.3,320,240,320,206,320C171.4,320,137,320,103,320C68.6,320,34,320,17,320L0,320Z"></path></svg> */}
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <Newspaper />
-          Ostatnie wiadomości
+          Ostatnie wydarzenia szkolne
         </h2>
-        <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
-          <p>Nie znaleziono żadnych wiadomości.</p>
+        <div className='mx-auto mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap justify-center gap-4'>
+          <ArticleSection/>
         </div>
       </section>
+
     </DefaultLayout>
   );
 };

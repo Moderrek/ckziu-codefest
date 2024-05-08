@@ -10,7 +10,7 @@ import { FAQ } from '@/config/constants';
 export default function FaqSection() {
   return (
     <div className='container mx-auto flex justify-center'>
-      <Accordion type='single' collapsible className='w-full lg:w-1/2'>
+      <Accordion type='multiple' className='w-full lg:w-1/2'>
         {FAQ.map((faq, idx) => {
           return (
             <AccordionItem key={idx} value={`item-${idx}`}>
