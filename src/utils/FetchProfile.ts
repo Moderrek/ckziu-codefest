@@ -1,7 +1,8 @@
 import { API_V1 } from '@/lib/api/api';
 
 const API_URL_GET_USER = (name: string) => `${API_V1}/profile/${name}`;
-const API_URL_GET_PROJECT = (username: string, projectname: string) => `${API_V1}/projects/${username}/${projectname}`;
+const API_URL_GET_PROJECT = (username: string, projectname: string) =>
+  `${API_V1}/projects/${username}/${projectname}`;
 
 export interface Badge {
   name: string;
@@ -86,4 +87,4 @@ const FetchProject = async (username: string, projectname: string) => {
 };
 
 export type { User };
-export { API_URL_GET_PROJECT, API_URL_GET_USER, FetchProject,FetchUser };
+export { API_URL_GET_PROJECT, API_URL_GET_USER, FetchProject, FetchUser };

@@ -82,10 +82,10 @@ const DialogCreateProject = () => {
         name: projectName,
         display_name: projectDisplayname,
         description: projectDescription,
-        private: projectPrivate
+        private: projectPrivate,
       });
       setProjectPublishing(false);
-    } catch(err: any) {
+    } catch (err: any) {
       setProjectPublishing(false);
       // Request error or status code != 200
       if (err.response && err.response.message) {
@@ -93,14 +93,14 @@ const DialogCreateProject = () => {
         toast({
           variant: 'destructive',
           title: 'Wystąpił problem',
-          description: `Nie udało się opublikować projektu. ${data.message}`
+          description: `Nie udało się opublikować projektu. ${data.message}`,
         });
         return;
       }
       toast({
         variant: 'destructive',
         title: 'Wystąpił nieznany problem',
-        description: `Nie udało się opublikować projektu. Sprawdź dostępnośc serwerów https://ckziucodefest.pl/status`
+        description: `Nie udało się opublikować projektu. Sprawdź dostępnośc serwerów https://ckziucodefest.pl/status`,
       });
       return;
     }
@@ -109,7 +109,7 @@ const DialogCreateProject = () => {
       toast({
         variant: 'destructive',
         title: 'Wystąpił problem',
-        description: `Nie udało się opublikować projektu. ${data.message}`
+        description: `Nie udało się opublikować projektu. ${data.message}`,
       });
       return;
     }
@@ -122,7 +122,7 @@ const DialogCreateProject = () => {
     toast({
       variant: 'default',
       title: 'Sukces!',
-      description: "Pomyślnie utworzono nowy projekt!"
+      description: 'Pomyślnie utworzono nowy projekt!',
     });
 
     await router.push(`/p/${user.name}/${projectName}`);
@@ -187,8 +187,16 @@ const DialogCreateProject = () => {
             />
           </div>
           <p className='w-full text-center text-sm text-muted-foreground'>
-            { projectExists ? <span className='text-red-400'>Nie można utworzyć projektu, ponieważ już istnieje!</span> : <span>Projekt będzie wyświetlany pod nazwą: <b className='text-green-400'>{projectName}</b></span>}
-            
+            {projectExists ? (
+              <span className='text-red-400'>
+                Nie można utworzyć projektu, ponieważ już istnieje!
+              </span>
+            ) : (
+              <span>
+                Projekt będzie wyświetlany pod nazwą:{' '}
+                <b className='text-green-400'>{projectName}</b>
+              </span>
+            )}
           </p>
           <div className='grid grid-cols-4 items-center gap-4'>
             <Label htmlFor='description' className='text-right'>

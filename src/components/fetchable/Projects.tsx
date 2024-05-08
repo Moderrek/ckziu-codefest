@@ -1,5 +1,3 @@
-import { Tooltip } from '@material-tailwind/react';
-import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useState } from 'react';

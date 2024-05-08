@@ -1,7 +1,10 @@
 import { Button } from '@material-tailwind/react';
 import { CalendarPlus2, LogOut, User } from 'lucide-react';
 import Markdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import remarkImages from 'remark-images';
 
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
@@ -9,11 +12,8 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
 import { UserMention } from '@/components/profile/UserMention';
 import Seo from '@/components/Seo';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 
 import { CodefestProject, FetchProject } from '@/utils/FetchProfile';
-import rehypeRaw from 'rehype-raw';
-import remarkImages from 'remark-images';
 
 interface ProjectPageProps {
   username: string;
@@ -139,7 +139,14 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
   }
   return (
     <DefaultLayout>
-      <Seo templateTitle={`Projekt ${projectname}`} description={project.description ?? `Projekt ${project.display_name} stworzony przez ${username}`} date={new Date(project.created_at).toISOString()} />
+      <Seo
+        templateTitle={`Projekt ${projectname}`}
+        description={
+          project.description ??
+          `Projekt ${project.display_name} stworzony przez ${username}`
+        }
+        date={new Date(project.created_at).toISOString()}
+      />
       <div className='container mx-auto '>
         <div className='rounded drop-shadow-xl border-2 border-muted border-t-4 border-t-red-400 mt-0 lg:mt-10 bg-primary-foreground min-h-[80vh]'>
           <div className='flex flex-col md:flex-row min-h-[80vh]'>
@@ -167,25 +174,36 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
                 <CalendarPlus2 /> Utworzono{' '}
                 {new Date(project.created_at).toLocaleDateString()}
               </div>
-              <div className='mt-5 ml-1 text-justify first-letter:text-2xl text-xl'>{project.description}</div>
-              <Markdown className='markdown' remarkPlugins={[[remarkGfm, {singleTilde: false}]]} rehypePlugins={[rehypeRaw, remarkImages]} components={{
-      code(props: any) {
-        const {children, className, _, ...rest} = props;
-        const match = /language-(\w+)/.exec(className || '');
-        return match ? (
-          <SyntaxHighlighter
-            {...rest}
-            PreTag="div"
-            language={match[1]}
-            lineNumberContainerStyle={true}
-          >{String(children).replace(/\n$/, '')}</SyntaxHighlighter>
-        ) : (
-          <code {...rest} className={className}>
-            {children}
-          </code>
-        );
-      }
-    }}>{markdown}</Markdown>
+              <div className='mt-5 ml-1 text-justify first-letter:text-2xl text-xl'>
+                {project.description}
+              </div>
+              <Markdown
+                className='markdown'
+                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                rehypePlugins={[rehypeRaw, remarkImages]}
+                components={{
+                  code(props: any) {
+                    const { children, className, _, ...rest } = props;
+                    const match = /language-(\w+)/.exec(className || '');
+                    return match ? (
+                      <SyntaxHighlighter
+                        {...rest}
+                        PreTag='div'
+                        language={match[1]}
+                        lineNumberContainerStyle={true}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code {...rest} className={className}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {markdown}
+              </Markdown>
               <div className='flex flex-col items-center justify-center sm:mt-5 md:mt-20'>
                 <NextImage
                   useSkeleton={true}

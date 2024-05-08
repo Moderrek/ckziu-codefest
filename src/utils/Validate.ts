@@ -2,6 +2,7 @@ export type ValidationResult = {
   valid: boolean;
   message: Set<string>;
 };
+
 function validate_name(name: string): ValidationResult {
   const MIN_LENGTH = 3;
   const has_whitespace = name.trim().length !== name.length;
@@ -52,6 +53,7 @@ function validate_name(name: string): ValidationResult {
     message: warnings,
   };
 }
+
 function validate_password(
   password: string,
   passwordAgain: string
@@ -61,4 +63,5 @@ function validate_password(
     message: new Set<string>(),
   };
 }
+
 export { validate_name, validate_password };

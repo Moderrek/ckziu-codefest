@@ -147,7 +147,7 @@
 
   .markdown pre > div > code {
     @apply text-foreground !important;
-  
+
     text-shadow: var(--background) 0px 0px !important;
   }
 
@@ -183,7 +183,7 @@
     @apply bg-background text-foreground;
   }
 
-  .markdown table,th,td {
+  .markdown table, th, td {
     @apply border-foreground;
     border-width: 1px;
   }

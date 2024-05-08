@@ -6,7 +6,8 @@ export type Faq = {
 export const FAQ: Faq[] = [
   {
     title: 'Jak zgłosić pracę?',
-    content: 'Aby zgłosić swój projekt musisz przejść na stronę logowania/rejestrowania. Następnie zautoryzować się i utworzyć projekt.',
+    content:
+      'Aby zgłosić swój projekt musisz przejść na stronę logowania/rejestrowania. Następnie zautoryzować się i utworzyć projekt.',
   },
   {
     title: 'Kto może wziąć udział w konkursie?',
@@ -24,6 +25,7 @@ export const FAQ: Faq[] = [
   },
   {
     title: 'Kto jest organizatorem konkursu?',
-    content: 'Organizatorem konkursu CKZiU CodeFest 2024 jest Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.',
+    content:
+      'Organizatorem konkursu CKZiU CodeFest 2024 jest Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.',
   },
 ];

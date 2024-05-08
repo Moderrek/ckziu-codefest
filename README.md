@@ -8,9 +8,11 @@ Opracowany przez Tymona Woźniaka i Filipa Sobczuka.
 * NodeJS 22
 * pnpm
 
-Korzystamy z `pnpm` zamiast `npm`, poniewaz `pnpm` jest oszczędny na dysku. Pliki `node_modules/` są łączone na stałe z jednego magazynu na dysku, zamiast jak `npm` głupio instalować paczkę w kazdym projekcie na komputerze.
+Korzystamy z `pnpm` zamiast `npm`, poniewaz `pnpm` jest oszczędny na dysku. Pliki `node_modules/` są łączone na stałe z
+jednego magazynu na dysku, zamiast jak `npm` głupio instalować paczkę w kazdym projekcie na komputerze.
 
-* Połączenie z [oficjalnym API](https://api.ckziucodefest.pl/) albo pobrać [własny serwer](https://github.com/Moderrek/ckziu-codefest-api)
+* Połączenie z [oficjalnym API](https://api.ckziucodefest.pl/) albo
+  pobrać [własny serwer](https://github.com/Moderrek/ckziu-codefest-api)
 
 * Jezeli produkcja => Klucze szyfrowania.
 
