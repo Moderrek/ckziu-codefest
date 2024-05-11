@@ -230,4 +230,21 @@
     border-collapse: collapse;
   }
 
+  @keyframes background-move {
+    0% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
+  }
+
+  .reward-effect {
+    background-size: 400% 400%;
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+  }
+
 }

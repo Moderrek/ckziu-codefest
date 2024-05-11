@@ -20,6 +20,7 @@ import { Projects } from '@/components/fetchable/Projects';
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
+import NextImage from '@/components/NextImage';
 import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
 
@@ -31,50 +32,50 @@ const Index: NextPage = () => {
       <Seo />
 
       {/*<Homepage />*/}
-      <section className='main-section'>
-        <div className='flex flex-col items-center'>
-          <CkziuLogo width={150} height={150} />
-          <h1 className='font-title text-center text-4xl font-bold'>
-            CKZiU
-            <br />
-            <span className='font-title text-5xl italic'>CODEFEST24</span>
-          </h1>
-        </div>
+      <section className='main-section flex-col md:flex-row gap-8'>
+        <div className='min-w-1/2'>
+          <div className='flex flex-col items-center'>
+            <CkziuLogo width={150} height={150} />
+            <h1 className='font-title text-center text-4xl font-bold'>
+              CKZiU
+              <br />
+              <span className='font-title text-5xl italic'>CODEFEST24</span>
+            </h1>
+          </div>
 
-        <div className='mt-5 flex flex-row flex-wrap justify-center gap-4'>
-          <Tooltip content='Zgłoś swoją pracę do konkursu.'>
-            <UnstyledLink
-              href={session?.isAuthorized ? `/p/${session.name}` : '/zaloguj'}
-            >
-              <Button
-                variant='gradient'
-                color='green'
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-                className='flex flex-row items-center justify-center gap-1'
+          <div className='mt-5 flex flex-row flex-wrap justify-center gap-4'>
+            <Tooltip content='Zgłoś swoją pracę do konkursu.'>
+              <UnstyledLink
+                href={session?.isAuthorized ? `/p/${session.name}` : '/zaloguj'}
               >
-                <Plus /> Weź udział
-              </Button>
-            </UnstyledLink>
-          </Tooltip>
+                <Button
+                  variant='gradient'
+                  color='green'
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  className='flex flex-row flex-1 min-w-fit items-center justify-center gap-1'
+                >
+                  <Plus /> Weź udział
+                </Button>
+              </UnstyledLink>
+            </Tooltip>
 
-          <Tooltip content='Czytaj regulamin na stronie szkoły.'>
-            <UnstyledLink href='/regulamin'>
-              <Button
-                variant='gradient'
-                color='red'
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-                className='flex flex-row items-center justify-center gap-1'
-              >
-                <Book /> Regulamin konkursu
-              </Button>
-            </UnstyledLink>
-          </Tooltip>
-        </div>
-        <div className='md:w-1/2'>
+            <Tooltip content='Czytaj regulamin na stronie szkoły.'>
+              <UnstyledLink href='/regulamin'>
+                <Button
+                  variant='gradient'
+                  color='red'
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  className='flex flex-row flex-1 min-w-fit items-center justify-center gap-1'
+                >
+                  <Book /> Regulamin konkursu
+                </Button>
+              </UnstyledLink>
+            </Tooltip>
+          </div>
           <p className='mt-5'>
             Konkurs polega wyłonieniu najlepszego twórcy stron internetowych w
             Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.
@@ -88,6 +89,19 @@ const Index: NextPage = () => {
             </UnstyledLink>
           </p>
         </div>
+        <div>
+          <UnstyledLink href='https://cez.lodz.pl/'>
+            <NextImage
+              alt='CKZiU'
+              src='/images/ckziu_thumbnail.png'
+              width={1000}
+              height={1000}
+              useSkeleton={true}
+              className='w-full h-full'
+              imgClassName='rounded-2xl drop-shadow-xl border-gradient border-2'
+            />
+          </UnstyledLink>
+        </div>
       </section>
 
       <section className='main-section'>
@@ -98,21 +112,42 @@ const Index: NextPage = () => {
           <Trophy />
           Nagrody konkursowe
         </h2>
-        <section className='container mb-5 mt-5 flex flex-row flex-wrap justify-center gap-2 lg:gap-8'>
-          <RewardCard
-            thumbnail='https://dharmamerchantservices.com/wp-content/uploads/2015/04/Question-mark-blackandwhite.png'
-            rewardName='Więcej informacji niedługo'
-          />
-          <RewardCard
-            thumbnail='https://dharmamerchantservices.com/wp-content/uploads/2015/04/Question-mark-blackandwhite.png'
-            rewardName='Więcej informacji niedługo'
-          />
-          <RewardCard
-            thumbnail='https://dharmamerchantservices.com/wp-content/uploads/2015/04/Question-mark-blackandwhite.png'
-            rewardName='Więcej informacji niedługo'
-          />
+        <section className='container mb-5 mt-5 center'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-8'>
+            <RewardCard
+              thumbnail='/images/rewards/headphones.png'
+              rewardName='Słuchawki'
+            />
+            <RewardCard
+              thumbnail='/images/rewards/headphones.png'
+              rewardName='Słuchawki'
+            />
+
+            <RewardCard
+              thumbnail='/images/rewards/camera.png'
+              rewardName='Kamerka'
+            />
+
+            <RewardCard
+              thumbnail='/images/rewards/powerbank.png'
+              rewardName='PowerBank 20000mAh'
+            />
+            <RewardCard
+              thumbnail='/images/rewards/powerbank.png'
+              rewardName='PowerBank 20000mAh'
+            />
+
+            <RewardCard
+              thumbnail='/images/rewards/cable.png'
+              rewardName='Łączówka'
+            />
+            <RewardCard
+              thumbnail='/images/rewards/cable.png'
+              rewardName='Łączówka'
+            />
+          </div>
         </section>
-        <p className='font-bold'>Więcej informacji niedługo...</p>
+        <p className='font-bold'>Nagród może przybywać</p>
         <p className='mt-5'>
           Każdy uczestnik konkursu otrzyma unikatową odznakę uczestnictwa na
           profilu.
@@ -120,6 +155,18 @@ const Index: NextPage = () => {
         <p>
           Nagrody będą wybrane przez zwycięzców po kolei od pierwszego miejsca.
         </p>
+      </section>
+
+      {/* POPULARNE PROJEKTY */}
+      <section className='main-section'>
+        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
+          <TerminalIcon />
+          Najbardziej popularne projekty
+        </h2>
+        <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
+          {/* PROJEKT */}
+          <Projects />
+        </div>
       </section>
 
       <section className='main-section'>
@@ -140,15 +187,15 @@ const Index: NextPage = () => {
             <div className='timeline-middle'>
               <CircleCheck className='text-green-600' />
             </div>
-            <hr className='bg-primary' />
+            <hr className='bg-green-500' />
           </li>
           <li>
-            <hr className='bg-primary' />
+            <hr className='bg-green-500' />
             <div className='timeline-middle'>
-              <Circle />
+              <CircleCheck className='text-green-600' />
             </div>
             <div className='timeline-end'>
-              7 maja
+              14 maja
               <br />
               <b>Zgłaszanie prac</b>
             </div>
@@ -192,31 +239,10 @@ const Index: NextPage = () => {
         </ul>
       </section>
 
-      {/*  FAQ */}
-      <section className='main-section'>
-        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
-          <CircleHelp />
-          Najczęściej zadawane pytania
-        </h2>
-        <FaqSection />
-      </section>
-
-      {/* POPULARNE PROJEKTY */}
-      <section className='main-section'>
-        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
-          <TerminalIcon />
-          Najbardziej popularne projekty
-        </h2>
-        <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
-          {/* PROJEKT */}
-          <Projects />
-        </div>
-      </section>
-
       {/* WIADOMOŚCI */}
-      <section className='main-section lg:mb-60 relative'>
+      <section className='main-section relative'>
         <svg
-          className='invisible lg:visible absolute -scale-50 opacity-50'
+          className='invisible hidden md:visible md:block lg:visible absolute -scale-50 opacity-50'
           viewBox='0 0 200 200'
           xmlns='http://www.w3.org/2000/svg'
         >
@@ -227,7 +253,7 @@ const Index: NextPage = () => {
           />
         </svg>
         <svg
-          className='invisible lg:visible absolute translate-x-[-20%] translate-y-[-20%] -scale-50  opacity-50'
+          className='invisible hidden md:visible md:block absolute translate-x-[-20%] translate-y-[-20%] -scale-50  opacity-50'
           viewBox='0 0 200 200'
           xmlns='http://www.w3.org/2000/svg'
         >
@@ -240,7 +266,7 @@ const Index: NextPage = () => {
         <svg
           viewBox='0 0 200 200'
           xmlns='http://www.w3.org/2000/svg'
-          className='invisible lg:visible absolute translate-x-[20%] translate-y-[-28%] -scale-75  opacity-50'
+          className='invisible hidden md:visible md:block absolute translate-x-[20%] translate-y-[-28%] -scale-75  opacity-50'
         >
           <path
             fill='#F1C21B'
@@ -255,6 +281,15 @@ const Index: NextPage = () => {
         <div className='mx-auto mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap justify-center gap-4'>
           <ArticleSection />
         </div>
+      </section>
+
+      {/*  FAQ */}
+      <section className='main-section lg:mb-60 mb-10'>
+        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
+          <CircleHelp />
+          Najczęściej zadawane pytania
+        </h2>
+        <FaqSection />
       </section>
     </DefaultLayout>
   );

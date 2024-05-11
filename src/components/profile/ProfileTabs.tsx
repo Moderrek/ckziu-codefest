@@ -15,16 +15,16 @@ const ProfileTabs = () => {
   return (
     <Tabs defaultValue='projects' className='w-full'>
       <TabsList>
-        <TabsTrigger value='posts'>Posty</TabsTrigger>
+        {/*<TabsTrigger value='posts'>Posty</TabsTrigger>*/}
         <TabsTrigger value='projects'>Projekty</TabsTrigger>
-        <TabsTrigger value='liked_projects'>Polubione projekty</TabsTrigger>
+        {/*<TabsTrigger value='liked_projects'>Polubione projekty</TabsTrigger>*/}
       </TabsList>
       <TabsContent value='posts'>
         <h2>Profile Posts</h2>
       </TabsContent>
       <TabsContent value='projects'>
         {owner ? <DialogCreateProject /> : <></>}
-        <div className='center'>
+        <div className='flex w-full h-full'>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-8'>
             <Projects />
           </div>

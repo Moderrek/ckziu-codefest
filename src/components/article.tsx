@@ -7,7 +7,7 @@ import UnstyledLink from './links/UnstyledLink';
 export default function Article(props: { article: ApiArticleData | null }) {
   if (props.article === null) {
     return (
-      <div className='card glass w-96 min-h-28'>
+      <div className='card glass w-80 md:w-96 min-h-28'>
         <div className='card-body'>
           <h2 className='card-title animate-pulse w-full'>
             <span className='bg-secondary rounded-3xl h-5 w-1/4'></span>
@@ -32,7 +32,7 @@ export default function Article(props: { article: ApiArticleData | null }) {
     );
   }
   return (
-    <div className='card glass w-96 min-h-28'>
+    <div className='card glass w-80 md:w-96 min-h-28'>
       <div className='card-body'>
         <h2 className='card-title'>{props.article.title}</h2>
         <p>{props.article.description}</p>

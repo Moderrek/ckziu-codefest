@@ -27,7 +27,7 @@ export default function DropdownMenuDemo() {
         <Button
           variant='gradient'
           color='indigo'
-          className='flex flex-row justify-center items-center p-2 gap-1'
+          className='flex flex-row min-w-fit flex-1 justify-center items-center p-2 gap-1'
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
