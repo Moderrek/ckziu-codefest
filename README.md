@@ -1,7 +1,7 @@
 # CKZiU CodeFest
 
 Serwis konkursowy dla CKZiU w Łodzi.
-Opracowany przez Tymona Woźniaka i Filipa Sobczuka.
+Opracowany przez Tymona Woźniaka
 
 ## Wymagania
 
@@ -29,6 +29,8 @@ Możesz rozpocząć edycje od zmiany `src/pages/index.tsx`. Strona automatycznie
 pliku.
 
 ## Uruchomienie produkcyjne
+
+Wymagane klucze w folderze `ssl/`
 
 ```bash
 pnpm run prod
