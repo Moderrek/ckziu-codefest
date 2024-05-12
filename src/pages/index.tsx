@@ -109,11 +109,12 @@ const Index: NextPage = () => {
           id='nagrody'
           className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'
         >
-          <Trophy />
-          Nagrody konkursowe
+          <Trophy className='text-amber-600' />
+          <span className='text-amber-600'>Nagrody</span> konkursowe
         </h2>
         <section className='container mb-5 mt-5 center'>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-8'>
+          {/*<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-8'>*/}
+          <div className='flex flex-wrap justify-center gap-2 lg:gap-8'>
             <RewardCard
               thumbnail='/images/rewards/headphones.png'
               rewardName='Słuchawki'
@@ -161,7 +162,7 @@ const Index: NextPage = () => {
       <section className='main-section'>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <TerminalIcon />
-          Najbardziej popularne projekty
+          Najbardziej <span className='text-blue-300'>popularne projekty</span>
         </h2>
         <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
           {/* PROJEKT */}
@@ -174,8 +175,8 @@ const Index: NextPage = () => {
           id='etapy'
           className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'
         >
-          <CalendarDays />
-          Etapy konkursu
+          <CalendarDays className='text-purple-300' />
+          <span className='text-purple-300'>Etapy</span> konkursu
         </h2>
         <ul className='timeline timeline-vertical'>
           <li>
@@ -276,7 +277,7 @@ const Index: NextPage = () => {
         </svg>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <Newspaper />
-          Ostatnie wydarzenia szkolne
+          Ostatnie <span className='text-amber-400'>wydarzenia szkolne</span>
         </h2>
         <div className='mx-auto mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap justify-center gap-4'>
           <ArticleSection />
@@ -287,7 +288,7 @@ const Index: NextPage = () => {
       <section className='main-section lg:mb-60 mb-10'>
         <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
           <CircleHelp />
-          Najczęściej zadawane pytania
+          Najczęściej zadawane <span className='text-green-400'>pytania</span>
         </h2>
         <FaqSection />
       </section>

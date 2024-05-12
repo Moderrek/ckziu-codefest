@@ -247,4 +247,8 @@
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
   }
 
+  .border-colorful {
+    border-image: linear-gradient(139deg, #fb8817, #ff4b01, #c12127, #e02aff) 3;
+  }
+
 }

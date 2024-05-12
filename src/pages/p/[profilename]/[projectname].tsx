@@ -1,13 +1,16 @@
 import { Button } from '@material-tailwind/react';
 import {
   CalendarPlus2,
+  Flag,
+  Github,
   Home,
+  Link,
   LogOut,
   Settings,
   Trash,
   User,
 } from 'lucide-react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rehypeRaw from 'rehype-raw';
@@ -131,6 +134,31 @@ const ProjectEdit = ({
   const [description, setDescription] = useState<string>(
     project.description ?? ''
   );
+  const [madeAnyChanges, setMadeAnyChanges] = useState(false);
+  const [uploadingChanges, setUploadingChanges] = useState(false);
+
+  useEffect(() => {
+    if (
+      content != markdown ||
+      projectName != project.display_name ||
+      description != project.description
+    ) {
+      setMadeAnyChanges(true);
+      return;
+    }
+    setMadeAnyChanges(false);
+  }, [
+    content,
+    description,
+    project.description,
+    project.display_name,
+    projectName,
+  ]);
+
+  const uploadChanges = async () => {
+    setUploadingChanges(true);
+  };
+
   return (
     <div className='p-5 w-full'>
       <NextImage
@@ -146,6 +174,7 @@ const ProjectEdit = ({
         className='font-title text-4xl'
         value={projectName}
         onChange={(e) => setProjectName(e.target.value)}
+        disabled={uploadingChanges}
       />
       <div className='text-muted-foreground flex flex-row items-center'>
         <User /> Autorstwa{' '}
@@ -159,6 +188,7 @@ const ProjectEdit = ({
         className='resize-none mt-5 ml-1 text-justify first-letter:text-2xl text-xl'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        disabled={uploadingChanges}
       />
 
       {/* Owner buttons */}
@@ -170,6 +200,9 @@ const ProjectEdit = ({
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
           className='flex flex-row justify-center items-center min-w-fit mt-4 mb-4 p-2'
+          disabled={!madeAnyChanges || uploadingChanges}
+          loading={uploadingChanges}
+          onClick={async () => await uploadChanges()}
         >
           Zapisz zmiany
         </Button>
@@ -192,6 +225,7 @@ const ProjectEdit = ({
             className='resize-none min-h-full'
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            disabled={uploadingChanges}
           />
         </div>
         <Markdown
@@ -262,6 +296,31 @@ const ProjectView = ({
       <div className='mt-5 ml-1 text-justify first-letter:text-2xl text-xl'>
         {project.description}
       </div>
+      <div className='mt-5 mb-5 flex flex-wrap flex-row gap-4 justify-center '>
+        <UnstyledLink
+          className='flex flex-row min-w-fit items-center gap-1 font-bold'
+          href='/p/moderr'
+        >
+          <User className='w-8 h-8' />{' '}
+          <UserMention userName={username} showAvatar={false} />
+        </UnstyledLink>
+        <UnstyledLink
+          className='flex flex-row min-w-fit items-center gap-1 font-bold'
+          href='/p/moderr'
+        >
+          <Github className='w-8 h-8' />
+          Moderrek
+        </UnstyledLink>
+        <UnstyledLink
+          className='flex flex-row min-w-fit items-center font-bold gap-1 break-words'
+          href='/p/moderr'
+        >
+          <Link className='w-6 h-8' />
+          <span className='underline text-blue-500'>
+            https://ckziucodefest.pl
+          </span>
+        </UnstyledLink>
+      </div>
       <Markdown
         className='markdown'
         remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
@@ -289,18 +348,6 @@ const ProjectView = ({
       >
         {markdown}
       </Markdown>
-      <div className='flex flex-col items-center justify-center sm:mt-5 md:mt-20'>
-        <NextImage
-          useSkeleton={true}
-          alt='CKZiU Logo'
-          src='/images/ckziu-cropped.svg'
-          width={150}
-          height={150}
-          className='animate-pulse'
-          fetchPriority='high'
-        />
-        <h2 className='font-title text-5xl animate-pulse'>P.W.T</h2>
-      </div>
     </div>
   );
 };
@@ -312,8 +359,15 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
 
   if (project === null) {
     return (
-      <DefaultLayout>
-        <Seo templateTitle='Nie znaleziono profilu' />
+      <DefaultLayout
+        breadcrumbs={[
+          {
+            name: username,
+            url: `/p/${username}`,
+          },
+        ]}
+      >
+        <Seo templateTitle='Nie znaleziono projektu' />
         <section className='main-section'>
           <div className='flex flex-col items-center'>
             <CkziuLogo width={100} height={100} />
@@ -321,7 +375,7 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
               CODEFEST
             </h2>
             <h1 className='text-center text-2xl font-bold'>
-              Nieznaleziono projektu{' '}
+              Nie znaleziono projektu{' '}
               <i>
                 @{username}/{projectname}
               </i>
@@ -343,39 +397,49 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
     );
   }
   return (
-    <DefaultLayout>
+    <DefaultLayout
+      breadcrumbs={[
+        {
+          name: username,
+          url: `/p/${username}`,
+        },
+        {
+          name: project.name,
+          url: `/p/${username}/${project.name}`,
+        },
+      ]}
+    >
       <Seo
-        templateTitle={`Projekt ${projectname}`}
+        templateTitle={`@${username}: ${project.display_name}`}
         description={
-          project.description ??
-          `Projekt ${project.display_name} stworzony przez ${username}`
+          `@${username}/${project.name}: ` + (project.description ?? ``)
         }
         date={new Date(project.created_at).toISOString()}
       />
-      <div className='container mx-auto '>
-        <div className='rounded drop-shadow-xl border-2 border-muted border-t-4 border-t-red-400 mt-0 lg:mt-10 bg-primary-foreground min-h-[80vh]'>
+      <div className='container mx-auto mb-5 md:mb-10'>
+        <div className='rounded-2xl drop-shadow-xl border-4 border-gradient mt-0 lg:mt-10 bg-primary-foreground min-h-[80vh]'>
           <div className='flex flex-col md:flex-row min-h-[80vh]'>
             {isOwner ? (
-              <div className='bg-primary-foreground md:min-h-[80vh] w-full h-12 md:w-52 border-b-2 md:border-b-0 md:border-r-2 light:border-gray-100 flex flex-row md:flex-col items-center p-4 gap-2'>
+              <div className='md:min-h-[80vh] w-full h-12 md:w-52 border-b-4 md:border-b-0 md:border-r-4 border-gradient flex flex-row md:flex-col items-center p-4 gap-2'>
                 <Button
-                  variant='outlined'
-                  className='flex flex-row min-w-fit items-center justify-center p-2 w-full light:text-black dark:text-white'
+                  className='flex flex-row min-w-fit justify-between items-center p-2 w-full'
                   placeholder={undefined}
                   onPointerEnterCapture={undefined}
                   onPointerLeaveCapture={undefined}
                   onClick={() => setEditMode(false)}
                 >
-                  <Home className='w-6 h-6' /> Widok
+                  <Home className='w-6 h-6' />
+                  <span className='flex-1'>Widok</span>
                 </Button>
                 <Button
-                  variant='outlined'
-                  className='flex flex-row min-w-fit items-center justify-center p-2 w-full'
+                  className='flex flex-row min-w-fit justify-between items-center p-2 w-full'
                   placeholder={undefined}
                   onPointerEnterCapture={undefined}
                   onPointerLeaveCapture={undefined}
                   onClick={() => setEditMode(true)}
                 >
-                  <Settings className='w-6 h-6' /> Właściwości
+                  <Settings className='w-6 h-6' />
+                  <span className='flex-1'>Właściwości</span>
                 </Button>
               </div>
             ) : (
@@ -394,6 +458,48 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
                 project={project}
               />
             )}
+            <div className='md:min-h-[80vh] w-full h-12 md:w-60 border-t-4 md:border-t-0 md:border-l-4 border-gradient flex flex-row md:flex-col items-center pt-4 gap-2'>
+              <p>
+                Licencja <b>MIT</b>
+              </p>
+              <div className='flex flex-wrap gap-2 justify-center text-sm text-white'>
+                {[
+                  'octocat',
+                  'atom',
+                  'electron',
+                  'api',
+                  'rust',
+                  'nextjs',
+                  'javascript',
+                ].map((tag, idx) => {
+                  return (
+                    <span
+                      key={idx}
+                      className='bg-blue-500 border-blue-600 border-[1px] drop-shadow hover:bg-blue-600 select-none rounded-full p-1 pl-2 pr-2'
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
+              </div>
+              {!isOwner && session?.token ? (
+                <div className='px-2'>
+                  <Button
+                    variant='gradient'
+                    color='red'
+                    placeholder={undefined}
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                    className='flex flex-row items-center justify-between min-w-fit py-2 px-4 w-full'
+                  >
+                    <Flag className='w-4 h-4' />
+                    <span className='break-words flex-1'>Zgłoś projekt</span>
+                  </Button>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
       </div>

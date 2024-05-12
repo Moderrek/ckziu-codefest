@@ -18,7 +18,14 @@ export function ProfileContent({ user }: { user: User }) {
   const session = useSession();
   const owner = useOwner(session, user.name);
   return (
-    <DefaultLayout>
+    <DefaultLayout
+      breadcrumbs={[
+        {
+          name: user.name,
+          url: `/p/${user.name}`,
+        },
+      ]}
+    >
       {selectedbadge !== undefined ? (
         <dialog id='modal' className='modal'>
           <div className='modal-box border-2 bg-white/30 backdrop-blur-2xl'>

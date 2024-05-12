@@ -41,8 +41,8 @@ export default function DropdownMenuDemo() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <ShadcnButton variant='outline' className='gap-2'>
-          <CircleUser /> {session.name}
+        <ShadcnButton variant='outline' className='gap-1'>
+          <CircleUser />@{session.name}
         </ShadcnButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-45'>
