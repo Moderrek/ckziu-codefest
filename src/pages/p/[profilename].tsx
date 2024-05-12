@@ -1,5 +1,8 @@
 import { Button } from '@material-tailwind/react';
 import { LogOut } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+import { useOwner, useSession } from '@/lib/auth/useSession';
 
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
@@ -7,15 +10,32 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import { ProfileContent } from '@/components/profile/ProfileContent';
 import Seo from '@/components/Seo';
 
-import { FetchUser, User } from '@/utils/FetchProfile';
+import { FetchUser, FetchUserAxios, User } from '@/utils/FetchProfile';
 
 interface ProfilePageProps {
   username: string;
-  user: User | null;
+  serveruser: User | null;
 }
 
 // Server or Client side
-const ProfilePage = ({ username, user }: ProfilePageProps) => {
+const ProfilePage = ({ username, serveruser }: ProfilePageProps) => {
+  const [user, setUser] = useState<User | null>(serveruser);
+  const [fetched, setFetched] = useState(false);
+
+  const session = useSession();
+  const isOwner = useOwner(session, username);
+
+  useEffect(() => {
+    if (serveruser == null) return;
+    (async () => {
+      if (isOwner && !fetched) {
+        setFetched(true);
+        const fetchedUser = await FetchUserAxios(username);
+        if (fetchedUser != null) setUser(fetchedUser);
+      }
+    })();
+  }, [isOwner]);
+
   // User Not Found
   if (user === null) {
     return (
@@ -73,7 +93,7 @@ const getServerSideProps = async ({
   return {
     props: {
       username: profilename,
-      user: user,
+      serveruser: user,
     },
   };
 };

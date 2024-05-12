@@ -5,8 +5,20 @@ import { isDev } from '@/lib/utils';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import Seo from '@/components/Seo';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useSession } from '@/lib/auth/useSession';
 
-const PanelPage = () => {
+interface PanelData {
+  usercount: number;
+  projectcount: number;
+}
+
+const PanelPage = ({ data }: { data: PanelData }) => {
+  
+  const session = useSession();
+  if (session == undefined || !session.isAuthorized || session.token === undefined) {
+    return (<>Brak dostępu</>);
+  }
+
   return (
     <DefaultLayout>
       <Seo templateTitle='Panel administratora' />
@@ -41,7 +53,7 @@ const PanelPage = () => {
                   <User className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>0</div>
+                  <div className='text-2xl font-bold'>{data.usercount}</div>
                   <p className='text-xs text-muted-foreground'>
                     +20.1% od wczoraj
                   </p>
@@ -55,7 +67,7 @@ const PanelPage = () => {
                   <Folder className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>0</div>
+                  <div className='text-2xl font-bold'>{data.projectcount}</div>
                   <p className='text-xs text-muted-foreground'>
                     +20.1% from last month
                   </p>
@@ -136,7 +148,13 @@ const PanelPage = () => {
 };
 
 const getServerSideProps = async () => {
-  return {};
+
+  const data: PanelData = {
+    usercount: 2,
+    projectcount: 4
+  };
+
+  return { props: { data: data }};
 };
 
 export { getServerSideProps };

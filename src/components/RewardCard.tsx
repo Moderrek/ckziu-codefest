@@ -9,11 +9,11 @@ const RewardCard = (props: { thumbnail: string; rewardName: string }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useTransform(y, [-0.5, 0.5], ['10.5deg', '-10.5deg'], {
+  const rotateX = useTransform(y, [-0.5, 0.5], ['17.5deg', '-17.5deg'], {
     clamp: true,
   });
 
-  const rotateY = useTransform(x, [-0.5, 0.5], ['-10.5deg', '10.5deg'], {
+  const rotateY = useTransform(x, [-0.5, 0.5], ['-17.5deg', '17.5deg'], {
     clamp: true,
   });
 

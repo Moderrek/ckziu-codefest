@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { API_V1 } from '@/lib/api/api';
 
 const API_URL_GET_USER = (name: string) => `${API_V1}/profile/${name}`;
@@ -41,6 +43,18 @@ interface User {
 
   flags: number;
 }
+
+const FetchUserAxios = async (name: string) => {
+  try {
+    const res = await axios.get(API_URL_GET_USER(name));
+    const user: User = res.data;
+    if (!user.created_at) return null;
+    return user;
+  } catch (_) {
+    //   ignored
+  }
+  return null;
+};
 
 const FetchUser = async (name: string) => {
   try {
@@ -87,4 +101,10 @@ const FetchProject = async (username: string, projectname: string) => {
 };
 
 export type { User };
-export { API_URL_GET_PROJECT, API_URL_GET_USER, FetchProject, FetchUser };
+export {
+  API_URL_GET_PROJECT,
+  API_URL_GET_USER,
+  FetchProject,
+  FetchUser,
+  FetchUserAxios,
+};
