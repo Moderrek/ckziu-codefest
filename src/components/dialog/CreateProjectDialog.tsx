@@ -229,6 +229,7 @@ const DialogCreateProject = () => {
         <DialogFooter>
           <MaterialButton
             variant='outlined'
+            color='green'
             loading={projectPublishing}
             disabled={projectExists}
             onClick={async () => publishProject()}

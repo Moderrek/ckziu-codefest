@@ -14,6 +14,7 @@ export interface Badge {
 }
 
 export interface CodefestProject {
+  owner_name: string;
   id: string;
   name: string;
   display_name: string;
@@ -22,10 +23,17 @@ export interface CodefestProject {
 
   private: boolean;
   description: string | null;
+  content: string;
+
+  github_url: string | null;
+  website_url: string | null;
+  tournament: boolean;
 
   likes: number;
   created_at: number;
   updated_at: number;
+
+  url: string;
 }
 
 interface User {
@@ -68,14 +76,14 @@ const FetchUser = async (name: string) => {
         image: '/images/badges/cc.png',
         name: 'Uczestnik konkursu CC 2024',
         description: 'tsfdsfsf',
-        id: '1',
+        id: '1'
       },
       {
         image: '/images/badges/admin_badge.png',
         name: 'Administrator serwisu',
         description: 'dsfsdfsdf',
-        id: '2',
-      },
+        id: '2'
+      }
     ];
     return user;
   } catch (_) {
@@ -100,11 +108,24 @@ const FetchProject = async (username: string, projectname: string) => {
   return null;
 };
 
+const FetchProjectAxios = async (username: string, projectname: string) => {
+  try {
+    const res = await axios.get(API_URL_GET_PROJECT(username, projectname));
+    const project: CodefestProject = res.data;
+    if (!project.created_at) return null;
+    return project;
+  } catch (_) {
+    //   ignored
+  }
+  return null;
+};
+
 export type { User };
 export {
   API_URL_GET_PROJECT,
   API_URL_GET_USER,
   FetchProject,
+  FetchProjectAxios,
   FetchUser,
-  FetchUserAxios,
+  FetchUserAxios
 };

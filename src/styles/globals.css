@@ -251,4 +251,13 @@
     border-image: linear-gradient(139deg, #fb8817, #ff4b01, #c12127, #e02aff) 3;
   }
 
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px !important;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #294a70 hsl(var(--background));
+  }
+
 }

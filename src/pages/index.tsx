@@ -16,7 +16,7 @@ import { useSession } from '@/lib/auth/useSession';
 
 import FaqSection from '@/components/FaqSection';
 import ArticleSection from '@/components/fetchable/articles';
-import { Projects } from '@/components/fetchable/Projects';
+import { NewestProjects } from '@/components/fetchable/Projects';
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -160,13 +160,13 @@ const Index: NextPage = () => {
 
       {/* POPULARNE PROJEKTY */}
       <section className='main-section'>
-        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold'>
+        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold text-blue-300'>
           <TerminalIcon />
-          Najbardziej <span className='text-blue-300'>popularne projekty</span>
+          Najnowsze projekty
         </h2>
         <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
           {/* PROJEKT */}
-          <Projects />
+          <NewestProjects />
         </div>
       </section>
 

@@ -22,16 +22,15 @@ export default function Navbar({ breadcrumbs }: NavbarProps) {
           </UnstyledLink>
           {breadcrumbs?.map((breadcrumb, idx) => {
             return (
-              <>
+              <span key={idx}>
                 /
                 <UnstyledLink
-                  key={idx}
                   href={breadcrumb.url}
                   className='btn btn-ghost font-title text-xl font-extrabold italic p-1'
                 >
                   {breadcrumb.name}
                 </UnstyledLink>
-              </>
+              </span>
             );
           })}
         </div>

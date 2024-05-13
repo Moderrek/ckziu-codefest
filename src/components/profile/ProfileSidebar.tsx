@@ -113,14 +113,14 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
             <h1 className='mt-2 text-center font-mono text-2xl text-black dark:text-white'>
               {(user.flags & (1 << 0)) != 0 ? (
                 <span className='font-title text-red-400 mr-1 drop-shadow'>
-                  <Tooltip content='Personel'>S</Tooltip>
+                  <Tooltip content={<b>Personel</b>}>S</Tooltip>
                 </span>
               ) : (
                 <></>
               )}
               {(user.flags & (1 << 1)) != 0 ? (
                 <span className='font-title text-amber-400 mr-1 drop-shadow'>
-                  <Tooltip content='Developer'>D</Tooltip>
+                  <Tooltip content={<b>Programista</b>}>D</Tooltip>
                 </span>
               ) : (
                 <></>
@@ -128,6 +128,13 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
               {(user.flags & (1 << 2)) != 0 ? (
                 <span className='font-title text-indigo-400 mr-1 drop-shadow'>
                   <Tooltip content='Nauczyciel'>N</Tooltip>
+                </span>
+              ) : (
+                <></>
+              )}
+              {(user.flags & (1 << 3)) != 0 ? (
+                <span className='font-title text-indigo-400 mr-1 drop-shadow'>
+                  <Tooltip content='Moderator'>M</Tooltip>
                 </span>
               ) : (
                 <></>

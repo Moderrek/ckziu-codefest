@@ -1,15 +1,22 @@
-import { Button } from '@material-tailwind/react';
+import { Button, Tooltip } from '@material-tailwind/react';
+import { Button as MaterialButton } from '@material-tailwind/react/components/Button';
+import axios from 'axios';
 import {
   CalendarPlus2,
   Flag,
   Github,
   Home,
   Link,
+  LockIcon,
   LogOut,
+  SaveAll,
   Settings,
   Trash,
+  Trophy,
+  UnlockIcon,
   User,
 } from 'lucide-react';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -18,7 +25,9 @@ import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 import remarkImages from 'remark-images';
 
+import { API_V1 } from '@/lib/api/api';
 import { useOwner, useSession } from '@/lib/auth/useSession';
+import { cn } from '@/lib/utils';
 
 import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
@@ -26,137 +35,142 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
 import { UserMention } from '@/components/profile/UserMention';
 import Seo from '@/components/Seo';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
 
-import { CodefestProject, FetchProject } from '@/utils/FetchProfile';
+import {
+  CodefestProject,
+  FetchProject,
+  FetchProjectAxios,
+} from '@/utils/FetchProfile';
 
 interface ProjectPageProps {
   username: string;
   projectname: string;
-  project: CodefestProject | null;
+  serverproject: CodefestProject | null;
 }
-
-const markdown = String.raw`
-<div align="center">
-    <h1>⚔️ HegeWorld</h1>
-
-[![CodeFactor](https://www.codefactor.io/repository/github/hegemonstudio/hegeworld/badge)](https://www.codefactor.io/repository/github/hegemonstudio/hegeworld)
-[![build](https://github.com/HegemonStudio/HegeWorld/actions/workflows/gradle.yml/badge.svg)](https://github.com/HegemonStudio/HegeWorld/actions/workflows/gradle.yml)
-![GitHub License](https://img.shields.io/github/license/HegemonStudio/HegeWorld)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/HegemonStudio/HegeWorld/total)
-    
-</div>
-
-**HegeWorld** is an innovative custom Minecraft hard-survival mode with build and gunplay.
-
-<h1 align="center">🔎 Overview</h1>
-
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/HegemonStudio/HegeWorld/main/imgs/ground.gif" width="250px" height="250px">
-
-<img src="https://raw.githubusercontent.com/HegemonStudio/HegeWorld/main/imgs/ore.gif" width="250px" height="250px">
-
-<img src="https://raw.githubusercontent.com/HegemonStudio/HegeWorld/main/imgs/ak.gif" width="250px" height="250px">
-
-</div>
-
-## About The Project
-
-### Collecting Resources
-
-### Building Structures
-
-### Raiding
-
-### Game Events and Gun play
-
-<h1 align="center">📥 How to install</h1>
-
-1. Go to [Github HegeWorld releases](https://github.com/HegemonStudio/HegeWorld/releases).
-2. Download latest jar file.
-3. Upload ~~HegeWorld.jar~~ into ~~plugins/~~ on your server.
-4. Install dependencies of HegeWorld. ([Download ImpactLib](https://github.com/Moderrek/ImpactMC/releases), [Download WorldEdit](https://dev.bukkit.org/projects/worldedit/files))
-5. Restart server.
-6. Enjoy **HegeWorld**!
-
-<h1 align="center">💻 Developers</h1>
-
-## Building
-
-1. Clone repository
-    ~~~shell
-    git clone https://github.com/HegemonStudio/HegeWorld.git
-    cd HegeWorld
-    ~~~
-
-2. Build gradle
-   ~~~shell
-   gradle build
-   ~~~
-
-3. Build jar file
-    ~~~shell
-    gradle jar
-    ~~~
-    The jar file will be located in ~~/build/libs/HegeWorld...jar~~
-
-    A paragraph with *emphasis* and **strong importance**.
-
-    > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-    
-    * Lists
-    * [ ] todo
-    * [x] done
-    
-    A table:
-    
-    | a | b |
-    | - | - |
-    | Literka a | a tutaj B |
-    | Literka a | a tutaj B |
-    | Literka a | a tutaj B |
-
-`;
 
 const ProjectEdit = ({
   username,
   projectname,
   project,
+  setProject,
 }: {
   username: string;
   projectname: string;
   project: CodefestProject;
+  setProject: any;
 }) => {
-  const [content, setContent] = useState<string>(markdown);
-  const [projectName, setProjectName] = useState<string>(project.display_name);
-  const [description, setDescription] = useState<string>(
-    project.description ?? ''
-  );
-  const [madeAnyChanges, setMadeAnyChanges] = useState(false);
+  const { toast } = useToast();
+  const [patchData, setPatchData] = useState({
+    display_name: project.display_name,
+    description: project.description ?? '',
+    private: project.private,
+    github_url: project.github_url,
+    website_url: project.website_url,
+    content: project.content,
+    tournament: project.tournament,
+  });
   const [uploadingChanges, setUploadingChanges] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (
-      content != markdown ||
-      projectName != project.display_name ||
-      description != project.description
-    ) {
-      setMadeAnyChanges(true);
+  const deleteProject = async () => {
+    setUploadingChanges(true);
+    const endpoint = `${API_V1}/projects/${username}/${projectname}`;
+    try {
+      const res = await axios.delete(endpoint);
+      setUploadingChanges(false);
+    } catch (err: any) {
+      setUploadingChanges(false);
+      // Request error or status code != 200
+      if (err.response && err.response.message) {
+        const data = err.response.data;
+        toast({
+          variant: 'destructive',
+          title: 'Wystąpił problem',
+          description: `Nie udało się usunąć projektu. ${data.message}`,
+        });
+        return;
+      }
+      toast({
+        variant: 'destructive',
+        title: 'Wystąpił nieznany problem',
+        description: `Nie udało się usunąć projektu. Sprawdź dostępność serwerów https://ckziucodefest.pl/status`,
+      });
       return;
     }
-    setMadeAnyChanges(false);
-  }, [
-    content,
-    description,
-    project.description,
-    project.display_name,
-    projectName,
-  ]);
+    toast({
+      variant: 'default',
+      title: 'Usunięto projekt',
+      description: `Pomyślnie usunięto projekt ${project.display_name}!`,
+    });
+
+    await router.push(`/p/${username}`);
+  };
 
   const uploadChanges = async () => {
+    const changesData = Object.fromEntries(
+      Object.entries(patchData).filter(
+        ([name, value]) => project[name as keyof CodefestProject] !== value
+      )
+    );
+    if (Object.entries(changesData).length == 0) {
+      return;
+    }
     setUploadingChanges(true);
+    const endpoint = `${API_V1}/projects/${username}/${projectname}`;
+    let response;
+
+    try {
+      response = await axios.patch(endpoint, changesData);
+      setUploadingChanges(false);
+    } catch (err: any) {
+      setUploadingChanges(false);
+      // Request error or status code != 200
+      if (err.response && err.response.message) {
+        const data = err.response.data;
+        toast({
+          variant: 'destructive',
+          title: 'Wystąpił problem',
+          description: `Nie udało się zaktualizować projektu. ${data.message}`,
+        });
+        return;
+      }
+      toast({
+        variant: 'destructive',
+        title: 'Wystąpił nieznany problem',
+        description: `Nie udało się opublikować projektu. Sprawdź dostępność serwerów https://ckziucodefest.pl/status`,
+      });
+      return;
+    }
+    const data = response.data;
+    if (!data.success) {
+      toast({
+        variant: 'destructive',
+        title: 'Wystąpił problem',
+        description: `Nie udało się zaktualizować projektu. ${data.message}`,
+      });
+      return;
+    }
+
+    toast({
+      variant: 'default',
+      title: 'Sukces!',
+      description: 'Pomyślnie zaktualizowano dane projektu!',
+    });
+    setProject({ ...project, ...patchData });
   };
 
   return (
@@ -172,22 +186,82 @@ const ProjectEdit = ({
       />
       <Input
         className='font-title text-4xl'
-        value={projectName}
-        onChange={(e) => setProjectName(e.target.value)}
+        value={patchData.display_name}
+        onChange={(e) =>
+          setPatchData({ ...patchData, display_name: e.target.value })
+        }
+        placeholder='abc'
+        maxLength={40}
         disabled={uploadingChanges}
       />
-      <div className='text-muted-foreground flex flex-row items-center'>
-        <User /> Autorstwa{' '}
-        <UserMention userName={username} showAvatar={false} />
+      <div className='flex flex-row items-center gap-2 mt-2'>
+        <Label
+          htmlFor='private'
+          className='text-right flex flex-row items-center'
+        >
+          {patchData.private ? (
+            <>
+              <LockIcon />
+              Prywatny
+            </>
+          ) : (
+            <>
+              <UnlockIcon />
+              Publiczny
+            </>
+          )}
+        </Label>
+        <Checkbox
+          id='private'
+          className='col-span-3'
+          checked={patchData.private}
+          onClick={() =>
+            setPatchData({ ...patchData, private: !patchData.private })
+          }
+          disabled={uploadingChanges}
+        />
       </div>
-      <div className='text-muted-foreground flex flex-row items-center'>
-        <CalendarPlus2 /> Utworzono{' '}
-        {new Date(project.created_at).toLocaleDateString()}
+      <div className='flex w-1/2 flex-row items-center gap-2'>
+        <Github className='w-10 h-10' />
+        <Input
+          value={patchData.github_url ?? ''}
+          onChange={(e) =>
+            setPatchData({ ...patchData, github_url: e.target.value.trim() })
+          }
+          className={cn(
+            patchData.github_url &&
+              isValidHttpUrl(patchData.github_url) &&
+              patchData.github_url.startsWith('https://github.com/') &&
+              patchData.github_url.length >= 'https://github.com/'.length + 3
+              ? ''
+              : 'text-red-400'
+          )}
+          placeholder='https://github.com/'
+          maxLength={100}
+          disabled={uploadingChanges}
+        />
+        <Link className='w-10 h-10' />
+        <Input
+          value={patchData.website_url ?? ''}
+          onChange={(e) =>
+            setPatchData({ ...patchData, website_url: e.target.value.trim() })
+          }
+          className={cn(
+            isValidHttpUrl(patchData.website_url ?? '') ? '' : 'text-red-400'
+          )}
+          placeholder='https://witryna.pl'
+          maxLength={100}
+          disabled={uploadingChanges}
+        />
       </div>
       <Textarea
-        className='resize-none mt-5 ml-1 text-justify first-letter:text-2xl text-xl'
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        className='resize-none mt-2 ml-1 text-justify first-letter:text-2xl text-xl'
+        value={patchData.description}
+        onChange={(e) =>
+          setPatchData({ ...patchData, description: e.target.value })
+        }
+        placeholder='Tutaj powinien znajdować się krótki opis projektu. Możesz pozostawić puste.'
+        maxLength={100}
         disabled={uploadingChanges}
       />
 
@@ -199,32 +273,123 @@ const ProjectEdit = ({
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          className='flex flex-row justify-center items-center min-w-fit mt-4 mb-4 p-2'
-          disabled={!madeAnyChanges || uploadingChanges}
+          className='flex flex-row justify-center items-center min-w-fit mt-4 mb-4 p-2 gap-1'
+          disabled={uploadingChanges}
           loading={uploadingChanges}
           onClick={async () => await uploadChanges()}
         >
+          <SaveAll className='w-4 h-4' />
           Zapisz zmiany
         </Button>
-        <Button
-          color='red'
-          variant='gradient'
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-          className='flex flex-row justify-center items-center min-w-fit mt-4 mb-4 p-2'
-        >
-          <Trash className='w-4 h-4' />
-          Usuń projekt
-        </Button>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              color='red'
+              variant='gradient'
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+              className='flex flex-row justify-center items-center min-w-fit mt-4 mb-4 p-2 gap-1'
+            >
+              <Trash className='w-4 h-4' />
+              Usuń projekt
+            </Button>
+          </DialogTrigger>
+          <DialogContent className='sm:max-w-[425px]'>
+            <DialogHeader>
+              <DialogTitle>Usuwanie projektu</DialogTitle>
+              <DialogDescription>
+                UWAGA! Usunięcie projektu jest nieodwracalne.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <MaterialButton
+                variant='gradient'
+                color='red'
+                loading={uploadingChanges}
+                onClick={async () => deleteProject()}
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+              >
+                {uploadingChanges ? 'Usuwanie...' : 'USUŃ projekt'}
+              </MaterialButton>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {!patchData.tournament ? (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                color='yellow'
+                variant='gradient'
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+                className='flex flex-row justify-center items-center min-w-fit mt-4 mb-4 p-2 gap-1'
+              >
+                <Trophy className='w-4 h-4' />
+                Zgłoś do konkursu
+              </Button>
+            </DialogTrigger>
+            <DialogContent className='sm:max-w-[425px]'>
+              <DialogHeader>
+                <DialogTitle className='flex flex-row items-center gap-1'>
+                  <Trophy /> CKZiU CodeFest24
+                </DialogTitle>
+                <DialogDescription>
+                  UWAGA! Zgłoszenie tego projektu do konkursu odwoła zgłoszenie
+                  poprzednich projektów, ponieważ tylko jeden projekt może być
+                  zgłoszony. Przedmiotem konkursu jest strona napisana
+                  własnoręcznie. Tematyka strony jest dowolna. Projekty
+                  niezgodne z regulaminem mogą został usunięte.
+                </DialogDescription>
+              </DialogHeader>
+              <ul>
+                <li>
+                  <UnstyledLink
+                    className='text-blue-400 hover:underline'
+                    href='/regulamin'
+                    target='_blank'
+                  >
+                    Zgłaszając prace akceptujesz regulamin konkursu
+                  </UnstyledLink>
+                </li>
+              </ul>
+              {patchData.private ? 'Projekt musi być publiczny.' : ''}
+              <DialogFooter>
+                <MaterialButton
+                  variant='gradient'
+                  color='yellow'
+                  loading={uploadingChanges}
+                  disabled={patchData.private}
+                  onClick={() =>
+                    setPatchData({ ...patchData, tournament: true })
+                  }
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  Zgłoś projekt do konkursu
+                </MaterialButton>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className='bg-accent rounded-xl p-4 border-2 border-gradient flex flex-row justify-between w-full gap-2'>
         <div className='w-1/2 min-h-full min-w-1/2 rounded-2xl'>
           <Textarea
             className='resize-none min-h-full'
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            value={patchData.content}
+            onChange={(e) =>
+              setPatchData({ ...patchData, content: e.target.value })
+            }
             disabled={uploadingChanges}
           />
         </div>
@@ -253,12 +418,24 @@ const ProjectEdit = ({
             },
           }}
         >
-          {content}
+          {patchData.content}
         </Markdown>
       </div>
     </div>
   );
 };
+
+function isValidHttpUrl(string: string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === 'http:' || url.protocol === 'https:';
+}
 
 const ProjectView = ({
   username,
@@ -281,7 +458,25 @@ const ProjectView = ({
         className='w-full md:w-1/2'
       />
       <div className='overflow-hidden'>
-        <h1 className='font-title text-6xl animate-uptitle'>
+        <h1
+          className={cn(
+            'font-title text-6xl animate-uptitle flex flex-row items-center gap-2'
+          )}
+        >
+          {project.private ? (
+            <Tooltip content='Tylko ty widzisz ten projekt'>
+              <LockIcon className='w-10 h-10 text-red-400' />
+            </Tooltip>
+          ) : (
+            <></>
+          )}
+          {project.tournament ? (
+            <Tooltip content='Kandydat CKZiU CodeFest24'>
+              <Trophy className='w-10 h-10 text-amber-600' />
+            </Tooltip>
+          ) : (
+            <></>
+          )}
           {project.display_name}
         </h1>
       </div>
@@ -299,27 +494,35 @@ const ProjectView = ({
       <div className='mt-5 mb-5 flex flex-wrap flex-row gap-4 justify-center '>
         <UnstyledLink
           className='flex flex-row min-w-fit items-center gap-1 font-bold'
-          href='/p/moderr'
+          href={`/p/${username}`}
         >
           <User className='w-8 h-8' />{' '}
           <UserMention userName={username} showAvatar={false} />
         </UnstyledLink>
-        <UnstyledLink
-          className='flex flex-row min-w-fit items-center gap-1 font-bold'
-          href='/p/moderr'
-        >
-          <Github className='w-8 h-8' />
-          Moderrek
-        </UnstyledLink>
-        <UnstyledLink
-          className='flex flex-row min-w-fit items-center font-bold gap-1 break-words'
-          href='/p/moderr'
-        >
-          <Link className='w-6 h-8' />
-          <span className='underline text-blue-500'>
-            https://ckziucodefest.pl
-          </span>
-        </UnstyledLink>
+        {project.github_url ? (
+          <UnstyledLink
+            className='flex flex-row min-w-fit items-center gap-1 font-bold'
+            href={project.github_url}
+          >
+            <Github className='w-8 h-8' />
+            GitHub
+          </UnstyledLink>
+        ) : (
+          <></>
+        )}
+        {project.website_url ? (
+          <UnstyledLink
+            className='flex flex-row min-w-fit items-center font-bold gap-1 break-words'
+            href={project.website_url}
+          >
+            <Link className='w-6 h-8' />
+            <span className='underline text-blue-500'>
+              {project.website_url}
+            </span>
+          </UnstyledLink>
+        ) : (
+          <></>
+        )}
       </div>
       <Markdown
         className='markdown'
@@ -346,16 +549,32 @@ const ProjectView = ({
           },
         }}
       >
-        {markdown}
+        {project.content}
       </Markdown>
     </div>
   );
 };
 
-const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
+const ProjectPage = ({
+  username,
+  projectname,
+  serverproject,
+}: ProjectPageProps) => {
+  const [project, setProject] = useState<CodefestProject | null>(serverproject);
   const session = useSession();
   const isOwner = useOwner(session, username);
   const [editMode, setEditMode] = useState(false);
+  const [fetchedProject, setFetchedProject] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      if (isOwner && !fetchedProject) {
+        setFetchedProject(true);
+        const fetchedProject = await FetchProjectAxios(username, projectname);
+        if (fetchedProject != null) setProject(fetchedProject);
+      }
+    })();
+  }, [isOwner]);
 
   if (project === null) {
     return (
@@ -450,6 +669,7 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
                 username={username}
                 projectname={projectname}
                 project={project}
+                setProject={setProject}
               />
             ) : (
               <ProjectView
@@ -458,31 +678,36 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
                 project={project}
               />
             )}
-            <div className='md:min-h-[80vh] w-full h-12 md:w-60 border-t-4 md:border-t-0 md:border-l-4 border-gradient flex flex-row md:flex-col items-center pt-4 gap-2'>
-              <p>
-                Licencja <b>MIT</b>
-              </p>
-              <div className='flex flex-wrap gap-2 justify-center text-sm text-white'>
-                {[
-                  'octocat',
-                  'atom',
-                  'electron',
-                  'api',
-                  'rust',
-                  'nextjs',
-                  'javascript',
-                ].map((tag, idx) => {
-                  return (
-                    <span
-                      key={idx}
-                      className='bg-blue-500 border-blue-600 border-[1px] drop-shadow hover:bg-blue-600 select-none rounded-full p-1 pl-2 pr-2'
-                    >
-                      {tag}
-                    </span>
-                  );
-                })}
-              </div>
-              {!isOwner && session?.token ? (
+            {!isOwner && session?.token ? (
+              <div className='md:min-h-[80vh] w-full h-12 md:w-60 border-t-4 md:border-t-0 md:border-l-4 border-gradient flex flex-row md:flex-col items-center pt-4 gap-2'>
+                {/*<p>*/}
+                {/*  Licencja <b>MIT</b>*/}
+                {/*</p>*/}
+                {/*<div className='flex flex-wrap gap-2 justify-center text-sm text-white'>*/}
+                {/*  {[*/}
+                {/*    'octocat',*/}
+                {/*    'atom',*/}
+                {/*    'electron',*/}
+                {/*    'api',*/}
+                {/*    'rust',*/}
+                {/*    'nextjs',*/}
+                {/*    'javascript',*/}
+                {/*    'randomtag',*/}
+                {/*    'minecraft',*/}
+                {/*    'moderrkowo',*/}
+                {/*    'lato',*/}
+                {/*    'ckziucodefest',*/}
+                {/*  ].map((tag, idx) => {*/}
+                {/*    return (*/}
+                {/*      <span*/}
+                {/*        key={idx}*/}
+                {/*        className='bg-blue-500 border-blue-600 border-[1px] drop-shadow hover:bg-blue-600 select-none rounded-full p-1 pl-2 pr-2'*/}
+                {/*      >*/}
+                {/*        {tag}*/}
+                {/*      </span>*/}
+                {/*    );*/}
+                {/*  })}*/}
+                {/*</div>*/}
                 <div className='px-2'>
                   <Button
                     variant='gradient'
@@ -496,10 +721,10 @@ const ProjectPage = ({ username, projectname, project }: ProjectPageProps) => {
                     <span className='break-words flex-1'>Zgłoś projekt</span>
                   </Button>
                 </div>
-              ) : (
-                <></>
-              )}
-            </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
@@ -540,7 +765,7 @@ const getServerSideProps = async ({
     props: {
       username: profilename,
       projectname: projectname,
-      project: project,
+      serverproject: project,
     },
   };
 };

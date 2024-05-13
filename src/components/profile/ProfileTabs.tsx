@@ -25,7 +25,7 @@ const ProfileTabs = () => {
       <TabsContent value='projects'>
         {owner ? <DialogCreateProject /> : <></>}
         <div className='flex w-full h-full'>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-8'>
+          <div className='flex flex-row flex-wrap justify-center md:justify-normal gap-2 lg:gap-8'>
             <Projects />
           </div>
         </div>
