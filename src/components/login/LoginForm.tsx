@@ -245,7 +245,7 @@ function LoginForm({ loginService }: LoginFormProps) {
         localStorage.setItem('cachedName', data.name);
         await router.push(`/p/${data.name}`);
       } catch (err: any) {
-        if (err.response.status === 401) {
+        if (!err.response || err.response.status === 401) {
           // logout
           delete axios.defaults.headers.common['Authorization'];
           localStorage.removeItem('cachedName');
