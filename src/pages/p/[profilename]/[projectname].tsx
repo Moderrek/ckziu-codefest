@@ -3,7 +3,6 @@ import { Button as MaterialButton } from '@material-tailwind/react/components/Bu
 import axios from 'axios';
 import {
   CalendarPlus2,
-  Flag,
   Github,
   Home,
   Link,
@@ -678,53 +677,53 @@ const ProjectPage = ({
                 project={project}
               />
             )}
-            {!isOwner ? (
-              <div className='md:min-h-[80vh] w-full h-12 md:w-60 border-t-4 md:border-t-0 md:border-l-4 border-gradient flex flex-row md:flex-col items-center pt-4 gap-2'>
-                <p>
-                  Licencja <b>MIT</b>
-                </p>
-                <div className='flex flex-wrap gap-2 justify-center text-sm text-white'>
-                  {[
-                    'octocat',
-                    'atom',
-                    'electron',
-                    'api',
-                    'rust',
-                    'nextjs',
-                    'javascript',
-                    'randomtag',
-                    'minecraft',
-                    'moderrkowo',
-                    'lato',
-                    'ckziucodefest',
-                  ].map((tag, idx) => {
-                    return (
-                      <span
-                        key={idx}
-                        className='bg-blue-500 border-blue-600 border-[1px] drop-shadow hover:bg-blue-600 select-none rounded-full p-1 pl-2 pr-2'
-                      >
-                        {tag}
-                      </span>
-                    );
-                  })}
-                </div>
-                <div className='px-2'>
-                  <Button
-                    variant='gradient'
-                    color='red'
-                    placeholder={undefined}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                    className='flex flex-row items-center justify-between min-w-fit py-2 px-4 w-full'
-                  >
-                    <Flag className='w-4 h-4' />
-                    <span className='break-words flex-1'>Zgłoś projekt</span>
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
+            {/*{!isOwner ? (*/}
+            {/*  <div className='md:min-h-[80vh] w-full h-12 md:w-60 border-t-4 md:border-t-0 md:border-l-4 border-gradient flex flex-row md:flex-col items-center pt-4 gap-2'>*/}
+            {/*    <p>*/}
+            {/*      Licencja <b>MIT</b>*/}
+            {/*    </p>*/}
+            {/*    <div className='flex flex-wrap gap-2 justify-center text-sm text-white'>*/}
+            {/*      {[*/}
+            {/*        'octocat',*/}
+            {/*        'atom',*/}
+            {/*        'electron',*/}
+            {/*        'api',*/}
+            {/*        'rust',*/}
+            {/*        'nextjs',*/}
+            {/*        'javascript',*/}
+            {/*        'randomtag',*/}
+            {/*        'minecraft',*/}
+            {/*        'moderrkowo',*/}
+            {/*        'lato',*/}
+            {/*        'ckziucodefest',*/}
+            {/*      ].map((tag, idx) => {*/}
+            {/*        return (*/}
+            {/*          <span*/}
+            {/*            key={idx}*/}
+            {/*            className='bg-blue-500 border-blue-600 border-[1px] drop-shadow hover:bg-blue-600 select-none rounded-full p-1 pl-2 pr-2'*/}
+            {/*          >*/}
+            {/*            {tag}*/}
+            {/*          </span>*/}
+            {/*        );*/}
+            {/*      })}*/}
+            {/*    </div>*/}
+            {/*    <div className='px-2'>*/}
+            {/*      <Button*/}
+            {/*        variant='gradient'*/}
+            {/*        color='red'*/}
+            {/*        placeholder={undefined}*/}
+            {/*        onPointerEnterCapture={undefined}*/}
+            {/*        onPointerLeaveCapture={undefined}*/}
+            {/*        className='flex flex-row items-center justify-between min-w-fit py-2 px-4 w-full'*/}
+            {/*      >*/}
+            {/*        <Flag className='w-4 h-4' />*/}
+            {/*        <span className='break-words flex-1'>Zgłoś projekt</span>*/}
+            {/*      </Button>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*) : (*/}
+            {/*  <></>*/}
+            {/*)}*/}
           </div>
         </div>
       </div>
