@@ -1,6 +1,6 @@
 {
   "name": "ckziu-codefest",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "private": true,
   "description": "Serwis konkursowy dla CKZiU w Łodzi.",
   "contributors": [
@@ -8,11 +8,6 @@
       "name": "Tymon Woźniak",
       "email": "tymon.student@gmail.com",
       "url": "https://github.com/Moderrek"
-    },
-    {
-      "name": "Filip Sobczuk",
-      "email": "filip.sobczuk@o2.pl",
-      "url": "https://github.com/Drakvlaa"
     }
   ],
   "scripts": {
