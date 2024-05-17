@@ -89,16 +89,17 @@ const Index: NextPage = () => {
             </UnstyledLink>
           </p>
         </div>
-        <div>
+        <div className='min-w-1/2'>
           <UnstyledLink href='https://cez.lodz.pl/'>
             <NextImage
               alt='CKZiU'
               src='/images/ckziu_thumbnail.png'
-              width={1000}
-              height={1000}
-              useSkeleton={true}
+              width={680}
+              height={400}
               className='w-full h-full'
               imgClassName='rounded-2xl drop-shadow-xl border-gradient border-2'
+              useSkeleton={false}
+              priority={true}
             />
           </UnstyledLink>
         </div>

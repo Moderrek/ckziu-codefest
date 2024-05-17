@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import NextImage from '@/components/NextImage';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   HoverCard,
   HoverCardContent,
@@ -73,10 +72,14 @@ const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
             href={profileUrl}
             className='inline-flex flex-row items-center hover:underline'
           >
-            <Avatar className='h-8 w-8'>
-              <AvatarImage src='/images/ckziu_thumbnail.png' />
-              <AvatarFallback>{user.name}</AvatarFallback>
-            </Avatar>
+            <NextImage
+              alt={`Profilowe ${user.name}`}
+              src='/images/ckziu_thumbnail.png'
+              width={32}
+              height={32}
+              className='h-8 w-8'
+              imgClassName='aspect-square h-full w-full rounded-full'
+            />
             <span className='ml-1'>@{user.name}</span>
           </Link>
         ) : (
