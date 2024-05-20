@@ -10,6 +10,7 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import { ProfileContent } from '@/components/profile/ProfileContent';
 import Seo from '@/components/Seo';
 
+import useGlobalState from '@/globalstate/useGlobalState';
 import { FetchUser, FetchUserAxios, User } from '@/utils/FetchProfile';
 
 interface ProfilePageProps {
@@ -25,13 +26,31 @@ const ProfilePage = ({ username, serveruser }: ProfilePageProps) => {
   const session = useSession();
   const isOwner = useOwner(session, username);
 
+  const globalState = useGlobalState();
+
   useEffect(() => {
     if (serveruser == null) return;
     (async () => {
       if (isOwner && !fetched) {
         setFetched(true);
+        if (globalState) {
+          if (globalState.globalState?.profiles.has(username)) {
+            const user = globalState.globalState?.profiles.get(username);
+            if (user) {
+              console.log('BRING BACK CACHED');
+              setUser(user);
+              return;
+            }
+          }
+        }
         const fetchedUser = await FetchUserAxios(username);
-        if (fetchedUser != null) setUser(fetchedUser);
+        if (fetchedUser != null) {
+          if (globalState) {
+            console.log('SET GLOBAL STATE');
+            globalState.globalState?.profiles.set(username, fetchedUser);
+          }
+          setUser(fetchedUser);
+        }
       }
     })();
   }, [isOwner]);

@@ -65,7 +65,7 @@ const RewardCard = (props: { thumbnail: string; rewardName: string }) => {
           />
         </div>
         <div
-          className='absolute h-[250px] w-[250px] reward-effect'
+          className='absolute h-[250px] w-[250px] reward-effect background-animate'
           style={{
             transformStyle: 'preserve-3d',
             transform: 'translateZ(50px)',

@@ -75,7 +75,7 @@ const DialogCreateProject = () => {
   const publishProject = async () => {
     setProjectPublishing(true);
 
-    const endpoint = `${API_V1}/project/create`;
+    const endpoint = `${API_V1}/projects`;
     let response;
     try {
       response = await axios.post(endpoint, {

@@ -130,11 +130,43 @@ const UserProject = (props: { project: CodefestProject }) => {
   );
 };
 
+function ShadowProject() {
+  return (
+    <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
+      <div className='min-w-[340px] min-h-[250px] rounded-b-lg shadow bg-secondary animate-pulse'></div>
+      <div className='px-6 py-4'>
+        <div className='flex flex-row justify-between text-2xl font-bold'>
+          <span className='flex flex-row items-center min-w-fit gap-1 hover:underline animate-pulse w-full'>
+            <span className='bg-secondary rounded-3xl h-5 w-1/2'></span>
+            <span className='bg-secondary rounded-3xl h-5 w-1/3'></span>
+          </span>
+        </div>
+        <span className='flex flex-row items-center min-w-fit gap-1 hover:underline animate-pulse w-full'>
+          <span className='bg-secondary rounded-full h-8 w-8'></span>
+          <span className='bg-secondary rounded-3xl h-5 w-1/4'></span>
+        </span>
+        <div className='mt-2 w-full h-5 animate-pulse bg-secondary rounded-3xl'></div>
+      </div>
+    </div>
+  );
+}
+
 const NewestProjects = () => {
   const { data, error, isLoading } = useSWR<CodefestProject[]>(
     `${API_V1}/projects`,
     fetcher
   );
+
+  if (error || isLoading) {
+    return (
+      <>
+        <ShadowProject />
+        <ShadowProject />
+        <ShadowProject />
+        <ShadowProject />
+      </>
+    );
+  }
 
   if (error || isLoading || !data)
     return (

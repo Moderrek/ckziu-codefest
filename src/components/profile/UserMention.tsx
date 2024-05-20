@@ -9,7 +9,8 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 
-import { FetchUser, User } from '@/utils/FetchProfile';
+import useGlobalState from '@/globalstate/useGlobalState';
+import { FetchUserAxios, User } from '@/utils/FetchProfile';
 import { UserCreatedDate } from '@/utils/UserCreatedDate';
 
 interface ProfileHoverCardProps {
@@ -20,12 +21,25 @@ interface ProfileHoverCardProps {
 const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
   // Tri-state => { fetched => User | null, fetching.. => undefined }
   const [user, setUser] = useState<User | null | undefined>(undefined);
+  const state = useGlobalState();
 
   useEffect(() => {
-    FetchUser(userName.toLowerCase()).then((user) => {
+    const name = userName.toLowerCase();
+    if (state) {
+      const { globalState } = state;
+      if (globalState?.users.has(name)) {
+        const user = globalState?.users.get(name);
+        setUser(user);
+        return;
+      }
+    }
+    FetchUserAxios(userName.toLowerCase()).then((user) => {
+      if (user && state) {
+        state.globalState?.users.set(name, user);
+      }
       setUser(user);
     });
-  }, [userName]);
+  }, [state, userName]);
 
   if (user === null) {
     // Error

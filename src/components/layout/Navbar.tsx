@@ -22,7 +22,7 @@ export default function Navbar({ breadcrumbs }: NavbarProps) {
           </UnstyledLink>
           {breadcrumbs?.map((breadcrumb, idx) => {
             return (
-              <span key={idx}>
+              <span key={idx} className='hidden md:block'>
                 /
                 <UnstyledLink
                   href={breadcrumb.url}

@@ -71,20 +71,6 @@ const FetchUser = async (name: string) => {
     if (!user.created_at) {
       return null;
     }
-    user.badges = [
-      {
-        image: '/images/badges/cc.png',
-        name: 'Uczestnik konkursu CC 2024',
-        description: 'tsfdsfsf',
-        id: '1'
-      },
-      {
-        image: '/images/badges/admin_badge.png',
-        name: 'Administrator serwisu',
-        description: 'dsfsdfsdf',
-        id: '2'
-      }
-    ];
     return user;
   } catch (_) {
     /* ignored */
@@ -127,5 +113,5 @@ export {
   FetchProject,
   FetchProjectAxios,
   FetchUser,
-  FetchUserAxios
+  FetchUserAxios,
 };
