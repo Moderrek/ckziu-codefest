@@ -59,20 +59,20 @@ const ProfilePage = ({ username, serveruser }: ProfilePageProps) => {
   if (user === null) {
     return (
       <DefaultLayout>
-        <Seo templateTitle='Nie znaleziono profilu' />
-        <section className='main-section'>
-          <div className='flex flex-col items-center'>
+        <Seo templateTitle="Nie znaleziono profilu" />
+        <section className="main-section">
+          <div className="flex flex-col items-center">
             <CkziuLogo width={100} height={100} />
-            <h2 className='font-title text-center text-4xl font-bold'>
+            <h2 className="text-center font-title text-4xl font-bold">
               CODEFEST
             </h2>
-            <h1 className='text-center text-2xl font-bold'>
+            <h1 className="text-center text-2xl font-bold">
               Nie znaleziono profilu <i>@{username}</i>
             </h1>
-            <UnstyledLink href='/'>
+            <UnstyledLink href="/">
               <Button
-                color='red'
-                className='center mt-5 flex-row gap-1'
+                color="red"
+                className="center mt-5 flex-row gap-1"
                 placeholder={undefined}
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
@@ -91,8 +91,8 @@ const ProfilePage = ({ username, serveruser }: ProfilePageProps) => {
 };
 
 const getServerSideProps = async ({
-  query,
-}: {
+                                    query
+                                  }: {
   query: { profilename: string };
 }) => {
   // Extract profile name from query
@@ -112,8 +112,8 @@ const getServerSideProps = async ({
   return {
     props: {
       username: profilename,
-      serveruser: user,
-    },
+      serveruser: user
+    }
   };
 };
 

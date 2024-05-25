@@ -15,7 +15,7 @@ const UserCreatedDate = (user: User) => {
     'Wrzesień',
     'Październik',
     'Listopad',
-    'Grudzień',
+    'Grudzień'
   ];
 
   return `${months[created_at.getMonth()]} ${created_at.getFullYear()}`;

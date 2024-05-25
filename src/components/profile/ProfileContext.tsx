@@ -11,7 +11,7 @@ const ProfileContext = createContext<User>({
   bio: null,
   created_at: 0,
   updated_at: 0,
-  flags: 0,
+  flags: 0
 });
 
 export default ProfileContext;

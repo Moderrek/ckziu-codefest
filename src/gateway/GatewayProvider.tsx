@@ -10,11 +10,6 @@ class Gateway {
     return this.connected;
   }
 
-  private on_connect() {
-    console.log('Gateway open');
-    this.socket!.send('hello');
-  }
-
   connect() {
     if (this.is_connected) {
       return;
@@ -48,6 +43,11 @@ class Gateway {
       this.socket!.send(JSON.stringify(data));
     }
   }
+
+  private on_connect() {
+    console.log('Gateway open');
+    this.socket!.send('hello');
+  }
 }
 
 interface GatewayContextProps {
@@ -57,7 +57,7 @@ interface GatewayContextProps {
 
 const GatewayContext = createContext<GatewayContextProps>({
   gateway: null,
-  setGateway: null,
+  setGateway: null
 });
 
 const GatewayProvider = ({ children }: { children: ReactNode }) => {
@@ -79,7 +79,7 @@ const GatewayProvider = ({ children }: { children: ReactNode }) => {
     <GatewayContext.Provider
       value={{
         gateway: gateway,
-        setGateway: setGateway,
+        setGateway: setGateway
       }}
     >
       {children}

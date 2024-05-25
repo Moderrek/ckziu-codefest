@@ -11,11 +11,7 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
 import ProfileContext from '@/components/profile/ProfileContext';
 import { UserMention } from '@/components/profile/UserMention';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 import { useUser } from '@/globalstate/useUser';
 import { CodefestProject } from '@/utils/FetchProfile';
@@ -24,9 +20,9 @@ import { UserCreatedDate } from '@/utils/UserCreatedDate';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const ProjectAuthor = ({
-  owner_name,
-  project_create,
-}: {
+                         owner_name,
+                         project_create
+                       }: {
   owner_name: string;
   project_create: number;
 }) => {
@@ -47,52 +43,52 @@ const ProjectAuthor = ({
   return (
     <HoverCard openDelay={1}>
       <HoverCardTrigger asChild>
-        <div className='mt-6 flex items-center'>
+        <div className="mt-6 flex items-center">
           <UnstyledLink href={`/p/${user.name}`}>
-            <div className='flex-shrink-0'>
-              <span className='sr-only'>{user.display_name}</span>
+            <div className="shrink-0">
+              <span className="sr-only">{user.display_name}</span>
               <NextImage
                 alt={`${user.display_name} Profile Picture`}
-                src='/images/ckziu_thumbnail.png'
+                src="/images/ckziu_thumbnail.png"
                 width={40}
                 height={40}
-                imgClassName='w-10 h-10 rounded-full'
+                imgClassName="w-10 h-10 rounded-full"
               />
             </div>
           </UnstyledLink>
 
-          <div className='pt-1 ml-3'>
+          <div className="ml-3 pt-1">
             <UnstyledLink href={`/p/${user.name}`}>
-              <p className='text-sm font-medium text-gray-900 dark:text-white'>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">
                 {user.display_name}
               </p>
             </UnstyledLink>
 
-            <div className='flex space-x-1 text-sm text-gray-500 dark:text-white'>
+            <div className="flex space-x-1 text-sm text-gray-500 dark:text-white">
               <time dateTime={createDate}>{createDate}</time>
-              <span aria-hidden='true'>·</span>
+              <span aria-hidden="true">·</span>
               <span>Projekt</span>
             </div>
           </div>
         </div>
       </HoverCardTrigger>
-      <HoverCardContent className='w-72'>
-        <div className='flex justify-between'>
+      <HoverCardContent className="w-72">
+        <div className="flex justify-between">
           <NextImage
             alt={`Profilowe @${user.name}`}
-            src='/images/ckziu-cropped.svg'
+            src="/images/ckziu-cropped.svg"
             width={64}
             height={64}
-            className='mr-2'
+            className="mr-2"
           />
-          <div className='-space-y-1'>
-            <Link href={`/p/${user.name}`} className='hover:underline'>
-              <h4 className='text-sm font-semibold'>@{user.name}</h4>
+          <div className="-space-y-1">
+            <Link href={`/p/${user.name}`} className="hover:underline">
+              <h4 className="text-sm font-semibold">@{user.name}</h4>
             </Link>
-            <p className='text-sm'>{user.bio}</p>
-            <div className='flex items-center pt-2'>
-              <CalendarDays className='mr-2 h-4 w-4 opacity-70' />{' '}
-              <span className='text-muted-foreground text-xs'>
+            <p className="text-sm">{user.bio}</p>
+            <div className="flex items-center pt-2">
+              <CalendarDays className="mr-2 size-4 opacity-70" />{' '}
+              <span className="text-xs text-muted-foreground">
                 Dołączył {UserCreatedDate(user)}
               </span>
             </div>
@@ -105,31 +101,31 @@ const ProjectAuthor = ({
 
 const Project = ({ project }: { project: CodefestProject }) => {
   return (
-    <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
+    <div className="max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl">
       <Link href={`/p/${project.owner_name}/${project.name}`}>
         <Image
-          src='/images/ckziu_thumbnail.png'
-          alt='ckziu_thumbnail'
+          src="/images/ckziu_thumbnail.png"
+          alt="ckziu_thumbnail"
           width={380}
           height={250}
-          className='object-fill overflow-hidden rounded-t-lg'
+          className="overflow-hidden rounded-t-lg object-fill"
         />
       </Link>
-      <div className='px-6 py-4'>
-        <div className='flex flex-row justify-between text-2xl font-bold'>
+      <div className="px-6 py-4">
+        <div className="flex flex-row justify-between text-2xl font-bold">
           <Link
             href={project.url}
-            className='flex flex-row items-center min-w-fit gap-1 hover:underline hover:text-indigo-600 dark:hover:text-indigo-500'
+            className="flex min-w-fit flex-row items-center gap-1 hover:text-indigo-600 hover:underline dark:hover:text-indigo-500"
           >
             {project.private ? (
-              <Tooltip content='Tylko ty widzisz ten projekt'>
+              <Tooltip content="Tylko ty widzisz ten projekt">
                 <LockIcon />
               </Tooltip>
             ) : (
               <></>
             )}
             {project.tournament ? (
-              <Tooltip content='Kandydat CKZiU CodeFest24'>
+              <Tooltip content="Kandydat CKZiU CodeFest24">
                 <Trophy />
               </Tooltip>
             ) : (
@@ -138,10 +134,10 @@ const Project = ({ project }: { project: CodefestProject }) => {
             {project.display_name}
           </Link>
         </div>
-        <p className='mt-3 text-base text-gray-900 dark:text-gray-300'>
+        <p className="mt-3 text-base text-gray-900 dark:text-gray-300">
           {project.description}
         </p>
-        <div className='mt-3 flex flex-wrap flex-row gap-1 font-medium'>
+        <div className="mt-3 flex flex-row flex-wrap gap-1 font-medium">
           {[
             'rust',
             'api',
@@ -152,14 +148,14 @@ const Project = ({ project }: { project: CodefestProject }) => {
             'gry',
             'strona',
             'discord',
-            'node',
+            'node'
           ]
             .filter((_) => Math.random() > 0.6)
             .map((tag, idx) => {
               return (
                 <UnstyledLink
                   key={idx}
-                  className='py-0.5 px-2 rounded-md text-gray-50 dark:hover:bg-blue-500 bg-blue-500 dark:bg-blue-600 hover:bg-blue-400 select-none'
+                  className="select-none rounded-md bg-blue-500 px-2 py-0.5 text-gray-50 hover:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-500"
                   href={`/tag/${tag}`}
                 >
                   {tag}
@@ -181,31 +177,31 @@ const UserProject = (props: { project: CodefestProject }) => {
   const project: CodefestProject = props.project;
 
   return (
-    <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
+    <div className="max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl">
       <Link href={`/p/${user.name}/${project.name}`}>
         <Image
-          src='/images/ckziu_thumbnail.png'
-          alt='ckziu_thumbnail'
+          src="/images/ckziu_thumbnail.png"
+          alt="ckziu_thumbnail"
           width={1140}
           height={760}
-          className='min-w-fill rounded-b-lg shadow'
+          className="min-w-fill rounded-b-lg shadow"
         />
       </Link>
-      <div className='px-6 py-4'>
-        <div className='flex flex-row justify-between text-2xl font-bold'>
+      <div className="px-6 py-4">
+        <div className="flex flex-row justify-between text-2xl font-bold">
           <Link
             href={`/p/${user.name}/${project.name}`}
-            className='flex flex-row items-center min-w-fit gap-1 hover:underline'
+            className="flex min-w-fit flex-row items-center gap-1 hover:underline"
           >
             {project.private ? (
-              <Tooltip content='Tylko ty widzisz ten projekt'>
+              <Tooltip content="Tylko ty widzisz ten projekt">
                 <LockIcon />
               </Tooltip>
             ) : (
               <></>
             )}
             {project.tournament ? (
-              <Tooltip content='Kandydat CKZiU CodeFest24'>
+              <Tooltip content="Kandydat CKZiU CodeFest24">
                 <Trophy />
               </Tooltip>
             ) : (
@@ -231,11 +227,11 @@ const UserProject = (props: { project: CodefestProject }) => {
             {likes}
           </div> */}
         </div>
-        <p className='text-base font-bold'>
+        <p className="text-base font-bold">
           <UserMention userName={user.name} showAvatar={true} />
         </p>
-        <div className='mt-2'>
-          <p className='text-base text-gray-700 dark:text-gray-200'>
+        <div className="mt-2">
+          <p className="text-base text-gray-700 dark:text-gray-200">
             {project.description}
           </p>
         </div>
@@ -246,20 +242,20 @@ const UserProject = (props: { project: CodefestProject }) => {
 
 function ShadowProject() {
   return (
-    <div className='max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl'>
-      <div className='min-w-[340px] min-h-[250px] rounded-b-lg shadow bg-secondary animate-pulse'></div>
-      <div className='px-6 py-4'>
-        <div className='flex flex-row justify-between text-2xl font-bold'>
-          <span className='flex flex-row items-center min-w-fit gap-1 hover:underline animate-pulse w-full'>
-            <span className='bg-secondary rounded-3xl h-5 w-1/2'></span>
-            <span className='bg-secondary rounded-3xl h-5 w-1/3'></span>
+    <div className="max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl">
+      <div className="min-h-[250px] min-w-[340px] animate-pulse rounded-b-lg bg-secondary shadow"></div>
+      <div className="px-6 py-4">
+        <div className="flex flex-row justify-between text-2xl font-bold">
+          <span className="flex w-full min-w-fit animate-pulse flex-row items-center gap-1 hover:underline">
+            <span className="h-5 w-1/2 rounded-3xl bg-secondary"></span>
+            <span className="h-5 w-1/3 rounded-3xl bg-secondary"></span>
           </span>
         </div>
-        <span className='flex flex-row items-center min-w-fit gap-1 hover:underline animate-pulse w-full'>
-          <span className='bg-secondary rounded-full h-8 w-8'></span>
-          <span className='bg-secondary rounded-3xl h-5 w-1/4'></span>
+        <span className="flex w-full min-w-fit animate-pulse flex-row items-center gap-1 hover:underline">
+          <span className="size-8 rounded-full bg-secondary"></span>
+          <span className="h-5 w-1/4 rounded-3xl bg-secondary"></span>
         </span>
-        <div className='mt-2 w-full h-5 animate-pulse bg-secondary rounded-3xl'></div>
+        <div className="mt-2 h-5 w-full animate-pulse rounded-3xl bg-secondary"></div>
       </div>
     </div>
   );

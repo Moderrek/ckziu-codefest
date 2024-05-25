@@ -7,9 +7,9 @@ import { cn } from '@/lib/utils';
 const Breadcrumb = React.forwardRef<
   HTMLElement,
   React.ComponentPropsWithoutRef<'nav'> & {
-    separator?: React.ReactNode;
-  }
->(({ ...props }, ref) => <nav ref={ref} aria-label='breadcrumb' {...props} />);
+  separator?: React.ReactNode;
+}
+>(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />);
 Breadcrumb.displayName = 'Breadcrumb';
 
 const BreadcrumbList = React.forwardRef<
@@ -42,8 +42,8 @@ BreadcrumbItem.displayName = 'BreadcrumbItem';
 const BreadcrumbLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<'a'> & {
-    asChild?: boolean;
-  }
+  asChild?: boolean;
+}
 >(({ asChild, className, ...props }, ref) => {
   const Comp = asChild ? Slot : 'a';
 
@@ -63,9 +63,9 @@ const BreadcrumbPage = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    role='link'
-    aria-disabled='true'
-    aria-current='page'
+    role="link"
+    aria-disabled="true"
+    aria-current="page"
     className={cn('text-foreground font-normal', className)}
     {...props}
   />
@@ -73,13 +73,13 @@ const BreadcrumbPage = React.forwardRef<
 BreadcrumbPage.displayName = 'BreadcrumbPage';
 
 const BreadcrumbSeparator = ({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<'li'>) => (
+                               children,
+                               className,
+                               ...props
+                             }: React.ComponentProps<'li'>) => (
   <li
-    role='presentation'
-    aria-hidden='true'
+    role="presentation"
+    aria-hidden="true"
     className={cn('[&>svg]:size-3.5', className)}
     {...props}
   >
@@ -89,17 +89,17 @@ const BreadcrumbSeparator = ({
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
 
 const BreadcrumbEllipsis = ({
-  className,
-  ...props
-}: React.ComponentProps<'span'>) => (
+                              className,
+                              ...props
+                            }: React.ComponentProps<'span'>) => (
   <span
-    role='presentation'
-    aria-hidden='true'
+    role="presentation"
+    aria-hidden="true"
     className={cn('flex h-9 w-9 items-center justify-center', className)}
     {...props}
   >
-    <MoreHorizontal className='h-4 w-4' />
-    <span className='sr-only'>More</span>
+    <MoreHorizontal className="size-4" />
+    <span className="sr-only">More</span>
   </span>
 );
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis';
@@ -111,5 +111,5 @@ export {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
+  BreadcrumbSeparator
 };

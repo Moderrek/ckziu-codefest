@@ -31,12 +31,12 @@ function validate_name(name: string): ValidationResult {
   if (name[name.length - 1] === '-') {
     ends_with_line = true;
     warnings.add(
-      "Nazwa użytkownika nie może zaczynać się lub kończyć znakiem '-'!"
+      'Nazwa użytkownika nie może zaczynać się lub kończyć znakiem \'-\'!'
     );
   }
   if (name[0] === '-') {
     ends_with_line = true;
-    warnings.add("Nazwa użytkownika nie może kończyć się znakiem '-'!");
+    warnings.add('Nazwa użytkownika nie może kończyć się znakiem \'-\'!');
   }
 
   if (name.length < MIN_LENGTH) {
@@ -50,7 +50,7 @@ function validate_name(name: string): ValidationResult {
       is_lowercase &&
       !ends_with_line &&
       name.length >= MIN_LENGTH,
-    message: warnings,
+    message: warnings
   };
 }
 
@@ -60,7 +60,7 @@ function validate_password(
 ): ValidationResult {
   return {
     valid: true,
-    message: new Set<string>(),
+    message: new Set<string>()
   };
 }
 

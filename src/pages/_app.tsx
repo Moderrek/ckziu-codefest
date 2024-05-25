@@ -21,8 +21,8 @@ const CodeFestApp = ({ Component, pageProps }: AppProps) => {
       <GatewayProvider>
         <MaterialThemeProvider>
           <ThemeProvider
-            attribute='class'
-            defaultTheme='light'
+            attribute="class"
+            defaultTheme="light"
             enableSystem={false}
           >
             <NextThemeProvider>

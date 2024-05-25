@@ -2,6 +2,8 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: 'CKZiU CodeFest',
+  subtitle: 'Platforma konkursowa',
   description:
-    'Beautifully designed components built with Radix UI and Tailwind CSS.',
+    'CKZiU CodeFest to platforma konkursowa oraz miejsce do znajdowania jak i publikowania projektów o rozmaitych tematach stworzona przez Tymona Woźniaka.',
+  cez_website: 'https://cez.lodz.pl/'
 };

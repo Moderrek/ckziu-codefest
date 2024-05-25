@@ -29,7 +29,7 @@ export async function getSession(): Promise<AuthSession> {
       isAuthorized: false,
       cachedName: false,
       name: undefined,
-      token: undefined,
+      token: undefined
     };
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
   if (localStorage.getItem('cachedName') !== null) {
@@ -37,7 +37,7 @@ export async function getSession(): Promise<AuthSession> {
       isAuthorized: true,
       cachedName: true,
       name: localStorage.getItem('cachedName')!,
-      token: localStorage.getItem('token')!,
+      token: localStorage.getItem('token')!
     };
   }
   let name = localStorage.getItem('cachedName');
@@ -54,14 +54,14 @@ export async function getSession(): Promise<AuthSession> {
       isAuthorized: false,
       cachedName: false,
       name: undefined,
-      token: undefined,
+      token: undefined
     };
   }
   return {
     isAuthorized: true,
     cachedName: false,
     name: name,
-    token: localStorage.getItem('token')!,
+    token: localStorage.getItem('token')!
   };
 }
 

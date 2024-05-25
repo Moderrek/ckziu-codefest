@@ -3,11 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import NextImage from '@/components/NextImage';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 import useGlobalState from '@/globalstate/useGlobalState';
 import { FetchUserAxios, User } from '@/utils/FetchProfile';
@@ -44,9 +40,9 @@ const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
   if (user === null) {
     // Error
     return (
-      <span className='inline-flex flex-row items-center'>
-        {showAvatar ? <UserCircle className='h-8 w-8' /> : <></>}
-        <span className='ml-1 text-red-400'>@Nieznany</span>
+      <span className="inline-flex flex-row items-center">
+        {showAvatar ? <UserCircle className="size-8" /> : <></>}
+        <span className="ml-1 text-red-400">@Nieznany</span>
       </span>
     );
   }
@@ -58,10 +54,10 @@ const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
       return (
         <Link
           href={`/p/${userName}`}
-          className='inline-flex flex-row items-center'
+          className="inline-flex flex-row items-center"
         >
-          <UserCircle className='h-8 w-8' />
-          <span className='ml-1'>@{userName}</span>
+          <UserCircle className="size-8" />
+          <span className="ml-1">@{userName}</span>
         </Link>
       );
     }
@@ -69,7 +65,7 @@ const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
     return (
       <Link
         href={`/p/${userName}`}
-        className='ml-1 inline-flex flex-row items-center'
+        className="ml-1 inline-flex flex-row items-center"
       >
         @{userName}
       </Link>
@@ -84,44 +80,44 @@ const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
         {showAvatar ? (
           <Link
             href={profileUrl}
-            className='inline-flex flex-row items-center hover:underline'
+            className="inline-flex flex-row items-center hover:underline"
           >
             <NextImage
               alt={`Profilowe ${user.name}`}
-              src='/images/ckziu_thumbnail.png'
+              src="/images/ckziu_thumbnail.png"
               width={32}
               height={32}
-              className='h-8 w-8'
-              imgClassName='aspect-square h-full w-full rounded-full'
+              className="size-8"
+              imgClassName="aspect-square h-full w-full rounded-full"
             />
-            <span className='ml-1'>@{user.name}</span>
+            <span className="ml-1">@{user.name}</span>
           </Link>
         ) : (
           <Link
             href={profileUrl}
-            className='ml-1 inline-flex flex-row items-center hover:underline'
+            className="ml-1 inline-flex flex-row items-center hover:underline"
           >
             @{user.name}
           </Link>
         )}
       </HoverCardTrigger>
-      <HoverCardContent className='w-72'>
-        <div className='flex justify-between'>
+      <HoverCardContent className="w-72">
+        <div className="flex justify-between">
           <NextImage
             alt={`Profilowe @${user.name}`}
-            src='/images/ckziu-cropped.svg'
+            src="/images/ckziu-cropped.svg"
             width={64}
             height={64}
-            className='mr-2'
+            className="mr-2"
           />
-          <div className='-space-y-1'>
-            <Link href={profileUrl} className='hover:underline'>
-              <h4 className='text-sm font-semibold'>@{user.name}</h4>
+          <div className="-space-y-1">
+            <Link href={profileUrl} className="hover:underline">
+              <h4 className="text-sm font-semibold">@{user.name}</h4>
             </Link>
-            <p className='text-sm'>{user.bio}</p>
-            <div className='flex items-center pt-2'>
-              <CalendarDays className='mr-2 h-4 w-4 opacity-70' />{' '}
-              <span className='text-muted-foreground text-xs'>
+            <p className="text-sm">{user.bio}</p>
+            <div className="flex items-center pt-2">
+              <CalendarDays className="mr-2 size-4 opacity-70" />{' '}
+              <span className="text-xs text-muted-foreground">
                 Dołączył {UserCreatedDate(user)}
               </span>
             </div>

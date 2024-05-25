@@ -1,29 +1,25 @@
 import { Button, Tooltip } from '@material-tailwind/react';
-import { Plus } from 'lucide-react';
+import { Book } from 'lucide-react';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 
-import { useName } from '@/globalstate/useName';
-
-const ParticipateButton = () => {
-  const name = useName();
-
+const CodeFestRulesButton = () => {
   return (
-    <Tooltip content="Zgłoś swoją pracę do konkursu.">
-      <UnstyledLink href={name ? `/p/${name}` : '/zaloguj'} className="w-1/2">
+    <Tooltip content="Czytaj regulamin na stronie szkoły.">
+      <UnstyledLink href="/regulamin" className="w-1/2">
         <Button
           variant="gradient"
-          color="green"
+          color="red"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
           className="flex w-full min-w-fit flex-1 flex-row items-center justify-center gap-1"
         >
-          <Plus className="size-6" /> Weź udział
+          <Book className="size-6" /> Regulamin konkursu
         </Button>
       </UnstyledLink>
     </Tooltip>
   );
 };
 
-export { ParticipateButton };
+export { CodeFestRulesButton };

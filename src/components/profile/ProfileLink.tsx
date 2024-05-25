@@ -8,9 +8,9 @@ const ProfileLink = (props: {
   icon: ReactElement;
 }) => {
   return (
-    <UnstyledLink href={props.href} className='flex flex-row items-center'>
+    <UnstyledLink href={props.href} className="flex flex-row items-center">
       {props.icon}
-      <span className='text-middle pl-1 pt-0.5'>{props.label}</span>
+      <span className="text-middle pl-1 pt-0.5">{props.label}</span>
     </UnstyledLink>
   );
 };

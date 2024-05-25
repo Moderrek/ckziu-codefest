@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+
 import { GlobalStateContext } from '@/globalstate/GlobalStateProvider';
 
 const useAuthorized = (): boolean => {

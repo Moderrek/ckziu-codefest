@@ -7,30 +7,14 @@ import { API_V1 } from '@/lib/api/api';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from '@/components/ui/input-otp';
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 
-import {
-  validate_name,
-  validate_password,
-  ValidationResult,
-} from '@/utils/Validate';
 import useGlobalState from '@/globalstate/useGlobalState';
+import { validate_name, validate_password, ValidationResult } from '@/utils/Validate';
 
 interface LoginFormProps {
   loginService: boolean;
@@ -76,7 +60,7 @@ function LoginForm({ loginService }: LoginFormProps) {
       variant: 'destructive',
       title: 'Błąd po stronie serwera',
       description:
-        'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.',
+        'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.'
     });
   }
 
@@ -97,7 +81,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     let req;
     try {
       req = await axios.post(API_V1 + '/auth/otp', {
-        email: login,
+        email: login
       });
     } catch (err: any) {
       console.log(err);
@@ -109,7 +93,7 @@ function LoginForm({ loginService }: LoginFormProps) {
         description:
           'Wystąpił problem. ' +
           err.response.data.message +
-          ' Upewnij się, że korzystasz z szkolnego maila.',
+          ' Upewnij się, że korzystasz z szkolnego maila.'
       });
       return;
     }
@@ -120,7 +104,7 @@ function LoginForm({ loginService }: LoginFormProps) {
       toast({
         variant: 'destructive',
         title: 'Wystąpił problem',
-        description: 'Wystąpił problem. ' + data.message,
+        description: 'Wystąpił problem. ' + data.message
       });
       return;
     }
@@ -128,7 +112,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     toast({
       variant: 'default',
       title: 'Wysłano kod na twoją pocztę!',
-      description: ' Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.',
+      description: ' Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.'
     });
     setStage(LoginStage.WAITING_OTP);
   }
@@ -140,7 +124,7 @@ function LoginForm({ loginService }: LoginFormProps) {
       toast({
         variant: 'destructive',
         title: 'Nieprawidłowe dane',
-        description: 'Podane hasła nie są takie same!',
+        description: 'Podane hasła nie są takie same!'
       });
       setWaiting(false);
       return;
@@ -153,7 +137,7 @@ function LoginForm({ loginService }: LoginFormProps) {
         email: login,
         name: username,
         password: password,
-        otp: otp,
+        otp: otp
       });
     } catch (err: any) {
       toast({
@@ -161,7 +145,7 @@ function LoginForm({ loginService }: LoginFormProps) {
         title: 'Błąd po stronie serwera',
         description:
           'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.' +
-          err.data.message,
+          err.data.message
       });
       setWaiting(false);
       return;
@@ -172,7 +156,7 @@ function LoginForm({ loginService }: LoginFormProps) {
       toast({
         variant: 'destructive',
         title: 'Wystąpił problem',
-        description: data.message,
+        description: data.message
       });
       return;
     }
@@ -180,7 +164,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     toast({
       variant: 'default',
       title: 'Pomyślnie zalogowano',
-      description: `Pomyślnie zalogowano jako ${data.name}`,
+      description: `Pomyślnie zalogowano jako ${data.name}`
     });
     await logIn(data.token, data.name);
   }
@@ -191,7 +175,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     let prelogin_request;
     try {
       prelogin_request = await axios.post(API_V1 + '/auth/prelogin', {
-        login: login,
+        login: login
       });
     } catch (err) {
       console.log(err);
@@ -214,7 +198,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     try {
       login_request = await axios.post(API_V1 + '/auth/login/credentials', {
         login: login,
-        password: password,
+        password: password
       });
       setWaiting(false);
     } catch (err) {
@@ -228,7 +212,7 @@ function LoginForm({ loginService }: LoginFormProps) {
       toast({
         variant: 'destructive',
         title: 'Błąd po stronie serwera',
-        description: 'Nie udało się zalogowoać.',
+        description: 'Nie udało się zalogowoać.'
       });
       return;
     }
@@ -286,30 +270,30 @@ function LoginForm({ loginService }: LoginFormProps) {
   }
 
   return (
-    <Card className='w-full max-w-sm'>
+    <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle className='text-2xl'>
+        <CardTitle className="text-2xl">
           {stage == LoginStage.LOGGING_IN
             ? 'Logowanie'
             : stage == LoginStage.WAITING_OTP
-            ? 'Rejestracja'
-            : 'Logowanie / Rejestracja'}
+              ? 'Rejestracja'
+              : 'Logowanie / Rejestracja'}
         </CardTitle>
         <CardDescription>
           Wpisz swojego e-maila szkolnego albo login, aby
           zalogować/zarejestrować się na swoje konto.
         </CardDescription>
       </CardHeader>
-      <CardContent className='grid gap-4'>
+      <CardContent className="grid gap-4">
         {stage != LoginStage.WAITING_OTP ? (
-          <div className='grid gap-2'>
-            <Label htmlFor='email'>Email albo login</Label>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email albo login</Label>
             <Input
-              id='email'
-              name='login'
-              type='text'
+              id="email"
+              name="login"
+              type="text"
               disabled={waiting || !loginService || stage != LoginStage.NONE}
-              placeholder='nazwa@ckziu.elodz.edu.pl'
+              placeholder="nazwa@ckziu.elodz.edu.pl"
               value={login}
               onChange={(data) => setLogin(data.target.value)}
               required
@@ -325,12 +309,12 @@ function LoginForm({ loginService }: LoginFormProps) {
           <></>
         )}
         {stage == LoginStage.LOGGING_IN ? (
-          <div className='grid gap-2'>
-            <Label htmlFor='password'>Hasło</Label>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Hasło</Label>
             <Input
-              id='password'
-              name='password'
-              type='password'
+              id="password"
+              name="password"
+              type="password"
               disabled={waiting || !loginService}
               value={password}
               onChange={(data) => setPassword(data.target.value)}
@@ -349,14 +333,14 @@ function LoginForm({ loginService }: LoginFormProps) {
         )}
         {stage == LoginStage.WAITING_OTP ? (
           <>
-            <div className='grid gap-2'>
+            <div className="grid gap-2">
               <Label>Kod jednorazowej autoryzacji</Label>
               <InputOTP
                 maxLength={6}
                 value={otp}
                 onChange={(otp) => setOtp(otp)}
-                name='otp'
-                className='flex justify-center'
+                name="otp"
+                className="flex justify-center"
               >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
@@ -371,12 +355,12 @@ function LoginForm({ loginService }: LoginFormProps) {
                 </InputOTPGroup>
               </InputOTP>
             </div>
-            <div className='grid gap-2'>
-              <Label htmlFor='password'>Nazwa użytkownika</Label>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Nazwa użytkownika</Label>
               <Input
-                id='username'
-                name='username'
-                type='text'
+                id="username"
+                name="username"
+                type="text"
                 disabled={waiting}
                 value={username}
                 maxLength={38}
@@ -387,7 +371,7 @@ function LoginForm({ loginService }: LoginFormProps) {
             {validUserName ? (
               Array.from(validUserName.message).map((message, idx) => {
                 return (
-                  <p key={idx} className='block text-red-400 text-sm font-bold'>
+                  <p key={idx} className="block text-sm font-bold text-red-400">
                     {message}
                   </p>
                 );
@@ -396,24 +380,24 @@ function LoginForm({ loginService }: LoginFormProps) {
               <></>
             )}
 
-            <div className='grid gap-2'>
-              <Label htmlFor='password'>Hasło</Label>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Hasło</Label>
               <Input
-                id='password'
-                name='password'
-                type='password'
+                id="password"
+                name="password"
+                type="password"
                 disabled={waiting}
                 value={password}
                 onChange={(data) => setPassword(data.target.value)}
                 required
               />
             </div>
-            <div className='grid gap-2'>
-              <Label htmlFor='password'>Ponownie hasło</Label>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Ponownie hasło</Label>
               <Input
-                id='password-again'
-                name='password'
-                type='password'
+                id="password-again"
+                name="password"
+                type="password"
                 disabled={waiting}
                 value={passwordAgain}
                 onChange={(data) => setPasswordAgain(data.target.value)}
@@ -425,16 +409,16 @@ function LoginForm({ loginService }: LoginFormProps) {
           <></>
         )}
       </CardContent>
-      <CardFooter className='flex flex-col'>
+      <CardFooter className="flex flex-col">
         {!loginService ? (
           <>
-            <Button className='w-full' disabled={true}>
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Spróbuj ponownie
+            <Button className="w-full" disabled={true}>
+              <Loader2 className="mr-2 size-4 animate-spin" /> Spróbuj ponownie
               później
             </Button>
             <UnstyledLink
-              className='mt-2 text-red-400 hover:underline'
-              href='/status'
+              className="mt-2 text-red-400 hover:underline"
+              href="/status"
             >
               Przepraszamy, serwery logowania są tymczasowo niedostępne. Spróbuj
               ponownie za chwilę
@@ -443,8 +427,8 @@ function LoginForm({ loginService }: LoginFormProps) {
         ) : (
           <>
             <Button
-              type='button'
-              className='w-full'
+              type="button"
+              className="w-full"
               disabled={waiting}
               onClick={async () => {
                 await buttonClick();
@@ -452,15 +436,15 @@ function LoginForm({ loginService }: LoginFormProps) {
             >
               {waiting ? (
                 <>
-                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                  <Loader2 className="mr-2 size-4 animate-spin" />
                   Logowanie...
                 </>
               ) : (
                 <>
                   {stage == LoginStage.WAITING_OTP ? (
-                    <Fingerprint className='mr-2 h-4 w-4' />
+                    <Fingerprint className="mr-2 size-4" />
                   ) : (
-                    <Mail className='mr-2 h-4 w-4' />
+                    <Mail className="mr-2 size-4" />
                   )}
                   Zaloguj sie
                 </>

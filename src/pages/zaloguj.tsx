@@ -13,8 +13,8 @@ interface LoginPageProps {
 const LoginPage = ({ loginService }: LoginPageProps) => {
   return (
     <DefaultLayout>
-      <Seo templateTitle='Zaloguj się' />
-      <div className='center pt-10'>
+      <Seo templateTitle="Zaloguj się" />
+      <div className="center pt-10">
         <LoginForm loginService={loginService} />
       </div>
     </DefaultLayout>
@@ -26,8 +26,8 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      loginService: status.services.login_service,
-    },
+      loginService: status.services.login_service
+    }
   };
 }
 

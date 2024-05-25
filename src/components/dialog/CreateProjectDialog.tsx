@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,7 +34,7 @@ const legalizeChars = new Map([
   ['ł', 'l'],
   ['ż', 'z'],
   ['ź', 'z'],
-  ['ń', 'n'],
+  ['ń', 'n']
 ]);
 
 const legalizeName = (name: string): string => {
@@ -82,7 +82,7 @@ const DialogCreateProject = () => {
         name: projectName,
         display_name: projectDisplayname,
         description: projectDescription,
-        private: projectPrivate,
+        private: projectPrivate
       });
       setProjectPublishing(false);
     } catch (err: any) {
@@ -93,14 +93,14 @@ const DialogCreateProject = () => {
         toast({
           variant: 'destructive',
           title: 'Wystąpił problem',
-          description: `Nie udało się opublikować projektu. ${data.message}`,
+          description: `Nie udało się opublikować projektu. ${data.message}`
         });
         return;
       }
       toast({
         variant: 'destructive',
         title: 'Wystąpił nieznany problem',
-        description: `Nie udało się opublikować projektu. Sprawdź dostępnośc serwerów https://ckziucodefest.pl/status`,
+        description: `Nie udało się opublikować projektu. Sprawdź dostępnośc serwerów https://ckziucodefest.pl/status`
       });
       return;
     }
@@ -109,7 +109,7 @@ const DialogCreateProject = () => {
       toast({
         variant: 'destructive',
         title: 'Wystąpił problem',
-        description: `Nie udało się opublikować projektu. ${data.message}`,
+        description: `Nie udało się opublikować projektu. ${data.message}`
       });
       return;
     }
@@ -122,7 +122,7 @@ const DialogCreateProject = () => {
     toast({
       variant: 'default',
       title: 'Sukces!',
-      description: 'Pomyślnie utworzono nowy projekt!',
+      description: 'Pomyślnie utworzono nowy projekt!'
     });
 
     await router.push(`/p/${user.name}/${projectName}`);
@@ -141,17 +141,17 @@ const DialogCreateProject = () => {
     <Dialog>
       <DialogTrigger asChild>
         <MaterialButton
-          variant='gradient'
-          color='green'
+          variant="gradient"
+          color="green"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          className='p-2 m-1 center'
+          className="center m-1 p-2"
         >
           <Plus width={16} height={16} /> Utwórz projekt
         </MaterialButton>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Utwórz projekt</DialogTitle>
           <DialogDescription>
@@ -159,23 +159,23 @@ const DialogCreateProject = () => {
             skończysz.
           </DialogDescription>
         </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <div className='center flex-col'>
-            <h1 className='font-title text-2xl flex flex-row gap-2 justify-center items-center'>
+        <div className="grid gap-4 py-4">
+          <div className="center flex-col">
+            <h1 className="flex flex-row items-center justify-center gap-2 font-title text-2xl">
               {projectPrivate ? <LockIcon /> : <UnlockIcon />}
               {projectDisplayname}
             </h1>
-            <p className='text-center'>{projectDescription}</p>
+            <p className="text-center">{projectDescription}</p>
           </div>
 
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='name' className='text-right'>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
               Nazwa projektu
             </Label>
             <Input
-              id='name'
-              defaultValue='Przykładowy projekt'
-              className='col-span-3'
+              id="name"
+              defaultValue="Przykładowy projekt"
+              className="col-span-3"
               value={projectDisplayname}
               disabled={projectPublishing}
               maxLength={40}
@@ -186,40 +186,40 @@ const DialogCreateProject = () => {
               }}
             />
           </div>
-          <p className='w-full text-center text-sm text-muted-foreground'>
+          <p className="w-full text-center text-sm text-muted-foreground">
             {projectExists ? (
-              <span className='text-red-400'>
+              <span className="text-red-400">
                 Nie można utworzyć projektu, ponieważ już istnieje!
               </span>
             ) : (
               <span>
                 Projekt będzie wyświetlany pod nazwą:{' '}
-                <b className='text-green-400'>{projectName}</b>
+                <b className="text-green-400">{projectName}</b>
               </span>
             )}
           </p>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='description' className='text-right'>
-              Opis <span className='text-muted-foreground'>(opcjonalne)</span>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Opis <span className="text-muted-foreground">(opcjonalne)</span>
             </Label>
             <Input
-              id='description'
-              defaultValue=''
-              placeholder='Przykładowy projekt napisany...'
-              className='col-span-3'
+              id="description"
+              defaultValue=""
+              placeholder="Przykładowy projekt napisany..."
+              className="col-span-3"
               disabled={projectPublishing}
               maxLength={100}
               value={projectDescription}
               onChange={(event) => setProjectDescription(event.target.value)}
             />
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='private' className='text-right'>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="private" className="text-right">
               Prywatny
             </Label>
             <Checkbox
-              id='private'
-              className='col-span-3'
+              id="private"
+              className="col-span-3"
               checked={projectPrivate}
               onClick={() => setProjectPrivate(!projectPrivate)}
               disabled={projectPublishing}
@@ -228,8 +228,8 @@ const DialogCreateProject = () => {
         </div>
         <DialogFooter>
           <MaterialButton
-            variant='outlined'
-            color='green'
+            variant="outlined"
+            color="green"
             loading={projectPublishing}
             disabled={projectExists}
             onClick={async () => publishProject()}

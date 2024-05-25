@@ -113,5 +113,5 @@ export {
   FetchProject,
   FetchProjectAxios,
   FetchUser,
-  FetchUserAxios,
+  FetchUserAxios
 };

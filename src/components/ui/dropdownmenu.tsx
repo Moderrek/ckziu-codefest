@@ -12,12 +12,13 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-import UnstyledLink from '../links/UnstyledLink';
-import useGlobalState from '@/globalstate/useGlobalState';
 import { useAuthorized } from '@/globalstate/useAuth';
+import useGlobalState from '@/globalstate/useGlobalState';
+
+import UnstyledLink from '../links/UnstyledLink';
 
 export default function DropdownMenuDemo() {
   const router = useRouter();
@@ -28,16 +29,16 @@ export default function DropdownMenuDemo() {
 
   if (!isAuthorized) {
     return (
-      <UnstyledLink href='/zaloguj'>
+      <UnstyledLink href="/zaloguj">
         <Button
-          variant='gradient'
-          color='indigo'
-          className='flex flex-row min-w-fit flex-1 justify-center items-center p-2 gap-1'
+          variant="gradient"
+          color="indigo"
+          className="flex min-w-fit flex-1 flex-row items-center justify-center gap-1 p-2"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          <LogIn className='w-5 h-5' /> Zaloguj się
+          <LogIn className="size-5" /> Zaloguj się
         </Button>
       </UnstyledLink>
     );
@@ -46,27 +47,27 @@ export default function DropdownMenuDemo() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <ShadcnButton variant='outline' className='gap-1'>
+        <ShadcnButton variant="outline" className="gap-1">
           <CircleUser />@{globalState?.authorizedName}
         </ShadcnButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-45'>
+      <DropdownMenuContent className="w-45">
         <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {isAuthorized ? (
           <Link href={`/p/${globalState?.authorizedName}`}>
             <DropdownMenuItem>
-              <div className='flex flex-row'>
-                <User className='mr-2 h-4 w-4' />
+              <div className="flex flex-row">
+                <User className="mr-2 size-4" />
                 Profil
               </div>
             </DropdownMenuItem>
           </Link>
         ) : (
-          <Link href='/zaloguj'>
+          <Link href="/zaloguj">
             <DropdownMenuItem>
-              <div className='flex flex-row'>
-                <User className='mr-2 h-4 w-4' />
+              <div className="flex flex-row">
+                <User className="mr-2 size-4" />
                 Zaloguj się
               </div>
             </DropdownMenuItem>
@@ -76,7 +77,7 @@ export default function DropdownMenuDemo() {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className='bg-red-400 text-white'
+              className="bg-red-400 text-white"
               onClick={() => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('cachedName');
@@ -89,7 +90,7 @@ export default function DropdownMenuDemo() {
                 router.push('/zaloguj');
               }}
             >
-              <LogOut className='mr-2 h-4 w-4' />
+              <LogOut className="mr-2 size-4" />
               <span>Wyloguj się</span>
             </DropdownMenuItem>
           </>

@@ -5,18 +5,18 @@ import { cn } from '@/lib/utils';
 export default function Document() {
   return (
     <Html
-      lang='pl-PL'
+      lang="pl-PL"
       suppressHydrationWarning={true}
-      className='scroll-smooth'
+      className="scroll-smooth"
     >
       <Head />
       <body
         className={cn(
-          'bg-background min-h-full scroll-smooth font-codefest antialiased'
+          'bg-background font-codefest min-h-full scroll-smooth antialiased'
         )}
       >
-        <Main />
-        <NextScript />
+      <Main />
+      <NextScript />
       </body>
     </Html>
   );

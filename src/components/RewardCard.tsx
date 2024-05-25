@@ -10,11 +10,11 @@ const RewardCard = (props: { thumbnail: string; rewardName: string }) => {
   const y = useMotionValue(0);
 
   const rotateX = useTransform(y, [-0.5, 0.5], ['17.5deg', '-17.5deg'], {
-    clamp: true,
+    clamp: true
   });
 
   const rotateY = useTransform(x, [-0.5, 0.5], ['-17.5deg', '17.5deg'], {
-    clamp: true,
+    clamp: true
   });
 
   const handleMouse = (event: any) => {
@@ -36,7 +36,7 @@ const RewardCard = (props: { thumbnail: string; rewardName: string }) => {
   return (
     <div>
       <motion.div
-        className='relative bg-card h-[250px] w-[250px] overflow-hidden rounded-3xl shadow-2xl border-2 border-gradient-to-r'
+        className="border-gradient-to-r relative size-[250px] overflow-hidden rounded-3xl border-2 bg-card shadow-2xl"
         onMouseMove={handleMouse}
         onMouseLeave={() => {
           x.set(0);
@@ -46,14 +46,14 @@ const RewardCard = (props: { thumbnail: string; rewardName: string }) => {
           transformStyle: 'preserve-3d',
           transformOrigin: 'center',
           rotateX,
-          rotateY,
+          rotateY
         }}
       >
         <div
-          className='absolute select-none'
+          className="absolute select-none"
           style={{
             transformStyle: 'preserve-3d',
-            transform: 'translateZ(75px)',
+            transform: 'translateZ(75px)'
           }}
         >
           <NextImage
@@ -65,14 +65,14 @@ const RewardCard = (props: { thumbnail: string; rewardName: string }) => {
           />
         </div>
         <div
-          className='absolute h-[250px] w-[250px] reward-effect background-animate'
+          className="reward-effect background-animate absolute size-[250px]"
           style={{
             transformStyle: 'preserve-3d',
-            transform: 'translateZ(50px)',
+            transform: 'translateZ(50px)'
           }}
         ></div>
       </motion.div>
-      <p className='font-bold text-center mt-2'>{rewardName}</p>
+      <p className="mt-2 text-center font-bold">{rewardName}</p>
     </div>
   );
 };

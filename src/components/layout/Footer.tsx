@@ -1,7 +1,7 @@
 function Footer() {
   return (
-    <footer className='bg-gray-900 text-gray-400'>
-      <div className='max-w-md px-4 py-12 mx-auto overflow-hidden sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8'>
+    <footer className="bg-gray-900 text-gray-400">
+      <div className="mx-auto max-w-md overflow-hidden px-4 py-12 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
         {/*<div className='flex justify-center mt-8 space-x-6'>*/}
         {/*  <UnstyledLink href='/discord'>*/}
         {/*    <svg*/}
@@ -23,7 +23,7 @@ function Footer() {
         {/*    </svg>*/}
         {/*  </UnstyledLink>*/}
         {/*</div>*/}
-        <p className='text-base text-center text-gray-400'>
+        <p className="text-center text-base text-gray-400">
           CKZiU CodeFest
           <br />© 2024 Tymon Woźniak. All rights reserved.
         </p>

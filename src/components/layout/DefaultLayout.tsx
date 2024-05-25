@@ -1,8 +1,8 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import * as React from 'react';
 
 import { Footer } from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
-import { GoogleAnalytics } from '@next/third-parties/google';
 
 export interface NavbarBreadcrumb {
   name: string;
@@ -10,20 +10,20 @@ export interface NavbarBreadcrumb {
 }
 
 const DefaultLayout = ({
-  children,
-  breadcrumbs,
-}: {
+                         children,
+                         breadcrumbs
+                       }: {
   children: React.ReactNode;
   breadcrumbs?: NavbarBreadcrumb[];
 }) => {
   return (
     <>
       <Navbar breadcrumbs={breadcrumbs} />
-      <main className='sticky flex-grow h-max w-full flex-1 flex-col'>
+      <main className="sticky h-max w-full flex-1 grow flex-col">
         {children}
       </main>
       <Footer />
-      <GoogleAnalytics gaId='G-9LCWSWF9Y8' />
+      <GoogleAnalytics gaId="G-9LCWSWF9Y8" />
     </>
   );
 };

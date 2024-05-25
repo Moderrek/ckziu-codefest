@@ -1,5 +1,6 @@
-import { GlobalStateContext } from '@/globalstate/GlobalStateProvider';
 import { useContext } from 'react';
+
+import { GlobalStateContext } from '@/globalstate/GlobalStateProvider';
 
 const useName = (): string | null => {
   const globalState = useContext(GlobalStateContext);

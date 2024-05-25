@@ -11,7 +11,7 @@ type NextImageProps = {
 } & (
   | { width: string | number; height: string | number }
   | { layout: 'fill'; width?: string | number; height?: string | number }
-) &
+  ) &
   ImageProps;
 
 /**
@@ -20,16 +20,16 @@ type NextImageProps = {
  * @param useSkeleton add background with pulse animation, don't use it if image is transparent
  */
 export default function NextImage({
-  useSkeleton = false,
-  src,
-  width,
-  height,
-  alt,
-  className,
-  imgClassName,
-  blurClassName,
-  ...rest
-}: NextImageProps) {
+                                    useSkeleton = false,
+                                    src,
+                                    width,
+                                    height,
+                                    alt,
+                                    className,
+                                    imgClassName,
+                                    blurClassName,
+                                    ...rest
+                                  }: NextImageProps) {
   const [status, setStatus] = React.useState(
     useSkeleton ? 'loading' : 'complete'
   );

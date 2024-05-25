@@ -1,17 +1,10 @@
 import axios from 'axios';
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
 
 import { API_V1 } from '@/lib/api/api';
+import { minutes } from '@/lib/time';
 
 import { CodefestProject, User } from '@/utils/FetchProfile';
-import { minutes } from '@/lib/time';
 
 interface GlobalState {
   projects: Map<string, CodefestProject>;
@@ -43,7 +36,7 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
       users: new Map<string, User>(),
       profiles: new Map<string, User>(),
       authorizedName: localStorage.getItem('cachedName'),
-      token: localStorage.getItem('token'),
+      token: localStorage.getItem('token')
     });
   }, [globalState]);
 
@@ -100,7 +93,7 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
         const req = await axios.get(API_V1 + '/auth/info');
         const {
           authorized,
-          name,
+          name
         }: { authorized: boolean; name: string | null } = req.data;
 
         if (globalState) {
@@ -154,7 +147,7 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
     <GlobalStateContext.Provider
       value={{
         globalState: globalState,
-        setGlobalState: setGlobalState,
+        setGlobalState: setGlobalState
       }}
     >
       {children}
