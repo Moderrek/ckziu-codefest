@@ -49,8 +49,7 @@ enum LoginStage {
 }
 
 function LoginForm({ loginService }: LoginFormProps) {
-  const gs = useGlobalState();
-  const globalState = gs?.globalState;
+  const globalState = useGlobalState();
   // form fields
   const [login, setLogin] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
@@ -82,11 +81,13 @@ function LoginForm({ loginService }: LoginFormProps) {
   }
 
   async function logIn(token: string, name: string) {
-    if (globalState) {
-      globalState.token = token;
-      globalState.authorizedName = name;
+    if (globalState && globalState.setGlobalState) {
+      globalState.setGlobalState((prev) => {
+        if (prev) return { ...prev, token: token, authorizedName: name };
+      });
     }
     localStorage.setItem('token', token);
+    localStorage.setItem('cachedName', name);
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     await router.push(`/p/${name}`);
   }

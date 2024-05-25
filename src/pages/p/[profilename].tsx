@@ -67,7 +67,7 @@ const ProfilePage = ({ username, serveruser }: ProfilePageProps) => {
               CODEFEST
             </h2>
             <h1 className='text-center text-2xl font-bold'>
-              Nieznaleziono profilu <i>@{username}</i>
+              Nie znaleziono profilu <i>@{username}</i>
             </h1>
             <UnstyledLink href='/'>
               <Button

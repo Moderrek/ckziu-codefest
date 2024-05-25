@@ -1,9 +1,17 @@
 import axios from 'axios';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 import { API_V1 } from '@/lib/api/api';
 
 import { CodefestProject, User } from '@/utils/FetchProfile';
+import { minutes } from '@/lib/time';
 
 interface GlobalState {
   projects: Map<string, CodefestProject>;
@@ -15,7 +23,7 @@ interface GlobalState {
 
 interface GatewayContextProps {
   globalState: GlobalState | undefined;
-  setGlobalState: ((globalState: GlobalState) => void) | undefined;
+  setGlobalState: Dispatch<SetStateAction<GlobalState | undefined>>;
 }
 
 const GlobalStateContext = createContext<GatewayContextProps | undefined>(
@@ -40,40 +48,107 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
   }, [globalState]);
 
   useEffect(() => {
-    const id = setInterval(async () => {
+    axios.defaults.headers.common['Authorization'] =
+      localStorage.getItem('token');
+    console.log(localStorage.getItem('token'));
+  }, []);
+
+  // External effect
+  useEffect(() => {
+    const id = setInterval(() => {
       if (!localStorage.getItem('token')) {
-        if (globalState) {
+        // No token in localstorage
+        axios.defaults.headers.common['Authorization'] = null;
+        if (globalState && globalState.token) {
+          // Token exists in global state but not in local storage. Which means another tab had logout
           setGlobalState((prev) => {
             if (prev) return { ...prev, token: null, authorizedName: null };
           });
+          console.log('Logout. Token removed externally');
         }
         return;
-      } else {
-        if (globalState) {
+      }
+      // Token in local storage
+      if (globalState) {
+        const token = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        if (globalState.token !== token) {
           setGlobalState((prev) => {
-            if (prev) return { ...prev, token: localStorage.getItem('token') };
+            if (prev) return { ...prev, token: token };
           });
+          console.log('Loaded token externally');
         }
       }
+    }, 1000);
+    return () => clearInterval(id);
+  });
+
+  // Validate token effect
+  useEffect(() => {
+    const id = setInterval(async () => {
       try {
+        // Update request credentials
+        const token = globalState
+          ? globalState.token ?? localStorage.getItem('token')
+          : localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+        // Cancel request. No authorized
+        if (!token) return;
+
+        // Perform request to check is token authorized
         const req = await axios.get(API_V1 + '/auth/info');
+        const {
+          authorized,
+          name,
+        }: { authorized: boolean; name: string | null } = req.data;
+
         if (globalState) {
-          globalState.authorizedName = req.data.name;
-          console.log('Set globalState name', req.data.name);
+          if (!authorized) {
+            // LogOut
+            localStorage.removeItem('token');
+            localStorage.removeItem('cachedName');
+            axios.defaults.headers.common['Authorization'] = null;
+            setGlobalState((prev) => {
+              if (prev) return { ...prev, token: null, authorizedName: null };
+            });
+            console.log('Session expired');
+            return;
+          }
+          // Update info
+          let updated = false;
+          if (name && localStorage.getItem('cachedName') !== name) {
+            localStorage.setItem('cachedName', name);
+            updated = true;
+          }
+          if (globalState.authorizedName !== name) {
+            setGlobalState((prev) => {
+              if (prev) return { ...prev, authorizedName: name };
+            });
+            updated = true;
+          }
+          if (updated) console.log('Updated session');
         }
-        localStorage.setItem('cachedName', req.data.name);
-        console.log('AUTH', req.data.name);
+        console.log('Authorized');
         return;
       } catch (err) {
+        console.error('Failed to check session');
         /* ignored */
       }
+
+      // Logout
+      axios.defaults.headers.common['Authorization'] = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('cachedName');
       if (globalState) {
-        globalState.authorizedName = null;
+        setGlobalState((prev) => {
+          if (prev) return { ...prev, token: null, authorizedName: null };
+        });
       }
-      console.log('UNAUTH');
-    }, 5000);
+      console.log('Logout');
+    }, minutes(5));
     return () => clearInterval(id);
-  }, []);
+  });
 
   return (
     <GlobalStateContext.Provider

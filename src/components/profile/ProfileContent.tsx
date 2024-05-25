@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { useOwner, useSession } from '@/lib/auth/useSession';
-
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import NextImage from '@/components/NextImage';
 import ProfileContext from '@/components/profile/ProfileContext';
@@ -12,11 +10,10 @@ import Seo from '@/components/Seo';
 import { Badge, User } from '@/utils/FetchProfile';
 
 export function ProfileContent({ user }: { user: User }) {
-  const [selectedbadge, setselectedbadge] = useState<Badge | undefined>(
+  const [selectedBadge, setSelectedBadge] = useState<Badge | undefined>(
     undefined
   );
-  const session = useSession();
-  const owner = useOwner(session, user.name);
+
   return (
     <DefaultLayout
       breadcrumbs={[
@@ -26,18 +23,18 @@ export function ProfileContent({ user }: { user: User }) {
         },
       ]}
     >
-      {selectedbadge !== undefined ? (
+      {selectedBadge !== undefined ? (
         <dialog id='modal' className='modal'>
           <div className='modal-box border-2 bg-white/30 backdrop-blur-2xl'>
             <div className='center flex-col'>
               <NextImage
                 alt='badgeImage'
-                src={selectedbadge.image}
+                src={selectedBadge.image}
                 width={128}
                 height={128}
                 imgClassName='rounded-full'
               />
-              {selectedbadge.name}
+              {selectedBadge.name}
             </div>
           </div>
           <form method='dialog' className='modal-backdrop'>
@@ -52,7 +49,7 @@ export function ProfileContent({ user }: { user: User }) {
       <div className='flex min-h-full flex-col md:flex-row lg:flex-row'>
         <ProfileContext.Provider value={user}>
           {/* SIDEBAR */}
-          <ProfileSidebar setCurrentBadge={setselectedbadge} />
+          <ProfileSidebar setCurrentBadge={setSelectedBadge} />
           {/* MAIN CONTENT */}
           <main className='flex h-full w-full flex-col items-center justify-center p-10'>
             <ProfileTabs />

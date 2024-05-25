@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Footer } from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export interface NavbarBreadcrumb {
   name: string;
@@ -22,6 +23,7 @@ const DefaultLayout = ({
         {children}
       </main>
       <Footer />
+      <GoogleAnalytics gaId='G-9LCWSWF9Y8' />
     </>
   );
 };

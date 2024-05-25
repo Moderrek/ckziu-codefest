@@ -10,7 +10,7 @@ interface NavbarProps {
 
 export default function Navbar({ breadcrumbs }: NavbarProps) {
   return (
-    <div className='top-0 z-50 w-full text-gray-900 md:sticky border-colorful border-b-2 bg-white bg-opacity-30 from-indigo-500 backdrop-blur-2xl dark:bg-opacity-0'>
+    <div className='top-0 z-50 w-full text-gray-900 dark:text-gray-50 md:sticky border-colorful border-b-2 bg-white bg-opacity-30 from-indigo-500 backdrop-blur-2xl dark:bg-opacity-0'>
       <div className='flex flex-col max-w-full px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8'>
         <div className='flex flex-row items-center justify-between p-4'>
           <UnstyledLink
