@@ -4,7 +4,12 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'simple-import-sort', 'unused-imports', 'eslint-plugin-react-compiler'],
+  plugins: [
+    '@typescript-eslint',
+    'simple-import-sort',
+    'unused-imports',
+    'eslint-plugin-react-compiler',
+  ],
   extends: [
     'eslint:recommended',
     'next',
@@ -13,7 +18,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    'react-compiler/react-compiler': "error",
+    'react-compiler/react-compiler': 'warn',
     semi: ['error', 'always'],
     'no-unused-vars': 'off',
     'no-console': 'warn',

@@ -10,22 +10,18 @@ import {
 } from 'lucide-react';
 import { NextPage } from 'next';
 
-import { useSession } from '@/lib/auth/useSession';
-
+import { CreateProjectRefButton } from '@/components/CreateProjectRefButton';
 import FaqSection from '@/components/FaqSection';
 import ArticleSection from '@/components/fetchable/articles';
 import { NewestProjects } from '@/components/fetchable/Projects';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
+import { ParticipateButton } from '@/components/ParticipateButton';
 import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
-import { CreateProjectRefButton } from '@/components/CreateProjectRefButton';
-import { ParticipateButton } from '@/components/ParticipateButton';
 
 const Index: NextPage = () => {
-  const session = useSession();
-
   return (
     <DefaultLayout>
       <Seo />
@@ -171,7 +167,6 @@ const Index: NextPage = () => {
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
           className='w-1/3 mt-5'
-          onClick={() => {}}
         >
           Utwórz projekt
         </Button>
