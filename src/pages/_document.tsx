@@ -13,7 +13,7 @@ export default function Document() {
       <Head />
       <body
         className={cn(
-          'bg-background min-h-full scroll-smooth font-sans antialiased'
+          'bg-background min-h-full scroll-smooth font-codefest antialiased'
         )}
       >
         <Main />

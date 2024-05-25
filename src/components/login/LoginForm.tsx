@@ -30,6 +30,7 @@ import {
   validate_password,
   ValidationResult,
 } from '@/utils/Validate';
+import useGlobalState from '@/globalstate/useGlobalState';
 
 interface LoginFormProps {
   loginService: boolean;
@@ -48,6 +49,8 @@ enum LoginStage {
 }
 
 function LoginForm({ loginService }: LoginFormProps) {
+  const gs = useGlobalState();
+  const globalState = gs?.globalState;
   // form fields
   const [login, setLogin] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
@@ -79,6 +82,10 @@ function LoginForm({ loginService }: LoginFormProps) {
   }
 
   async function logIn(token: string, name: string) {
+    if (globalState) {
+      globalState.token = token;
+      globalState.authorizedName = name;
+    }
     localStorage.setItem('token', token);
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     await router.push(`/p/${name}`);

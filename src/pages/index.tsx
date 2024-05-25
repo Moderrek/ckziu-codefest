@@ -6,7 +6,6 @@ import {
   CircleCheck,
   CircleHelp,
   Crown,
-  Newspaper,
   Plus,
   TerminalIcon,
 } from 'lucide-react';
@@ -17,12 +16,12 @@ import { useSession } from '@/lib/auth/useSession';
 import FaqSection from '@/components/FaqSection';
 import ArticleSection from '@/components/fetchable/articles';
 import { NewestProjects } from '@/components/fetchable/Projects';
-import CkziuLogo from '@/components/images/CkziuLogo';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
 import { RewardCard } from '@/components/RewardCard';
 import Seo from '@/components/Seo';
+import { CreateProjectRefButton } from '@/components/CreateProjectRefButton';
 
 const Index: NextPage = () => {
   const session = useSession();
@@ -32,80 +31,76 @@ const Index: NextPage = () => {
       <Seo />
 
       {/*<Homepage />*/}
-      <section className='main-section flex-col md:flex-row gap-8'>
-        <div className='min-w-1/2'>
-          <div className='flex flex-col items-center'>
-            <CkziuLogo width={150} height={150} />
-            <h1 className='font-title text-center text-4xl font-bold'>
-              CKZiU
-              <br />
-              <span className='font-title text-5xl italic tracking-tight'>
-                CODEFEST24
-              </span>
-            </h1>
-          </div>
+      <section className='bg-gray-200 dark:bg-gray-900'>
+        <div className='max-w-screen-xl px-4 py-8 mx-auto'>
+          <div className='grid items-center gap-8 mb-8 sm:mb-0 lg:gap-12 lg:grid-cols-12'>
+            <div className='col-span-6 px-4 text-center sm:mb-6 lg:text-left lg:mb-0'>
+              <h1 className='mb-2 text-4xl font-title leading-none tracking-tight text-gray-900 md:text-5xl xl:text-6xl dark:text-white'>
+                CKZiU CodeFest
+              </h1>
+              <h2 className='pb-2 text-3xl font-light text-gray-800 dark:text-gray-300 md:text-4xl'>
+                Platforma konkursowa
+              </h2>
+              <p className='max-w-xl mx-auto mb-6 font-normal text-gray-900 lg:mx-0 xl:mb-2 md:text-lg xl:text-xl dark:text-gray-50'>
+                CKZiU CodeFest to platforma konkursowa oraz miejsce do
+                znajdowania jak i publikowania projektów o rozmaitych tematach
+                stworzona przez Tymona Woźniaka
+              </p>
+              <div className='flex flex-row gap-4'>
+                <Tooltip content='Zgłoś swoją pracę do konkursu.'>
+                  <UnstyledLink
+                    href={
+                      session?.isAuthorized ? `/p/${session.name}` : '/zaloguj'
+                    }
+                    className='w-1/2'
+                  >
+                    <Button
+                      variant='gradient'
+                      color='green'
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                      className='flex flex-row flex-1 min-w-fit items-center justify-center gap-1 w-full'
+                    >
+                      <Plus className='w-6 h-6' /> Weź udział
+                    </Button>
+                  </UnstyledLink>
+                </Tooltip>
 
-          <div className='mt-5 flex flex-row flex-wrap justify-center gap-4'>
-            <Tooltip content='Zgłoś swoją pracę do konkursu.'>
-              <UnstyledLink
-                href={session?.isAuthorized ? `/p/${session.name}` : '/zaloguj'}
-              >
-                <Button
-                  variant='gradient'
-                  color='green'
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                  className='flex flex-row flex-1 min-w-fit items-center justify-center gap-1'
-                >
-                  <Plus /> Weź udział
-                </Button>
+                <Tooltip content='Czytaj regulamin na stronie szkoły.'>
+                  <UnstyledLink href='/regulamin' className='w-1/2'>
+                    <Button
+                      variant='gradient'
+                      color='red'
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                      className='flex flex-row flex-1 min-w-fit items-center justify-center gap-1 w-full'
+                    >
+                      <Book className='w-6 h-6' /> Regulamin konkursu
+                    </Button>
+                  </UnstyledLink>
+                </Tooltip>
+              </div>
+            </div>
+            <div className='col-span-6'>
+              <UnstyledLink href='https://cez.lodz.pl/'>
+                <NextImage
+                  alt='CKZiU'
+                  src='/images/ckziu_thumbnail.png'
+                  width={680}
+                  height={400}
+                  className='w-full h-full'
+                  imgClassName='rounded-2xl drop-shadow-xl border-gradient border-2'
+                  useSkeleton={false}
+                  priority={true}
+                />
               </UnstyledLink>
-            </Tooltip>
-
-            <Tooltip content='Czytaj regulamin na stronie szkoły.'>
-              <UnstyledLink href='/regulamin'>
-                <Button
-                  variant='gradient'
-                  color='red'
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                  className='flex flex-row flex-1 min-w-fit items-center justify-center gap-1'
-                >
-                  <Book /> Regulamin konkursu
-                </Button>
-              </UnstyledLink>
-            </Tooltip>
+            </div>
           </div>
-          <p className='mt-5'>
-            Konkurs polega wyłonieniu najlepszego twórcy stron internetowych w
-            Centrum Kształcenia Zawodowego i Ustawicznego w Łodzi.
-          </p>
-          <p className='mt-5'>
-            Organizowany przez <b>CKZiU w Łodzi</b> wraz z twórcą serwisu
-            <UnstyledLink href='https://github.com/Moderrek'>
-              <Tooltip content='Kliknij aby zobaczyć profil GitHub'>
-                <b>Tymonem Woźniakiem</b>
-              </Tooltip>
-            </UnstyledLink>
-          </p>
-        </div>
-        <div className='min-w-1/2'>
-          <UnstyledLink href='https://cez.lodz.pl/'>
-            <NextImage
-              alt='CKZiU'
-              src='/images/ckziu_thumbnail.png'
-              width={680}
-              height={400}
-              className='w-full h-full'
-              imgClassName='rounded-2xl drop-shadow-xl border-gradient border-2'
-              useSkeleton={false}
-              priority={true}
-            />
-          </UnstyledLink>
         </div>
       </section>
+
       <section className='main-section'>
         <h2
           id='nagrody'
@@ -135,7 +130,6 @@ const Index: NextPage = () => {
           .
         </p>
         <section className='container mb-5 mt-5 center'>
-          {/*<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-8'>*/}
           <div className='flex flex-wrap justify-center gap-2 lg:gap-8'>
             <RewardCard
               thumbnail='/images/rewards/headphones.png'
@@ -178,13 +172,28 @@ const Index: NextPage = () => {
 
       {/* POPULARNE PROJEKTY */}
       <section className='main-section'>
-        <h2 className='flex flex-row items-center justify-center gap-2 text-4xl font-bold text-blue-300 tracking-tighter'>
-          <TerminalIcon />
+        <h2 className='flex flex-row items-center justify-center gap-2 text-4xl font-bold text-blue-300 tracking-tighter drop-shadow-lg'>
+          <TerminalIcon className='w-10 h-10' />
           Najnowsze projekty
         </h2>
+        <p className='mt-5 text-center'>
+          Ostatnie projekty, które zostały zmodyfikowane na serwisie.
+        </p>
         <div className='mx-auto mt-5 flex flex-wrap justify-center gap-4'>
           <NewestProjects />
         </div>
+        <Button
+          variant='filled'
+          color='blue'
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+          className='w-1/3 mt-5'
+          onClick={() => {}}
+        >
+          Utwórz projekt
+        </Button>
+        <CreateProjectRefButton />
       </section>
 
       <section className='main-section'>
@@ -258,13 +267,24 @@ const Index: NextPage = () => {
       </section>
 
       {/* WIADOMOŚCI */}
-      <section className='main-section'>
-        <h2 className='flex flex-row items-center justify-center gap-2 text-3xl font-bold tracking-tighter'>
-          <Newspaper />
-          Ostatnie <span className='text-amber-400 '>wydarzenia szkolne</span>
-        </h2>
-        <div className='flex flex-wrap flex-row justify-center gap-4 mt-5'>
-          <ArticleSection />
+      <section className='relative px-1 pt-8 pb-4 bg-transparent lg:px-8 lg:pt-12 lg:mb-4 md:mt-12'>
+        <div className='absolute inset-0'>
+          <div className='bg-gray-200 dark:bg-gray-900/50 h-1/3 sm:h-2/3'></div>
+        </div>
+        <div className='relative px-2 mx-auto max-w-7xl'>
+          <div className='text-center'>
+            <h2 className='text-3xl font-black tracking-tight text-primary-500 dark:text-primary-300 sm:text-4xl'>
+              Ostatnie wiadomości
+            </h2>
+            <p className='max-w-2xl mx-auto mt-3 text-xl text-gray-500 dark:text-gray-300 sm:mt-4'>
+              Wiadomości serwisu oraz szkolne
+            </p>
+          </div>
+          <div className='mx-auto text-gray-900 max-w-7xl dark:text-gray-50 md:px-1.5'>
+            <div className='flex flex-wrap flex-row justify-center gap-4 mt-5'>
+              <ArticleSection />
+            </div>
+          </div>
         </div>
       </section>
 

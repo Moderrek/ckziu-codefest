@@ -16,12 +16,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import UnstyledLink from '../links/UnstyledLink';
+import useGlobalState from '@/globalstate/useGlobalState';
+import { useAuthorized } from '@/globalstate/useAuth';
 
 export default function DropdownMenuDemo() {
   const router = useRouter();
   const session = useSession();
+  const gs = useGlobalState();
+  const globalState = gs?.globalState;
+  const isAuthorized = useAuthorized();
 
-  if (!session?.isAuthorized) {
+  if (!isAuthorized) {
     return (
       <UnstyledLink href='/zaloguj'>
         <Button
@@ -42,14 +47,14 @@ export default function DropdownMenuDemo() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <ShadcnButton variant='outline' className='gap-1'>
-          <CircleUser />@{session.name}
+          <CircleUser />@{globalState?.authorizedName}
         </ShadcnButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-45'>
         <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {session?.isAuthorized ? (
-          <Link href={`/p/${session?.name}`}>
+        {isAuthorized ? (
+          <Link href={`/p/${globalState?.authorizedName}`}>
             <DropdownMenuItem>
               <div className='flex flex-row'>
                 <User className='mr-2 h-4 w-4' />
@@ -67,13 +72,20 @@ export default function DropdownMenuDemo() {
             </DropdownMenuItem>
           </Link>
         )}
-        {session?.isAuthorized ? (
+        {isAuthorized ? (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem
+              className='bg-red-400 text-white'
               onClick={() => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('cachedName');
+
+                if (globalState) {
+                  globalState.authorizedName = null;
+                  globalState.token = null;
+                }
+
                 router.push('/zaloguj');
               }}
             >

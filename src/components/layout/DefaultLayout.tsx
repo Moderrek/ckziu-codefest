@@ -18,7 +18,7 @@ const DefaultLayout = ({
   return (
     <>
       <Navbar breadcrumbs={breadcrumbs} />
-      <main className='sticky inset-0 block h-max w-full flex-1 flex-col'>
+      <main className='sticky flex-grow h-max w-full flex-1 flex-col'>
         {children}
       </main>
       <Footer />

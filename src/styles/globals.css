@@ -6,7 +6,7 @@
 
 @layer components {
   #__next {
-    @apply flex h-full flex-col;
+    @apply flex min-h-screen flex-col;
     @apply bg-background;
   }
 
@@ -94,12 +94,18 @@
     @apply border-border;
   }
 
+  .font-codefest {
+    tab-size: 4;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+  }
+
   .markdown ul {
     display: block;
     list-style-type: disc;
     margin-block-start: 1em;
     margin-block-end: 1em;
-    margin-inline-end: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 40px;
   }

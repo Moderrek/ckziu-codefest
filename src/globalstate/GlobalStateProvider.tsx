@@ -10,6 +10,7 @@ interface GlobalState {
   users: Map<string, User>;
   profiles: Map<string, User>;
   authorizedName: string | null;
+  token: string | null;
 }
 
 interface GatewayContextProps {
@@ -34,17 +35,40 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
       users: new Map<string, User>(),
       profiles: new Map<string, User>(),
       authorizedName: localStorage.getItem('cachedName'),
+      token: localStorage.getItem('token'),
     });
   }, [globalState]);
 
   useEffect(() => {
     const id = setInterval(async () => {
+      if (!localStorage.getItem('token')) {
+        if (globalState) {
+          setGlobalState((prev) => {
+            if (prev) return { ...prev, token: null, authorizedName: null };
+          });
+        }
+        return;
+      } else {
+        if (globalState) {
+          setGlobalState((prev) => {
+            if (prev) return { ...prev, token: localStorage.getItem('token') };
+          });
+        }
+      }
       try {
         const req = await axios.get(API_V1 + '/auth/info');
+        if (globalState) {
+          globalState.authorizedName = req.data.name;
+          console.log('Set globalState name', req.data.name);
+        }
+        localStorage.setItem('cachedName', req.data.name);
         console.log('AUTH', req.data.name);
         return;
       } catch (err) {
         /* ignored */
+      }
+      if (globalState) {
+        globalState.authorizedName = null;
       }
       console.log('UNAUTH');
     }, 5000);
