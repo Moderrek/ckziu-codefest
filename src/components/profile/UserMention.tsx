@@ -112,7 +112,7 @@ const UserMention = ({ userName, showAvatar }: ProfileHoverCardProps) => {
           />
           <div className="-space-y-1">
             <Link href={profileUrl} className="hover:underline">
-              <h4 className="text-sm font-semibold">@{user.name}</h4>
+              <h4 className="text-sm font-semibold">{user.display_name}</h4>
             </Link>
             <p className="text-sm">{user.bio}</p>
             <div className="flex items-center pt-2">

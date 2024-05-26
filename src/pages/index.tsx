@@ -215,10 +215,12 @@ const Index: NextPage = () => {
         <div className="relative mx-auto max-w-7xl px-2">
           <div className="text-center">
             <h2 className="text-primary-500 dark:text-primary-300 text-3xl font-black tracking-tight sm:text-4xl">
-              Ostatnie wiadomości
+              Wiadomości szkolne
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-xl text-gray-500 dark:text-gray-300 sm:mt-4">
-              Wiadomości serwisu oraz szkolne
+              Wiadomości szkolne pochodzące z <UnstyledLink className="text-blue-400 hover:underline"
+                                                            href={siteConfig.cez_website}>strony
+              szkoły</UnstyledLink>
             </p>
           </div>
           <div className="mx-auto max-w-7xl text-gray-900 dark:text-gray-50 md:px-1.5">

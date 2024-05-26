@@ -72,21 +72,59 @@ const ProjectAuthor = ({
           </div>
         </div>
       </HoverCardTrigger>
-      <HoverCardContent className="w-72">
-        <div className="flex justify-between">
-          <NextImage
-            alt={`Profilowe @${user.name}`}
-            src="/images/ckziu-cropped.svg"
-            width={64}
-            height={64}
-            className="mr-2"
-          />
-          <div className="-space-y-1">
-            <Link href={`/p/${user.name}`} className="hover:underline">
-              <h4 className="text-sm font-semibold">@{user.name}</h4>
-            </Link>
-            <p className="text-sm">{user.bio}</p>
-            <div className="flex items-center pt-2">
+      <HoverCardContent className="w-72 bg-gray-50 dark:bg-gray-900">
+        <div className="flex items-center">
+          <UnstyledLink href={`/p/${user.name}`}>
+            <div className="shrink-0">
+              <span className="sr-only">{user.display_name}</span>
+              <NextImage
+                alt={`${user.display_name} Profile Picture`}
+                src="/images/ckziu_thumbnail.png"
+                width={40}
+                height={40}
+                imgClassName="w-10 h-10 rounded-full"
+              />
+            </div>
+          </UnstyledLink>
+
+          <div className="ml-3 pt-1">
+            <UnstyledLink href={`/p/${user.name}`}>
+              <p className="text-sm font-medium text-gray-900 hover:underline dark:text-white">
+                {(user.flags & (1 << 0)) != 0 ? (
+                  <span className="mr-1 font-title text-red-400 drop-shadow">
+                  <Tooltip content={<b>Personel</b>}>S</Tooltip>
+                </span>
+                ) : (
+                  <></>
+                )}
+                {(user.flags & (1 << 1)) != 0 ? (
+                  <span className="mr-1 font-title text-amber-400 drop-shadow">
+                  <Tooltip content={<b>Programista</b>}>D</Tooltip>
+                </span>
+                ) : (
+                  <></>
+                )}
+                {(user.flags & (1 << 2)) != 0 ? (
+                  <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content="Nauczyciel">N</Tooltip>
+                </span>
+                ) : (
+                  <></>
+                )}
+                {(user.flags & (1 << 3)) != 0 ? (
+                  <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content="Moderator">M</Tooltip>
+                </span>
+                ) : (
+                  <></>
+                )}
+                {user.display_name}
+              </p>
+            </UnstyledLink>
+            <p className="text-sm">
+              {user.bio}
+            </p>
+            <div className="flex space-x-1 text-sm text-gray-500 dark:text-white">
               <CalendarDays className="mr-2 size-4 opacity-70" />{' '}
               <span className="text-xs text-muted-foreground">
                 Dołączył {UserCreatedDate(user)}
@@ -104,7 +142,7 @@ const Project = ({ project }: { project: CodefestProject }) => {
     <div className="max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl">
       <Link href={`/p/${project.owner_name}/${project.name}`}>
         <Image
-          src="/images/ckziu_thumbnail.png"
+          src="/images/project_template.png"
           alt="ckziu_thumbnail"
           width={380}
           height={250}
