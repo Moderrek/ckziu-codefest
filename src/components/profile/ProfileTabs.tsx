@@ -1,13 +1,14 @@
 import { useContext } from 'react';
 
+import { DialogCreateProject } from '@/components/dialog/CreateProjectDialog';
 import { Projects } from '@/components/fetchable/Projects';
+import { ProfileBoard } from '@/components/profile/ProfileBoard';
 import ProfileContext from '@/components/profile/ProfileContext';
+import { ProfilePosts } from '@/components/profile/ProfilePosts';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { useName } from '@/globalstate/useName';
 import { User } from '@/utils/FetchProfile';
-
-import { DialogCreateProject } from '../dialog/CreateProjectDialog';
 
 const ProfileTabs = () => {
   const user: User = useContext(ProfileContext);
@@ -15,14 +16,18 @@ const ProfileTabs = () => {
   const isOwner: boolean = name !== null && name === user.name;
 
   return (
-    <Tabs defaultValue="projects" className="w-full">
+    <Tabs defaultValue="tablica" className="w-full">
       <TabsList>
-        <TabsTrigger value="posts">Posty</TabsTrigger>
+        <TabsTrigger value="tablica">Tablica</TabsTrigger>
+        <TabsTrigger value="posts">Wpisy</TabsTrigger>
         <TabsTrigger value="projects">Projekty</TabsTrigger>
         <TabsTrigger value="liked_projects">Polubione projekty</TabsTrigger>
       </TabsList>
+      <TabsContent value="tablica">
+        <ProfileBoard />
+      </TabsContent>
       <TabsContent value="posts">
-        <h2>Profile Posts</h2>
+        <ProfilePosts />
       </TabsContent>
       <TabsContent value="projects">
         {isOwner ? <DialogCreateProject /> : <></>}

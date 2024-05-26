@@ -6,25 +6,60 @@ import React, { useContext } from 'react';
 import useSWR from 'swr';
 
 import { API_V1 } from '@/lib/api/api';
+import { getRelativeTimeString } from '@/lib/utils';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
 import ProfileContext from '@/components/profile/ProfileContext';
-import { UserMention } from '@/components/profile/UserMention';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 import { useUser } from '@/globalstate/useUser';
-import { CodefestProject } from '@/utils/FetchProfile';
+import { CodefestProject, User } from '@/utils/FetchProfile';
 import { UserCreatedDate } from '@/utils/UserCreatedDate';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const ProjectAuthor = ({
-                         owner_name,
-                         project_create
-                       }: {
+export function UserDisplayName(props: { user: User }) {
+  const { user } = props;
+  return <>{(user.flags & (1 << 0)) != 0 ? (
+    <span className="mr-1 font-title text-red-400 drop-shadow">
+                  <Tooltip content={<b>Personel</b>}>S</Tooltip>
+                </span>
+  ) : (
+    <></>
+  )}
+    {(user.flags & (1 << 1)) != 0 ? (
+      <span className="mr-1 font-title text-amber-400 drop-shadow">
+                  <Tooltip content={<b>Programista</b>}>D</Tooltip>
+                </span>
+    ) : (
+      <></>
+    )}
+    {(user.flags & (1 << 2)) != 0 ? (
+      <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content="Nauczyciel">N</Tooltip>
+                </span>
+    ) : (
+      <></>
+    )}
+    {(user.flags & (1 << 3)) != 0 ? (
+      <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content="Moderator">M</Tooltip>
+                </span>
+    ) : (
+      <></>
+    )}
+    {user.display_name}</>;
+}
+
+export const ProjectAuthor = ({
+                                owner_name,
+                                create,
+                                type
+                              }: {
   owner_name: string;
-  project_create: number;
+  create: number;
+  type: string;
 }) => {
   const user = useUser(owner_name);
 
@@ -38,36 +73,40 @@ const ProjectAuthor = ({
     return <></>;
   }
 
-  const createDate = new Date(project_create).toISOString().slice(0, 10);
+  const createDate = new Date(create).toISOString().slice(0, 10);
 
   return (
     <HoverCard openDelay={1}>
       <HoverCardTrigger asChild>
-        <div className="mt-6 flex items-center">
+        <div className="flex items-center">
           <UnstyledLink href={`/p/${user.name}`}>
             <div className="shrink-0">
               <span className="sr-only">{user.display_name}</span>
-              <NextImage
-                alt={`${user.display_name} Profile Picture`}
-                src="/images/ckziu_thumbnail.png"
-                width={40}
-                height={40}
-                imgClassName="w-10 h-10 rounded-full"
-              />
+              <div className="relative">
+                <NextImage
+                  alt={`${user.display_name} Profile Picture`}
+                  src="/images/ckziu_thumbnail.png"
+                  width={40}
+                  height={40}
+                  imgClassName="w-10 h-10 rounded-full"
+                />
+                <span className="absolute bottom-0 right-0 block size-3 rounded-full bg-green-400 content-['']" />
+              </div>
+
             </div>
           </UnstyledLink>
 
           <div className="ml-3 pt-1">
             <UnstyledLink href={`/p/${user.name}`}>
               <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {user.display_name}
+                <UserDisplayName user={user} />
               </p>
             </UnstyledLink>
 
             <div className="flex space-x-1 text-sm text-gray-500 dark:text-white">
-              <time dateTime={createDate}>{createDate}</time>
+              <time dateTime={createDate}>{getRelativeTimeString(new Date(create))}</time>
               <span aria-hidden="true">·</span>
-              <span>Projekt</span>
+              <span>{type}</span>
             </div>
           </div>
         </div>
@@ -90,35 +129,7 @@ const ProjectAuthor = ({
           <div className="ml-3 pt-1">
             <UnstyledLink href={`/p/${user.name}`}>
               <p className="text-sm font-medium text-gray-900 hover:underline dark:text-white">
-                {(user.flags & (1 << 0)) != 0 ? (
-                  <span className="mr-1 font-title text-red-400 drop-shadow">
-                  <Tooltip content={<b>Personel</b>}>S</Tooltip>
-                </span>
-                ) : (
-                  <></>
-                )}
-                {(user.flags & (1 << 1)) != 0 ? (
-                  <span className="mr-1 font-title text-amber-400 drop-shadow">
-                  <Tooltip content={<b>Programista</b>}>D</Tooltip>
-                </span>
-                ) : (
-                  <></>
-                )}
-                {(user.flags & (1 << 2)) != 0 ? (
-                  <span className="mr-1 font-title text-indigo-400 drop-shadow">
-                  <Tooltip content="Nauczyciel">N</Tooltip>
-                </span>
-                ) : (
-                  <></>
-                )}
-                {(user.flags & (1 << 3)) != 0 ? (
-                  <span className="mr-1 font-title text-indigo-400 drop-shadow">
-                  <Tooltip content="Moderator">M</Tooltip>
-                </span>
-                ) : (
-                  <></>
-                )}
-                {user.display_name}
+                <UserDisplayName user={user} />
               </p>
             </UnstyledLink>
             <p className="text-sm">
@@ -137,7 +148,7 @@ const ProjectAuthor = ({
   );
 };
 
-const Project = ({ project }: { project: CodefestProject }) => {
+const Project = ({ project, showAuthor = false }: { project: CodefestProject, showAuthor: boolean }) => {
   return (
     <div className="max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl">
       <Link href={`/p/${project.owner_name}/${project.name}`}>
@@ -152,7 +163,7 @@ const Project = ({ project }: { project: CodefestProject }) => {
       <div className="px-6 py-4">
         <div className="flex flex-row justify-between text-2xl font-bold">
           <Link
-            href={project.url}
+            href={`/p/${project.owner_name}/${project.name}`}
             className="flex min-w-fit flex-row items-center gap-1 hover:text-indigo-600 hover:underline dark:hover:text-indigo-500"
           >
             {project.private ? (
@@ -188,7 +199,7 @@ const Project = ({ project }: { project: CodefestProject }) => {
             'discord',
             'node'
           ]
-            .filter((_) => Math.random() > 0.6)
+            // .filter((_) => Math.random() > 0.6)
             .map((tag, idx) => {
               return (
                 <UnstyledLink
@@ -201,78 +212,15 @@ const Project = ({ project }: { project: CodefestProject }) => {
               );
             })}
         </div>
-        <ProjectAuthor
-          owner_name={project.owner_name}
-          project_create={project.created_at}
-        />
-      </div>
-    </div>
-  );
-};
-
-const UserProject = (props: { project: CodefestProject }) => {
-  const user = useContext(ProfileContext);
-  const project: CodefestProject = props.project;
-
-  return (
-    <div className="max-w-sm overflow-hidden rounded-b rounded-t-lg border-b-4 border-r-4 shadow-2xl">
-      <Link href={`/p/${user.name}/${project.name}`}>
-        <Image
-          src="/images/ckziu_thumbnail.png"
-          alt="ckziu_thumbnail"
-          width={1140}
-          height={760}
-          className="min-w-fill rounded-b-lg shadow"
-        />
-      </Link>
-      <div className="px-6 py-4">
-        <div className="flex flex-row justify-between text-2xl font-bold">
-          <Link
-            href={`/p/${user.name}/${project.name}`}
-            className="flex min-w-fit flex-row items-center gap-1 hover:underline"
-          >
-            {project.private ? (
-              <Tooltip content="Tylko ty widzisz ten projekt">
-                <LockIcon />
-              </Tooltip>
-            ) : (
-              <></>
-            )}
-            {project.tournament ? (
-              <Tooltip content="Kandydat CKZiU CodeFest24">
-                <Trophy />
-              </Tooltip>
-            ) : (
-              <></>
-            )}
-            {project.display_name}
-          </Link>
-          {/* <div
-            className='ml-5 flex cursor-pointer select-none flex-row justify-between text-right'
-            onClick={() => {
-              setLiked(!liked);
-              if (!liked) setLikes(likes + 1);
-              else setLikes(likes - 1);
-            }}
-          >
-            <Tooltip content='Kliknij aby polubić'>
-              <Star
-                stroke={liked ? '#FDE047' : 'black'}
-                fill={liked ? '#FDE047' : 'none'}
-                className='drop-shadow'
-              />
-            </Tooltip>
-            {likes}
-          </div> */}
-        </div>
-        <p className="text-base font-bold">
-          <UserMention userName={user.name} showAvatar={true} />
-        </p>
-        <div className="mt-2">
-          <p className="text-base text-gray-700 dark:text-gray-200">
-            {project.description}
-          </p>
-        </div>
+        {
+          showAuthor ? <div className="mt-6 ">
+            <ProjectAuthor
+              owner_name={project.owner_name}
+              create={project.created_at}
+              type="Projekt"
+            />
+          </div> : <></>
+        }
       </div>
     </div>
   );
@@ -327,7 +275,7 @@ const NewestProjects = () => {
   return (
     <>
       {data.map((project) => {
-        return <Project key={project.id} project={project} />;
+        return <Project key={project.id} project={project} showAuthor />;
       })}
     </>
   );
@@ -345,11 +293,11 @@ const Projects = () => {
       </>
     );
 
-  // Render articles
+  // Render projects
   return (
     <>
       {projects.map((project) => {
-        return <UserProject key={project.id} project={project} />;
+        return <Project project={project} key={project.id} showAuthor={false} />;
       })}
     </>
   );
