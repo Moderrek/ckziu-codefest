@@ -1,4 +1,4 @@
-import { Button, Tooltip } from '@material-tailwind/react';
+import { Tooltip } from '@material-tailwind/react';
 import { CalendarDays, Circle, CircleCheck, CircleHelp, Crown, TerminalIcon } from 'lucide-react';
 import { NextPage } from 'next';
 
@@ -134,16 +134,6 @@ const Index: NextPage = () => {
         <div className="mx-auto mt-5 flex flex-wrap justify-center gap-4">
           <NewestProjects />
         </div>
-        <Button
-          variant="filled"
-          color="blue"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-          className="mt-5 w-1/3"
-        >
-          Utwórz projekt
-        </Button>
         <CreateProjectRefButton />
       </section>
 

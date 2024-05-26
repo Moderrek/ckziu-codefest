@@ -8,6 +8,9 @@ export type Reward = {
   thumbnail_url: string;
 };
 
+export const loginUrl = '/zaloguj';
+export const profileUrl = (name: string) => `/p/${name}`;
+export const profileOrLogin = (name: string | null | undefined) => name ? profileUrl(name) : loginUrl;
 const rewardUrl = (file: string) => `/images/rewards/${file}.png`;
 
 export const FAQ: Faq[] = [

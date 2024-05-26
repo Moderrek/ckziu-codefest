@@ -7,19 +7,18 @@ import { ProfileSidebar } from '@/components/profile/ProfileSidebar';
 import { ProfileTabs } from '@/components/profile/ProfileTabs';
 import Seo from '@/components/Seo';
 
+import { profileUrl } from '@/config/constants';
 import { Badge, User } from '@/utils/FetchProfile';
 
 export function ProfileContent({ user }: { user: User }) {
-  const [selectedBadge, setSelectedBadge] = useState<Badge | undefined>(
-    undefined
-  );
+  const [selectedBadge, setSelectedBadge] = useState<Badge | undefined>(undefined);
 
   return (
     <DefaultLayout
       breadcrumbs={[
         {
           name: user.name,
-          url: `/p/${user.name}`
+          url: profileUrl(user.name)
         }
       ]}
     >

@@ -64,7 +64,7 @@ const FetchUserAxios = async (name: string) => {
   return null;
 };
 
-const FetchUser = async (name: string) => {
+const FetchUser = async (name: string): Promise<User | null | undefined> => {
   try {
     const res = await fetch(API_URL_GET_USER(name));
     const user: User = await res.json();
@@ -76,7 +76,7 @@ const FetchUser = async (name: string) => {
     /* ignored */
   }
   // The default response
-  return null;
+  return undefined;
 };
 
 const FetchProject = async (username: string, projectname: string) => {

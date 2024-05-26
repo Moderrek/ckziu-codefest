@@ -1,5 +1,7 @@
 import { RedirectPage } from '@/components/RedirectPage';
 
+const RegulaminUrl = '/regulamin';
+
 const RegulaminPage = () => (
   <RedirectPage
     title="Regulamin"
@@ -7,4 +9,5 @@ const RegulaminPage = () => (
   />
 );
 
+export { RegulaminUrl };
 export default RegulaminPage;

@@ -80,4 +80,7 @@ export async function getServerSideProps() {
   };
 }
 
+const statusUrl = '/status';
+
+export { statusUrl };
 export default StatusPage;
