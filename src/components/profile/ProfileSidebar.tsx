@@ -37,14 +37,14 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
       // bio changes
       try {
         const req = await axios.post(API_V1 + '/update/user/bio', {
-          bio: newBio,
+          bio: newBio
         });
         setEditQueue((prev) => prev - 1);
         if (!req.data.success) {
           toast({
             variant: 'destructive',
             title: 'Wystąpił problem.',
-            description: req.data.message,
+            description: req.data.message
           });
         }
       } catch (err) {
@@ -52,7 +52,7 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
           variant: 'destructive',
           title: 'Błąd po stronie serwera',
           description:
-            'Przepraszamy! Wystąpił błąd po stronie serwera. Nie udało się zaktualizować biografii. Spróbuj ponownie później.',
+            'Przepraszamy! Wystąpił błąd po stronie serwera. Nie udało się zaktualizować biografii. Spróbuj ponownie później.'
         });
         setEditQueue((prev) => prev - 1);
       }
@@ -72,14 +72,14 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
       // displayname changes
       try {
         const req = await axios.post(API_V1 + '/update/user/displayname', {
-          displayname: newDisplayName,
+          displayname: newDisplayName
         });
         setEditQueue((prev) => prev - 1);
         if (!req.data.success) {
           toast({
             variant: 'destructive',
             title: 'Wystąpił problem.',
-            description: req.data.message,
+            description: req.data.message
           });
         }
       } catch (err) {
@@ -87,7 +87,7 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
           variant: 'destructive',
           title: 'Błąd po stronie serwera',
           description:
-            'Przepraszamy! Wystąpił błąd po stronie serwera. Nie udało się zaktualizować wyświetlanej nazwy. Spróbuj ponownie później.',
+            'Przepraszamy! Wystąpił błąd po stronie serwera. Nie udało się zaktualizować wyświetlanej nazwy. Spróbuj ponownie później.'
         });
         setEditQueue((prev) => prev - 1);
       }
@@ -95,46 +95,47 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
   };
 
   return (
-    <div className='border-gradient-to-r left-0 m-0 min-h-full w-full from-indigo-500 shadow-xl backdrop-blur-2xl pb-5 md:pb-0 md:w-60 lg:w-80 dark:bg-transparent'>
-      <div className='container mx-auto pt-10 min-h-full w-full flex flex-col'>
-        <div className='flex flex-col items-center justify-center'>
+    <div
+      className="border-gradient-to-r left-0 m-0 min-h-full w-full from-indigo-500 pb-5 shadow-xl backdrop-blur-2xl dark:bg-transparent md:w-60 md:pb-0 lg:w-80">
+      <div className="container mx-auto flex min-h-full w-full flex-col pt-10">
+        <div className="flex flex-col items-center justify-center">
           <ProfileAvatar profileName={user.name} />
           {editMode ? (
             <Input
-              type='text'
+              type="text"
               value={editDisplayName}
               onChange={(e) => setEditDisplayName(e.target.value)}
-              placeholder='Wyświetlana nazwa'
+              placeholder="Wyświetlana nazwa"
               disabled={editQueue != 0}
               maxLength={30}
-              className='mt-2 text-center font-mono text-2xl text-black dark:text-white'
+              className="mt-2 text-center font-mono text-2xl text-black dark:text-white"
             />
           ) : (
-            <h1 className='mt-2 text-center font-mono text-2xl text-black dark:text-white'>
+            <h1 className="mt-2 text-center font-mono text-2xl text-black dark:text-white">
               {(user.flags & (1 << 0)) != 0 ? (
-                <span className='font-title text-red-400 mr-1 drop-shadow'>
+                <span className="mr-1 font-title text-red-400 drop-shadow">
                   <Tooltip content={<b>Personel</b>}>S</Tooltip>
                 </span>
               ) : (
                 <></>
               )}
               {(user.flags & (1 << 1)) != 0 ? (
-                <span className='font-title text-amber-400 mr-1 drop-shadow'>
+                <span className="mr-1 font-title text-amber-400 drop-shadow">
                   <Tooltip content={<b>Programista</b>}>D</Tooltip>
                 </span>
               ) : (
                 <></>
               )}
               {(user.flags & (1 << 2)) != 0 ? (
-                <span className='font-title text-indigo-400 mr-1 drop-shadow'>
-                  <Tooltip content='Nauczyciel'>N</Tooltip>
+                <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content="Nauczyciel">N</Tooltip>
                 </span>
               ) : (
                 <></>
               )}
               {(user.flags & (1 << 3)) != 0 ? (
-                <span className='font-title text-indigo-400 mr-1 drop-shadow'>
-                  <Tooltip content='Moderator'>M</Tooltip>
+                <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content="Moderator">M</Tooltip>
                 </span>
               ) : (
                 <></>
@@ -142,12 +143,12 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
               {user.display_name}
             </h1>
           )}
-          <p className='text-muted-foreground text-sm'>@{user.name}</p>
+          <p className="text-sm text-muted-foreground">@{user.name}</p>
         </div>
         {editMode ? (
-          <div className='mt-2'>
+          <div className="mt-2">
             <Input
-              type='text'
+              type="text"
               value={editBio}
               maxLength={99}
               onChange={(e) => setEditBio(e.target.value)}
@@ -159,7 +160,7 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
           <></>
         )}
         {user.bio && !editMode ? (
-          <div className='mt-2'>
+          <div className="mt-2">
             <p>{user.bio}</p>
           </div>
         ) : (
@@ -190,8 +191,8 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
         {/*    );*/}
         {/*  })}*/}
         {/*</section>*/}
-        <section className='mt-5'>
-          <div className='center gap-1'>
+        <section className="mt-5">
+          <div className="center gap-1">
             <CalendarDays />
             Dołączył {UserCreatedDate(user)}
           </div>
@@ -222,12 +223,12 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
           {/*  icon={<MailIcon className='left-2 h-5 w-5' />}*/}
           {/*/>*/}
         </section>
-        <div className='flex flex-grow md:items-end w-full md:justify-end'>
+        <div className="flex w-full grow md:items-end md:justify-end">
           {' '}
           {owner ? (
             <Button
-              variant='gradient'
-              className='p-2 m-1 center gap-1 w-full'
+              variant="gradient"
+              className="center m-1 w-full gap-1 p-2"
               placeholder={undefined}
               onPointerEnterCapture={() => {
                 /**/

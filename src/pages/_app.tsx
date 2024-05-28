@@ -10,24 +10,30 @@ import { SessionContext } from '@/components/profile/SessionContext';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 
+import { GlobalStateProvider } from '@/globalstate/GlobalStateProvider';
+
 config.autoAddCss = false;
 
 const CodeFestApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <MaterialThemeProvider>
-      <ThemeProvider
-        attribute='class'
-        defaultTheme='light'
-        enableSystem={false}
-      >
-        <NextThemeProvider>
-          <SessionContext.Provider value={undefined}>
-            <Component {...pageProps} />
-          </SessionContext.Provider>
-          <Toaster />
-        </NextThemeProvider>
-      </ThemeProvider>
-    </MaterialThemeProvider>
+    <GlobalStateProvider>
+      {/*<GatewayProvider>*/}
+      <MaterialThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
+          <NextThemeProvider>
+            <SessionContext.Provider value={undefined}>
+              <Component {...pageProps} />
+            </SessionContext.Provider>
+            <Toaster />
+          </NextThemeProvider>
+        </ThemeProvider>
+      </MaterialThemeProvider>
+      {/*</GatewayProvider>*/}
+    </GlobalStateProvider>
   );
 };
 

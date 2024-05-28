@@ -26,7 +26,6 @@ export default function ArticleSection() {
         <Article article={null} />
         <Article article={null} />
         <Article article={null} />
-        <Article article={null} />
       </>
     );
 

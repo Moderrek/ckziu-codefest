@@ -21,8 +21,8 @@ const GetAPIStatus = async () => {
     version: 'Unknown',
     services: {
       login_service: false,
-      cez_website: false,
-    },
+      cez_website: false
+    }
   };
   return unavailable;
 };

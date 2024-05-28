@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { API_V1 } from '@/lib/api/api';
 
+import { Post } from '@/utils/FetchPosts';
+
 const API_URL_GET_USER = (name: string) => `${API_V1}/profile/${name}`;
 const API_URL_GET_PROJECT = (username: string, projectname: string) =>
   `${API_V1}/projects/${username}/${projectname}`;
@@ -47,6 +49,7 @@ interface User {
   updated_at: number;
 
   projects: CodefestProject[];
+  posts: Post[];
   badges: Badge[];
 
   flags: number;
@@ -64,33 +67,19 @@ const FetchUserAxios = async (name: string) => {
   return null;
 };
 
-const FetchUser = async (name: string) => {
+const FetchUser = async (name: string): Promise<User | null | undefined> => {
   try {
     const res = await fetch(API_URL_GET_USER(name));
     const user: User = await res.json();
     if (!user.created_at) {
       return null;
     }
-    user.badges = [
-      {
-        image: '/images/badges/cc.png',
-        name: 'Uczestnik konkursu CC 2024',
-        description: 'tsfdsfsf',
-        id: '1'
-      },
-      {
-        image: '/images/badges/admin_badge.png',
-        name: 'Administrator serwisu',
-        description: 'dsfsdfsdf',
-        id: '2'
-      }
-    ];
     return user;
   } catch (_) {
     /* ignored */
   }
   // The default response
-  return null;
+  return undefined;
 };
 
 const FetchProject = async (username: string, projectname: string) => {
