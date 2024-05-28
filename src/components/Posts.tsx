@@ -1,7 +1,7 @@
 import { Button, Textarea } from '@material-tailwind/react';
 import axios from 'axios';
 import { Send } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { API_V1 } from '@/lib/api/api';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { ProjectAuthor, UserDisplayName } from '@/components/fetchable/Projects';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import NextImage from '@/components/NextImage';
+import ProfileContext from '@/components/profile/ProfileContext';
 import { useToast } from '@/components/ui/use-toast';
 
 import { useName } from '@/globalstate/useName';
@@ -132,7 +133,7 @@ const Posts = () => {
 
   return (
     <>
-      <CreatePost />
+      {/*<CreatePost />*/}
       {posts.map(post => {
         return <CardPost post={post} key={post.id} />;
       })}
@@ -140,4 +141,17 @@ const Posts = () => {
   );
 };
 
-export { CardPost, Posts };
+const PostsOnProfile = () => {
+  const user = useContext(ProfileContext);
+  const posts = user.posts;
+  return (
+    <>
+      {/*<CreatePost />*/}
+      {posts.map(post => {
+        return <CardPost post={post} key={post.id} />;
+      })}
+    </>
+  );
+};
+
+export { CardPost, Posts, PostsOnProfile };

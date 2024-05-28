@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 
-import { Posts } from '@/components/Posts';
+import { PostsOnProfile } from '@/components/Posts';
 import ProfileContext from '@/components/profile/ProfileContext';
-import { ProfilePostCreate } from '@/components/profile/ProfilePostCreate';
 
 import { useName } from '@/globalstate/useName';
 import { User } from '@/utils/FetchProfile';
@@ -13,9 +12,11 @@ const ProfilePosts = () => {
   const isOwner: boolean = name !== null && name === user.name;
 
   return <>
-    <ProfilePostCreate />
-    <div className="flex flex-col gap-4">
-      <Posts />
+    {/*<ProfilePostCreate />*/}
+    <div className="flex justify-center">
+      <div className="flex flex-col gap-4">
+        <PostsOnProfile />
+      </div>
     </div>
   </>;
 };

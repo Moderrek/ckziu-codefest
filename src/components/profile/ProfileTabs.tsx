@@ -21,7 +21,7 @@ const ProfileTabs = () => {
         <TabsTrigger value="tablica">Tablica</TabsTrigger>
         <TabsTrigger value="posts">Wpisy</TabsTrigger>
         <TabsTrigger value="projects">Projekty</TabsTrigger>
-        <TabsTrigger value="liked_projects">Polubione projekty</TabsTrigger>
+        {/*<TabsTrigger value="liked_projects">Polubione projekty</TabsTrigger>*/}
       </TabsList>
       <TabsContent value="tablica">
         <ProfileBoard />

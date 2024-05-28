@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Project } from '@/components/fetchable/Projects';
-import { CardPost, CreatePost } from '@/components/Posts';
+import { CardPost } from '@/components/Posts';
 import ProfileContext from '@/components/profile/ProfileContext';
 
 import { useName } from '@/globalstate/useName';
@@ -22,9 +22,9 @@ export const ProfileBoard = () => {
 
   return <div className="flex justify-center">
     <div className="flex flex-col gap-4">
-      {isOwner ? <>
-        <CreatePost />
-      </> : <></>}
+      {/*{isOwner ? <>*/}
+      {/*  <CreatePost />*/}
+      {/*</> : <></>}*/}
       {board.map(item => {
         if ('private' in item) {
           const project = item as CodefestProject;

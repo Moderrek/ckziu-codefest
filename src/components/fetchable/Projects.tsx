@@ -21,16 +21,17 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export function UserDisplayName(props: { user: User }) {
   const { user } = props;
-  return <>{(user.flags & (1 << 0)) != 0 ? (
-    <span className="mr-1 font-title text-red-400 drop-shadow">
-                  <Tooltip content={<b>Personel</b>}>S</Tooltip>
+  return <>
+    {(user.flags & (1 << 0)) != 0 ? (
+      <span className="mr-1 font-title text-red-400 drop-shadow">
+                  <Tooltip content={<b>Administrator</b>}>A</Tooltip>
                 </span>
-  ) : (
-    <></>
-  )}
+    ) : (
+      <></>
+    )}
     {(user.flags & (1 << 1)) != 0 ? (
       <span className="mr-1 font-title text-amber-400 drop-shadow">
-                  <Tooltip content={<b>Programista</b>}>D</Tooltip>
+                  <Tooltip content={<b>Programista</b>}>P</Tooltip>
                 </span>
     ) : (
       <></>
@@ -43,12 +44,15 @@ export function UserDisplayName(props: { user: User }) {
       <></>
     )}
     {(user.flags & (1 << 3)) != 0 ? (
-      <span className="mr-1 font-title text-indigo-400 drop-shadow">
+      <span className="mr-1 font-title text-green-400 drop-shadow">
                   <Tooltip content="Moderator">M</Tooltip>
                 </span>
     ) : (
       <></>
     )}
+    <span className="mr-1 font-title text-indigo-400 drop-shadow">
+                  <Tooltip content={<b>Uczeń</b>}>U</Tooltip>
+                </span>
     {user.display_name}</>;
 }
 
@@ -90,7 +94,7 @@ export const ProjectAuthor = ({
                   height={40}
                   imgClassName="w-10 h-10 rounded-full"
                 />
-                <span className="absolute bottom-0 right-0 block size-3 rounded-full bg-green-400 content-['']" />
+                {/*<span className="absolute bottom-0 right-0 block size-3 rounded-full bg-green-400 content-['']" />*/}
               </div>
 
             </div>
@@ -187,18 +191,7 @@ const Project = ({ project, showAuthor = false }: { project: CodefestProject, sh
           {project.description}
         </p>
         <div className="mt-3 flex flex-row flex-wrap gap-1 font-medium">
-          {[
-            'rust',
-            'api',
-            'vite',
-            'sql',
-            'python',
-            'js',
-            'gry',
-            'strona',
-            'discord',
-            'node'
-          ]
+          {[]
             // .filter((_) => Math.random() > 0.6)
             .map((tag, idx) => {
               return (
