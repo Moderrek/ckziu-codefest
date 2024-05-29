@@ -8,22 +8,49 @@ const useUser = (userName: string) => {
   const state = useGlobalState();
 
   useEffect(() => {
+    if (!userName) {
+      setUser(undefined);
+      return;
+    }
     const name = userName.toLowerCase();
+    // Check global cache
     if (state) {
       const { globalState } = state;
+      // First load from global cache and then start fetching...
       if (globalState?.users.has(name)) {
         const user = globalState?.users.get(name);
         setUser(user);
         return;
       }
     }
-    FetchUserAxios(userName.toLowerCase()).then((user) => {
+    if (state?.globalState?.fetching.has(userName)) {
+      // Wait for fetch
+      return;
+    }
+    // Fetch user from API
+    (async () => {
+      if (state) {
+        state.globalState?.fetching.add(userName);
+        state.setGlobalState(prev => {
+          if (prev && state.globalState && prev.fetching) return {
+            ...prev,
+            fetching: state.globalState.fetching.add(userName)
+          };
+        });
+      }
+      const user = await FetchUserAxios(userName);
       if (user && state) {
         state.globalState?.users.set(name, user);
+        setUser(user);
       }
-      setUser(user);
-    });
-  }, [state, userName]);
+      if (state) {
+        state.globalState?.fetching.delete(userName);
+        state.setGlobalState((prev) => {
+          if (prev && state.globalState && prev.fetching) return { ...prev, fetching: state.globalState.fetching };
+        });
+      }
+    })();
+  }, [state, state?.globalState?.fetching, userName]);
 
   return user;
 };

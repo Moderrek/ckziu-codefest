@@ -12,6 +12,7 @@ interface GlobalState {
   profiles: Map<string, User>;
   authorizedName: string | null;
   token: string | null;
+  fetching: Set<string>;
 }
 
 interface GatewayContextProps {
@@ -27,6 +28,7 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
   const [globalState, setGlobalState] = useState<GlobalState | undefined>(
     undefined
   );
+  const [fetching, setFetching] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     window.globalState = globalState;
@@ -36,7 +38,8 @@ const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
       users: new Map<string, User>(),
       profiles: new Map<string, User>(),
       authorizedName: localStorage.getItem('cachedName'),
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
+      fetching: fetching
     });
   }, [globalState]);
 

@@ -21,8 +21,10 @@ import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
+import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkImages from 'remark-images';
+import remarkMath from 'remark-math';
 
 import { API_V1 } from '@/lib/api/api';
 import { useOwner, useSession } from '@/lib/auth/useSession';
@@ -392,7 +394,7 @@ const ProjectEdit = ({
         <Markdown
           className="markdown w-1/2 rounded-2xl"
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-          rehypePlugins={[rehypeRaw, remarkImages, rehypeSanitize]}
+          rehypePlugins={[rehypeRaw, remarkImages, remarkMath, rehypeSanitize, rehypeStringify]}
           components={{
             code(props: any) {
               const { children, className, _, ...rest } = props;

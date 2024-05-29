@@ -24,42 +24,34 @@ interface ProfilePageProps {
 // Server or Client side
 const ProfilePage = ({ username, serveruser, serverproblem }: ProfilePageProps) => {
   const [user, setUser] = useState<User | null>(serveruser);
-  const [fetched, setFetched] = useState(false);
 
   const session = useSession();
   const isOwner = useOwner(session, username);
 
-  const globalState = useGlobalState();
+  const gs = useGlobalState();
 
   useEffect(() => {
-    if (serveruser == null) return;
+    // First. load from global state
+    if (gs?.globalState) {
+      const { globalState } = gs;
+      if (globalState.profiles.has(username)) {
+        setUser(globalState.profiles.get(username) as User);
+      } else {
+        if (user) gs.globalState.profiles.set(username, user);
+      }
+    }
+    // Fetch
     (async () => {
-      if (isOwner && !fetched) {
-        setFetched(true);
-        if (globalState) {
-          if (globalState.globalState?.profiles.has(username)) {
-            const user = globalState.globalState?.profiles.get(username);
-            if (user) {
-              setUser(user);
-              return;
-            }
-          }
-        }
+      try {
         const fetchedUser = await FetchUserAxios(username);
-        if (fetchedUser != null) {
-          if (globalState && globalState.globalState && globalState.setGlobalState) {
-            const profiles = globalState.globalState.profiles;
-            profiles.set(username, fetchedUser);
-            globalState.setGlobalState((prev) => {
-              if (prev) return { ...prev, profiles: profiles };
-            });
-            globalState.globalState?.profiles.set(username, fetchedUser);
-          }
+        if (fetchedUser) {
+          if (gs?.globalState) gs.globalState.profiles.set(username, fetchedUser);
           setUser(fetchedUser);
         }
+      } catch (err) { /* ignored */
       }
     })();
-  }, [fetched, globalState, isOwner, serveruser, username]);
+  }, []);
 
   // Server Problem
   if (serverproblem) {

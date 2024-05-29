@@ -16,7 +16,7 @@ const ProfileTabs = () => {
   const isOwner: boolean = name !== null && name === user.name;
 
   return (
-    <Tabs defaultValue="tablica" className="w-full">
+    <Tabs defaultValue="projects" className="w-full">
       <TabsList>
         <TabsTrigger value="tablica">Tablica</TabsTrigger>
         <TabsTrigger value="posts">Wpisy</TabsTrigger>
