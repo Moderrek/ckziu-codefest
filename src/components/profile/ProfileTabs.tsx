@@ -10,6 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useName } from '@/globalstate/useName';
 import { User } from '@/utils/FetchProfile';
 
+import { CreatePost } from '../Posts';
+
 const ProfileTabs = () => {
   const user: User = useContext(ProfileContext);
   const name: string | null = useName();
@@ -18,14 +20,10 @@ const ProfileTabs = () => {
   return (
     <Tabs defaultValue="projects" className="w-full">
       <TabsList>
-        <TabsTrigger value="tablica">Tablica</TabsTrigger>
         <TabsTrigger value="posts">Wpisy</TabsTrigger>
         <TabsTrigger value="projects">Projekty</TabsTrigger>
         {/*<TabsTrigger value="liked_projects">Polubione projekty</TabsTrigger>*/}
       </TabsList>
-      <TabsContent value="tablica">
-        <ProfileBoard />
-      </TabsContent>
       <TabsContent value="posts">
         <ProfilePosts />
       </TabsContent>

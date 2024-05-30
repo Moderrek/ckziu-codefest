@@ -356,13 +356,24 @@ const ProjectEdit = ({
                   </UnstyledLink>
                 </li>
               </ul>
-              {patchData.private ? 'Projekt musi być publiczny.' : ''}
+              <div className='text-red-400 underline'>
+
+              {patchData.private ? <p>Projekt musi być publiczny.</p> : <></>}
+              {patchData.tournament ? <p>Projekt nie może byc już zgłoszony.</p> : <></>}
+
+              {!patchData.website_url ? <p>Projekt musi posiadać stronę internetową.</p> : <></> }
+              {!isValidHttpUrl(patchData.website_url ?? '') ? <p>Projekt musi prawidłowy link do strony internetowej.</p> : <></> }
+
+              {!patchData.github_url ? <p>Projekt musi posiadać projekt GitHub.</p> : <></> }
+              {!isValidHttpUrl(patchData.github_url ?? '') || !(patchData.github_url ?? '').startsWith("https://github.com/") ? <p>Projekt musi prawidłowy link do GitHub'a.</p> : <></> }
+              </div>
+              <p>Projekty niespełniające wymagań będą odrzucone.</p>
               <DialogFooter>
                 <MaterialButton
                   variant="gradient"
                   color="yellow"
                   loading={uploadingChanges}
-                  disabled={patchData.private}
+                  disabled={patchData.private || !patchData.website_url || !patchData.github_url || !isValidHttpUrl(patchData.website_url ?? '') || !isValidHttpUrl(patchData.github_url ?? '') || patchData.tournament || !patchData.github_url.startsWith("https://github.com/")}
                   onClick={() =>
                     setPatchData({ ...patchData, tournament: true })
                   }
@@ -379,6 +390,8 @@ const ProjectEdit = ({
           <></>
         )}
       </div>
+
+      <p>Strona projektu wspiera znaczniki <b>HTML</b> oraz <b>Markdown</b>. Możesz wkleić swoje README z GitHub'a</p>
 
       <div className="border-gradient flex w-full flex-row justify-between gap-2 rounded-xl border-2 bg-accent p-4">
         <div className="min-w-1/2 min-h-full w-1/2 rounded-2xl">

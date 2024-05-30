@@ -1,4 +1,4 @@
-import { Button, Tooltip } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react';
 import axios from 'axios';
 import { CalendarDays, Edit } from 'lucide-react';
 import { useContext, useState } from 'react';
@@ -12,6 +12,8 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 
 import { UserCreatedDate } from '@/utils/UserCreatedDate';
+
+import { UserDisplayName } from '../fetchable/Projects';
 
 const ProfileSidebar = ({ setCurrentBadge }: any) => {
   const { toast } = useToast();
@@ -112,35 +114,7 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
             />
           ) : (
             <h1 className="mt-2 text-center font-mono text-2xl text-black dark:text-white">
-              {(user.flags & (1 << 0)) != 0 ? (
-                <span className="mr-1 font-title text-red-400 drop-shadow">
-                  <Tooltip content={<b>Personel</b>}>S</Tooltip>
-                </span>
-              ) : (
-                <></>
-              )}
-              {(user.flags & (1 << 1)) != 0 ? (
-                <span className="mr-1 font-title text-amber-400 drop-shadow">
-                  <Tooltip content={<b>Programista</b>}>D</Tooltip>
-                </span>
-              ) : (
-                <></>
-              )}
-              {(user.flags & (1 << 2)) != 0 ? (
-                <span className="mr-1 font-title text-indigo-400 drop-shadow">
-                  <Tooltip content="Nauczyciel">N</Tooltip>
-                </span>
-              ) : (
-                <></>
-              )}
-              {(user.flags & (1 << 3)) != 0 ? (
-                <span className="mr-1 font-title text-indigo-400 drop-shadow">
-                  <Tooltip content="Moderator">M</Tooltip>
-                </span>
-              ) : (
-                <></>
-              )}
-              {user.display_name}
+              <UserDisplayName user={user} />
             </h1>
           )}
           <p className="text-sm text-muted-foreground">@{user.name}</p>
@@ -223,8 +197,7 @@ const ProfileSidebar = ({ setCurrentBadge }: any) => {
           {/*  icon={<MailIcon className='left-2 h-5 w-5' />}*/}
           {/*/>*/}
         </section>
-        <div className="flex w-full grow md:items-end md:justify-end">
-          {' '}
+        <div className="mt-5 flex w-full md:items-end md:justify-end">
           {owner ? (
             <Button
               variant="gradient"

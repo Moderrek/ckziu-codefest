@@ -290,6 +290,7 @@ const Projects = () => {
   return (
     <>
       {projects.map((project) => {
+        project.owner_name = user.name;
         return <Project project={project} key={project.id} showAuthor={false} />;
       })}
     </>
