@@ -17,15 +17,15 @@ export default function ArticleSection() {
   if (!data || error)
     return (
       <>
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
-        <ArticleCard article={null} />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
       </>
     );
 
