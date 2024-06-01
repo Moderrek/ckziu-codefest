@@ -5,7 +5,11 @@ import { isValidHttpUrl } from "@/lib/validate";
 
 import UnstyledLink from "@/shared-components/link/UnstyledLink";
 
-export default function Article({ article }: { article: ApiArticleData | null }) {
+type ArticleCardProps = {
+  article?: ApiArticleData
+}
+
+const ArticleCard = ({ article }: ArticleCardProps) => {
   // The article is null. Render a skeleton version
   if (!article) {
     return (
@@ -58,4 +62,7 @@ export default function Article({ article }: { article: ApiArticleData | null })
       </div>
     </div>
   );
-}
+};
+
+export type { ArticleCardProps };
+export default ArticleCard;
