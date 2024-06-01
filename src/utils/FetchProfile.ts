@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { API_V1 } from '@/lib/api/api';
+import { API_V1 } from "@/lib/api/api";
 
-import { Post } from '@/utils/FetchPosts';
+import { Post } from "@/utils/FetchPosts";
 
 const API_URL_GET_USER = (name: string) => `${API_V1}/profile/${name}`;
 const API_URL_GET_PROJECT = (username: string, projectname: string) =>

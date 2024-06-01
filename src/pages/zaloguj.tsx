@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import { LoginForm } from '@/components/login/LoginForm';
-import Seo from '@/components/Seo';
+import { LoginForm } from "@/components/login/LoginForm";
 
-import { GetAPIStatus } from '@/utils/GetAPIStatus';
+import DefaultLayout from "@/shared-components/layout/DefaultLayout";
+import Seo from "@/shared-components/layout/Seo";
+import { GetAPIStatus } from "@/utils/GetAPIStatus";
 
 interface LoginPageProps {
   loginService: boolean;

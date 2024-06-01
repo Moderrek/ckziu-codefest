@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
-import { GlobalStateContext } from '@/globalstate/GlobalStateProvider';
+import { GlobalStateContext } from "@/globalstate/GlobalStateProvider";
 
 const useAuthorized = (): boolean => {
   const globalState = useContext(GlobalStateContext);

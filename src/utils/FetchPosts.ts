@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { API_V1 } from '@/lib/api/api';
+import { API_V1 } from "@/lib/api/api";
 
 export interface Post {
   id: string,

@@ -1,15 +1,15 @@
-import useSWR from 'swr';
+import useSWR from "swr";
 
-import { API_V1 } from '@/lib/api/api';
-import { ApiArticlesData } from '@/lib/api/api_responses';
+import { API_V1 } from "@/lib/api/api";
+import { ApiArticlesData } from "@/lib/api/api_responses";
 
-import Article from '@/components/article';
+import Article from "@/components/article";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ArticleSection() {
   const { data, error } = useSWR<ApiArticlesData, Error>(
-    API_V1 + '/ckziu/news',
+    API_V1 + "/ckziu/news",
     fetcher
   );
 

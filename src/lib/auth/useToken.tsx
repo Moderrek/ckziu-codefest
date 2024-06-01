@@ -1,6 +1,6 @@
-'use client';
-import useLocalStorage from '@/lib/hooks/useLocalStorage';
+"use client";
+import useLocalStorage from "@/lib/hooks/useLocalStorage";
 
 export default function useToken() {
-  return useLocalStorage('token', null);
+  return useLocalStorage("token", null);
 }

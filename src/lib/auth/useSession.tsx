@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { AuthSession, getSession } from '@/lib/auth/getSession';
+import { AuthSession, getSession } from "@/lib/auth/getSession";
 
 function useSession() {
   const [session, setSession] = useState<undefined | AuthSession>();

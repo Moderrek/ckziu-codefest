@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
-import { GatewayContext } from '@/gateway/GatewayProvider';
+import { GatewayContext } from "@/gateway/GatewayProvider";
 
 const useGateway = () => {
   return useContext(GatewayContext);

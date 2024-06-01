@@ -1,5 +1,5 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 const useLocalStorage = (key: string, initialValue: any) => {
   const [state, setState] = useState(() => {

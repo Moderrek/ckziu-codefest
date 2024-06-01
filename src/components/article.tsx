@@ -1,11 +1,13 @@
-import { Button, Tooltip } from '@material-tailwind/react';
+import { Button, Tooltip } from "@material-tailwind/react";
 
-import { ApiArticleData } from '@/lib/api/api_responses';
+import { ApiArticleData } from "@/lib/api/api_responses";
+import { isValidHttpUrl } from "@/lib/validate";
 
-import UnstyledLink from './links/UnstyledLink';
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
 
-export default function Article(props: { article: ApiArticleData | null }) {
-  if (props.article === null) {
+export default function Article({ article }: { article: ApiArticleData | null }) {
+  // The article is null. Render a skeleton version
+  if (!article) {
     return (
       <div className="card glass min-h-28 w-80 md:w-96">
         <div className="card-body">
@@ -31,13 +33,15 @@ export default function Article(props: { article: ApiArticleData | null }) {
       </div>
     );
   }
+  // Full-render article
   return (
     <div className="card glass min-h-28 w-80 md:w-96">
       <div className="card-body">
-        <h2 className="card-title">{props.article.title}</h2>
-        <p>{props.article.description}</p>
+        <h2 className="card-title">{article.title ?? "Nieznany tytuł"}</h2>
+        <p>{article.description ?? ""}</p>
         <div className="card-actions justify-end">
-          <UnstyledLink href={props.article.url}>
+          {/* Render read button only if an article has url */}
+          {article.url && isValidHttpUrl(article.url) ? <UnstyledLink href={article.url}>
             <Tooltip content="Przejdziesz na stronę szkoły.">
               <Button
                 variant="outlined"
@@ -49,7 +53,7 @@ export default function Article(props: { article: ApiArticleData | null }) {
                 Czytaj
               </Button>
             </Tooltip>
-          </UnstyledLink>
+          </UnstyledLink> : <></>}
         </div>
       </div>
     </div>

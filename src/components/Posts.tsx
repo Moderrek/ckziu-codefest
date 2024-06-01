@@ -1,28 +1,28 @@
-import { Button, Menu, MenuHandler, MenuItem, MenuList, Spinner, Textarea, Tooltip } from '@material-tailwind/react';
-import axios from 'axios';
-import { EllipsisVertical, Heart, Send, Trash } from 'lucide-react';
-import React, { useContext, useEffect, useState } from 'react';
+import { Button, Menu, MenuHandler, MenuItem, MenuList, Spinner, Textarea, Tooltip } from "@material-tailwind/react";
+import axios from "axios";
+import { EllipsisVertical, Heart, Send, Trash } from "lucide-react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { API_V1 } from '@/lib/api/api';
-import { cn } from '@/lib/utils';
+import { API_V1 } from "@/lib/api/api";
+import { cn } from "@/lib/utils";
 
-import { ProjectAuthor, UserDisplayName } from '@/components/fetchable/Projects';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
-import ProfileContext from '@/components/profile/ProfileContext';
-import { useToast } from '@/components/ui/use-toast';
+import { ProjectAuthor, UserDisplayName } from "@/components/fetchable/Projects";
+import NextImage from "@/components/NextImage";
+import { useToast } from "@/components/ui/use-toast";
 
-import { loginUrl } from '@/config/constants';
-import { useAuthorized } from '@/globalstate/useAuth';
-import { useName } from '@/globalstate/useName';
-import { fetchPosts, Post } from '@/utils/FetchPosts';
+import { loginUrl } from "@/constants/constants";
+import { useAuthorized } from "@/globalstate/useAuth";
+import { useName } from "@/globalstate/useName";
+import ProfileContext from "@/pages-components/profile/ProfileContext";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
+import { fetchPosts, Post } from "@/utils/FetchPosts";
 
 
 export const CreatePost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<Post[]>> }) => {
   const user = useContext(ProfileContext);
 
   const [uploading, setUploading] = useState(false);
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
 
   const { toast } = useToast();
 
@@ -32,17 +32,17 @@ export const CreatePost = ({ setPosts }: { setPosts: React.Dispatch<React.SetSta
   const createPost = async () => {
     if (content.length < 1) {
       toast({
-        variant: 'default',
-        title: 'Nie można opublikować projektu',
-        description: 'Wpis musi posiadać zawartość'
+        variant: "default",
+        title: "Nie można opublikować projektu",
+        description: "Wpis musi posiadać zawartość"
       });
       return;
     }
     if (content.length > 240) {
       toast({
-        variant: 'default',
-        title: 'Nie można opublikować projektu',
-        description: 'Maksymalna długość wpisu to 240 znaków'
+        variant: "default",
+        title: "Nie można opublikować projektu",
+        description: "Maksymalna długość wpisu to 240 znaków"
       });
       return;
     }
@@ -51,7 +51,7 @@ export const CreatePost = ({ setPosts }: { setPosts: React.Dispatch<React.SetSta
       const post = await axios.post(`${API_V1}/posts`, {
         content: content
       });
-      setContent('');
+      setContent("");
       setPosts((prev) => {
         const newPosts = [...prev];
         newPosts.unshift(post.data);
@@ -62,15 +62,15 @@ export const CreatePost = ({ setPosts }: { setPosts: React.Dispatch<React.SetSta
     } catch (err: any) {
       setUploading(false);
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem podczas publikowania wpisu',
+        variant: "destructive",
+        title: "Wystąpił problem podczas publikowania wpisu",
         description: `Nie udało się utworzyć wpisu. ${err.message}`
       });
       return;
     }
   };
 
-  return <div className={cn('max-w-sm overflow-hidden rounded-md border-2', uploading ? 'animate-pulse' : '')}>
+  return <div className={cn("max-w-sm overflow-hidden rounded-md border-2", uploading ? "animate-pulse" : "")}>
     <div className="px-6 py-4">
       <div className="flex">
         <UnstyledLink href={`/p/${user.name}`}>
@@ -94,21 +94,21 @@ export const CreatePost = ({ setPosts }: { setPosts: React.Dispatch<React.SetSta
       </div>
       <div className="mt-2">
         <Textarea label="Utwórz nowy wpis" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
-          className="text-sm text-gray-900 dark:text-gray-300" disabled={uploading}
-          value={content} onChange={(e) => setContent(e.target.value)} />
+                  className="text-sm text-gray-900 dark:text-gray-300" disabled={uploading}
+                  value={content} onChange={(e) => setContent(e.target.value)} />
       </div>
 
       <div className="flex justify-end">
         <div className="flex flex-row items-center gap-1">
           <span
-            className={cn('text-xs', content.length < 1 || content.length > 240 ? 'text-red-400' : 'text-muted-foreground')}>{content.length} / 240</span>
+            className={cn("text-xs", content.length < 1 || content.length > 240 ? "text-red-400" : "text-muted-foreground")}>{content.length} / 240</span>
           <Button variant="filled" color="blue" placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            className="flex size-8 items-center justify-center p-1"
-            onClick={createPost}
-            loading={uploading}
-            disabled={content.length < 1 || content.length > 240}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  className="flex size-8 items-center justify-center p-1"
+                  onClick={createPost}
+                  loading={uploading}
+                  disabled={content.length < 1 || content.length > 240}
           >
             {!uploading ? <Send className="size-4" /> : <></>}
           </Button>
@@ -118,7 +118,10 @@ export const CreatePost = ({ setPosts }: { setPosts: React.Dispatch<React.SetSta
   </div>;
 };
 
-const CardPost = ({ post, setPosts }: { post: Post, setPosts: React.Dispatch<React.SetStateAction<Post[]>> | undefined }) => {
+const CardPost = ({ post, setPosts }: {
+  post: Post,
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>> | undefined
+}) => {
   const [likes, setLikes] = useState(post.likes ?? 0);
   const [liking, setLiking] = useState(false);
   const [liked, setLiked] = useState(post.liked ?? false);
@@ -138,21 +141,21 @@ const CardPost = ({ post, setPosts }: { post: Post, setPosts: React.Dispatch<Rea
     const like = !liked;
     if (!isAuthorized) {
       toast({
-        variant: 'destructive',
-        title: 'Nie można polubić wpisu',
-        description: 'Zaloguj się, aby polubić wpis'
+        variant: "destructive",
+        title: "Nie można polubić wpisu",
+        description: "Zaloguj się, aby polubić wpis"
       });
       return;
     }
     try {
       setLiking(true);
-      await axios.get(`${API_V1}/posts/${post.id}/${like ? 'like' : 'unlike'}`);
+      await axios.get(`${API_V1}/posts/${post.id}/${like ? "like" : "unlike"}`);
       setLiked(like);
       setLikes(likes + (like ? 1 : -1));
     } catch (err: any) {
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem podczas polubienia wpisu',
+        variant: "destructive",
+        title: "Wystąpił problem podczas polubienia wpisu",
         description: `Nie udało się polubić wpisu. ${err.message}`
       });
     }
@@ -163,17 +166,17 @@ const CardPost = ({ post, setPosts }: { post: Post, setPosts: React.Dispatch<Rea
     if (removing) return;
     if (!isAuthorized) {
       toast({
-        variant: 'destructive',
-        title: 'Nie można usunąć wpisu',
-        description: 'Zaloguj się, aby usunąć wpis'
+        variant: "destructive",
+        title: "Nie można usunąć wpisu",
+        description: "Zaloguj się, aby usunąć wpis"
       });
       return;
     }
     if (!isMyPost) {
       toast({
-        variant: 'destructive',
-        title: 'Nie można usunąć wpisu',
-        description: 'Nie jesteś właścicielem wpisu'
+        variant: "destructive",
+        title: "Nie można usunąć wpisu",
+        description: "Nie jesteś właścicielem wpisu"
       });
       return;
     }
@@ -181,22 +184,22 @@ const CardPost = ({ post, setPosts }: { post: Post, setPosts: React.Dispatch<Rea
       setRemoving(true);
       const response = await axios.delete(`${API_V1}/posts/${post.id}`);
       const { data } = response;
-      
+
       if (data.success) {
         if (setPosts) setPosts((prev) => {
           const newPosts = prev.filter((p) => p.id !== post.id);
 
           return newPosts;
-      });
+        });
         toast({
-          variant: 'default',
-          title: 'Wpis usunięty',
-          description: 'Wpis został usunięty pomyślnie'
+          variant: "default",
+          title: "Wpis usunięty",
+          description: "Wpis został usunięty pomyślnie"
         });
       } else {
         toast({
-          variant: 'destructive',
-          title: 'Wystąpił problem podczas usuwania wpisu',
+          variant: "destructive",
+          title: "Wystąpił problem podczas usuwania wpisu",
           description: `Nie udało się usunąć wpisu. ${data.message}`
         });
       }
@@ -204,14 +207,14 @@ const CardPost = ({ post, setPosts }: { post: Post, setPosts: React.Dispatch<Rea
       if (err.response?.status === 404) {
         if (setPosts) setPosts((prev) => prev.filter((p) => p.id !== post.id));
         toast({
-          variant: 'destructive',
-          title: 'Wpis nie istnieje',
-          description: 'Wpis, który próbujesz usunąć, nie istnieje'
+          variant: "destructive",
+          title: "Wpis nie istnieje",
+          description: "Wpis, który próbujesz usunąć, nie istnieje"
         });
       } else {
         toast({
-          variant: 'destructive',
-          title: 'Wystąpił problem podczas usuwania wpisu',
+          variant: "destructive",
+          title: "Wystąpił problem podczas usuwania wpisu",
           description: `Nie udało się usunąć wpisu. ${err.message}`
         });
       }
@@ -222,20 +225,23 @@ const CardPost = ({ post, setPosts }: { post: Post, setPosts: React.Dispatch<Rea
   return <div className="max-w-sm overflow-hidden rounded-md border-2">
     <div className="px-6 py-4">
       {isAuthorized && isMyPost ?
-        <div className='relative'>
+        <div className="relative">
           <Menu
             animate={{
               mount: { y: 0 },
-              unmount: { y: 25 },
+              unmount: { y: 25 }
             }}
           >
             <MenuHandler>
-              <div className='absolute right-0 top-0'>
-                <EllipsisVertical className='size-5 text-muted-foreground hover:text-foreground' />
+              <div className="absolute right-0 top-0">
+                <EllipsisVertical className="size-5 text-muted-foreground hover:text-foreground" />
               </div>
             </MenuHandler>
             <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-              <MenuItem onClick={deletePost} disabled={removing} className='flex flex-row items-center gap-1 bg-red-400 text-white' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Trash className='size-4' /> Usuń wpis</MenuItem>
+              <MenuItem onClick={deletePost} disabled={removing}
+                        className="flex flex-row items-center gap-1 bg-red-400 text-white" placeholder={undefined}
+                        onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Trash
+                className="size-4" /> Usuń wpis</MenuItem>
             </MenuList>
           </Menu>
         </div>
@@ -300,7 +306,7 @@ const PostsOnProfile = () => {
   return (
     <>
       {isMyProfile ? <CreatePost setPosts={setPosts} /> : <></>}
-      {posts.sort((a,b) => b.created_at - a.created_at).map(post => {
+      {posts.sort((a, b) => b.created_at - a.created_at).map(post => {
         post.owner = {
           id: profile.id,
           name: profile.name,

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import useGlobalState from '@/globalstate/useGlobalState';
-import { FetchUserAxios, User } from '@/utils/FetchProfile';
+import useGlobalState from "@/globalstate/useGlobalState";
+import { FetchUserAxios, User } from "@/utils/FetchProfile";
 
 const useUser = (userName: string) => {
   const [user, setUser] = useState<User | null | undefined>(undefined);

@@ -1,19 +1,18 @@
-import { Button } from '@material-tailwind/react';
-import { LogOut, Server } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Button } from "@material-tailwind/react";
+import { LogOut, Server } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { useOwner, useSession } from '@/lib/auth/useSession';
+import { useOwner, useSession } from "@/lib/auth/useSession";
 
-import CkziuLogo from '@/components/images/CkziuLogo';
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import { ProfileContent } from '@/components/profile/ProfileContent';
-import Seo from '@/components/Seo';
-
-import { siteConfig } from '@/config/site';
-import useGlobalState from '@/globalstate/useGlobalState';
-import { statusUrl } from '@/pages/status';
-import { FetchUser, FetchUserAxios, User } from '@/utils/FetchProfile';
+import { siteConfig } from "@/constants/site";
+import useGlobalState from "@/globalstate/useGlobalState";
+import { statusUrl } from "@/pages/status";
+import { ProfileContent } from "@/pages-components/profile/ProfileContent";
+import CkziuLogo from "@/shared-components/icon/CkziuLogo";
+import DefaultLayout from "@/shared-components/layout/DefaultLayout";
+import Seo from "@/shared-components/layout/Seo";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
+import { FetchUser, FetchUserAxios, User } from "@/utils/FetchProfile";
 
 interface ProfilePageProps {
   username: string;
@@ -141,7 +140,7 @@ const getServerSideProps = async ({
   profilename = profilename
     .trimEnd()
     .trimStart()
-    .replace(' ', '-')
+    .replace(" ", "-")
     .trim()
     .toLowerCase();
 

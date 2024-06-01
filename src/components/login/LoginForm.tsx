@@ -1,20 +1,20 @@
-import axios from 'axios';
-import { Fingerprint, Loader2, Mail } from 'lucide-react';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { Fingerprint, Loader2, Mail } from "lucide-react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-import { API_V1 } from '@/lib/api/api';
+import { API_V1 } from "@/lib/api/api";
 
-import UnstyledLink from '@/components/links/UnstyledLink';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 
-import useGlobalState from '@/globalstate/useGlobalState';
-import { validate_name, validate_password, ValidationResult } from '@/utils/Validate';
+import useGlobalState from "@/globalstate/useGlobalState";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
+import { validate_name, validate_password, ValidationResult } from "@/utils/Validate";
 
 interface LoginFormProps {
   loginService: boolean;
@@ -35,11 +35,11 @@ enum LoginStage {
 function LoginForm({ loginService }: LoginFormProps) {
   const globalState = useGlobalState();
   // form fields
-  const [login, setLogin] = useState<string>('');
-  const [otp, setOtp] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [passwordAgain, setPasswordAgain] = useState<string>('');
-  const [username, setUsername] = useState<string>('');
+  const [login, setLogin] = useState<string>("");
+  const [otp, setOtp] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordAgain, setPasswordAgain] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
 
   const [stage, setStage] = useState<LoginStage>(LoginStage.NONE);
   // is waiting for a response
@@ -57,10 +57,10 @@ function LoginForm({ loginService }: LoginFormProps) {
 
   function toastServerProblem() {
     toast({
-      variant: 'destructive',
-      title: 'Błąd po stronie serwera',
+      variant: "destructive",
+      title: "Błąd po stronie serwera",
       description:
-        'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.'
+        "Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później."
     });
   }
 
@@ -70,9 +70,9 @@ function LoginForm({ loginService }: LoginFormProps) {
         if (prev) return { ...prev, token: token, authorizedName: name };
       });
     }
-    localStorage.setItem('token', token);
-    localStorage.setItem('cachedName', name);
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    localStorage.setItem("token", token);
+    localStorage.setItem("cachedName", name);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     await router.push(`/p/${name}`);
   }
 
@@ -80,7 +80,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     setWaiting(true);
     let req;
     try {
-      req = await axios.post(API_V1 + '/auth/otp', {
+      req = await axios.post(API_V1 + "/auth/otp", {
         email: login
       });
     } catch (err: any) {
@@ -88,12 +88,12 @@ function LoginForm({ loginService }: LoginFormProps) {
       setWaiting(false);
       setStage(LoginStage.NONE);
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem',
+        variant: "destructive",
+        title: "Wystąpił problem",
         description:
-          'Wystąpił problem. ' +
+          "Wystąpił problem. " +
           err.response.data.message +
-          ' Upewnij się, że korzystasz z szkolnego maila.'
+          " Upewnij się, że korzystasz z szkolnego maila."
       });
       return;
     }
@@ -102,17 +102,17 @@ function LoginForm({ loginService }: LoginFormProps) {
     if (!data.success) {
       setStage(LoginStage.NONE);
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem',
-        description: 'Wystąpił problem. ' + data.message
+        variant: "destructive",
+        title: "Wystąpił problem",
+        description: "Wystąpił problem. " + data.message
       });
       return;
     }
     setStage(LoginStage.WAITING_OTP);
     toast({
-      variant: 'default',
-      title: 'Wysłano kod na twoją pocztę!',
-      description: ' Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę.'
+      variant: "default",
+      title: "Wysłano kod na twoją pocztę!",
+      description: " Wpisz 6 cyfrowy kod, który otrzymasz na swoją pocztę."
     });
     setStage(LoginStage.WAITING_OTP);
   }
@@ -122,9 +122,9 @@ function LoginForm({ loginService }: LoginFormProps) {
     // verify data
     if (password !== passwordAgain) {
       toast({
-        variant: 'destructive',
-        title: 'Nieprawidłowe dane',
-        description: 'Podane hasła nie są takie same!'
+        variant: "destructive",
+        title: "Nieprawidłowe dane",
+        description: "Podane hasła nie są takie same!"
       });
       setWaiting(false);
       return;
@@ -133,7 +133,7 @@ function LoginForm({ loginService }: LoginFormProps) {
 
     let req;
     try {
-      req = await axios.post(API_V1 + '/auth/register', {
+      req = await axios.post(API_V1 + "/auth/register", {
         email: login,
         name: username,
         password: password,
@@ -141,10 +141,10 @@ function LoginForm({ loginService }: LoginFormProps) {
       });
     } catch (err: any) {
       toast({
-        variant: 'destructive',
-        title: 'Błąd po stronie serwera',
+        variant: "destructive",
+        title: "Błąd po stronie serwera",
         description:
-          'Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później.' +
+          "Przepraszamy! Wystąpił błąd po stronie serwera. Spróbuj ponownie później." +
           err.data.message
       });
       setWaiting(false);
@@ -154,16 +154,16 @@ function LoginForm({ loginService }: LoginFormProps) {
     const data = req.data;
     if (!data.success) {
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem',
+        variant: "destructive",
+        title: "Wystąpił problem",
         description: data.message
       });
       return;
     }
 
     toast({
-      variant: 'default',
-      title: 'Pomyślnie zalogowano',
+      variant: "default",
+      title: "Pomyślnie zalogowano",
       description: `Pomyślnie zalogowano jako ${data.name}`
     });
     await logIn(data.token, data.name);
@@ -174,7 +174,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     setWaiting(true);
     let prelogin_request;
     try {
-      prelogin_request = await axios.post(API_V1 + '/auth/prelogin', {
+      prelogin_request = await axios.post(API_V1 + "/auth/prelogin", {
         login: login
       });
     } catch (err) {
@@ -196,7 +196,7 @@ function LoginForm({ loginService }: LoginFormProps) {
     setWaiting(true);
     let login_request;
     try {
-      login_request = await axios.post(API_V1 + '/auth/login/credentials', {
+      login_request = await axios.post(API_V1 + "/auth/login/credentials", {
         login: login,
         password: password
       });
@@ -210,9 +210,9 @@ function LoginForm({ loginService }: LoginFormProps) {
     const data = login_request.data;
     if (!data.token) {
       toast({
-        variant: 'destructive',
-        title: 'Błąd po stronie serwera',
-        description: 'Nie udało się zalogowoać.'
+        variant: "destructive",
+        title: "Błąd po stronie serwera",
+        description: "Nie udało się zalogowoać."
       });
       return;
     }
@@ -221,27 +221,27 @@ function LoginForm({ loginService }: LoginFormProps) {
 
   useEffect(() => {
     (async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (token == null) {
         return;
       }
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      if (localStorage.getItem('cachedName') !== null) {
-        await router.push(`/p/${localStorage.getItem('cachedName')}`);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      if (localStorage.getItem("cachedName") !== null) {
+        await router.push(`/p/${localStorage.getItem("cachedName")}`);
         return;
       }
 
       try {
-        const req = await axios.get(API_V1 + '/auth/info');
+        const req = await axios.get(API_V1 + "/auth/info");
         const data = req.data;
-        localStorage.setItem('cachedName', data.name);
+        localStorage.setItem("cachedName", data.name);
         await router.push(`/p/${data.name}`);
       } catch (err: any) {
         if (!err.response || err.response.status === 401) {
           // logout
-          delete axios.defaults.headers.common['Authorization'];
-          localStorage.removeItem('cachedName');
-          localStorage.removeItem('token');
+          delete axios.defaults.headers.common["Authorization"];
+          localStorage.removeItem("cachedName");
+          localStorage.removeItem("token");
           await router.push(`/zaloguj`);
         }
       }
@@ -274,10 +274,10 @@ function LoginForm({ loginService }: LoginFormProps) {
       <CardHeader>
         <CardTitle className="text-2xl">
           {stage == LoginStage.LOGGING_IN
-            ? 'Logowanie'
+            ? "Logowanie"
             : stage == LoginStage.WAITING_OTP
-              ? 'Rejestracja'
-              : 'Logowanie / Rejestracja'}
+              ? "Rejestracja"
+              : "Logowanie / Rejestracja"}
         </CardTitle>
         <CardDescription>
           Wpisz swojego e-maila szkolnego albo login, aby
@@ -298,7 +298,7 @@ function LoginForm({ loginService }: LoginFormProps) {
               onChange={(data) => setLogin(data.target.value)}
               required
               onKeyDown={async (event) => {
-                if (event.code === 'Enter') {
+                if (event.code === "Enter") {
                   await buttonClick();
                   event.preventDefault();
                 }
@@ -321,7 +321,7 @@ function LoginForm({ loginService }: LoginFormProps) {
               required
               maxLength={38}
               onKeyDown={async (event) => {
-                if (event.code === 'Enter') {
+                if (event.code === "Enter") {
                   await buttonClick();
                   event.preventDefault();
                 }

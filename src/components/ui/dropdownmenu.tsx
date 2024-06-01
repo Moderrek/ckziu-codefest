@@ -1,11 +1,11 @@
-import { Button } from '@material-tailwind/react';
-import { CircleUser, LogIn, LogOut, User } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Button } from "@material-tailwind/react";
+import { CircleUser, LogIn, LogOut, User } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-import { useSession } from '@/lib/auth/useSession';
+import { useSession } from "@/lib/auth/useSession";
 
-import { Button as ShadcnButton } from '@/components/ui/button';
+import { Button as ShadcnButton } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +13,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
-import { useAuthorized } from '@/globalstate/useAuth';
-import useGlobalState from '@/globalstate/useGlobalState';
-
-import UnstyledLink from '../links/UnstyledLink';
+import { useAuthorized } from "@/globalstate/useAuth";
+import useGlobalState from "@/globalstate/useGlobalState";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
 
 export default function DropdownMenuDemo() {
   const router = useRouter();
@@ -79,15 +78,15 @@ export default function DropdownMenuDemo() {
             <DropdownMenuItem
               className="bg-red-400 text-white"
               onClick={() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('cachedName');
+                localStorage.removeItem("token");
+                localStorage.removeItem("cachedName");
 
                 if (globalState) {
                   globalState.authorizedName = null;
                   globalState.token = null;
                 }
 
-                router.push('/zaloguj');
+                router.push("/zaloguj");
               }}
             >
               <LogOut className="mr-2 size-4" />
