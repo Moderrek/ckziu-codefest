@@ -5,19 +5,20 @@ import React from "react";
 const defaultMeta = {
   title: "CKZiU CodeFest",
   siteName: "CKZiU CodeFest",
-  description: "Serwis konkursowy CKZiU CodeFest w Łodzi.",
+  description: "Platforma deweloperska, konkursowa CKZiU CodeFest w Łodzi.",
   url: "https://ckziucodefest.pl",
   type: "website",
   robots: "follow, index",
   image: "https://ckziucodefest.pl/images/ckziu_thumbnail.png",
   keywords:
-    "ckziu, lodz, łódź, szkoła, zawodowe, zawod, programista, centrum, kształcenia, zawodowego, ustawicznego, łodzi, codefest, 2024, 24, codefest24, konkurs, cez, programowanie, witryny, technik, informatyk, informatyka, strona internetowa, witryna, plan lekcji, plan zajęć, hegemonstudio, żeromskiego, zeromskiego, politechnika, technikum nr 19"
+    "ckziu, lodz, łódź, szkoła, zawodowe, zawod, programista, centrum, kształcenia, zawodowego, ustawicznego, łodzi, codefest, 2024, 24, codefest24, konkurs, konkursy, turniej, turnieje, gry, cez, programowanie, witryny, technik, informatyk, informatyka, strona internetowa, witryna, plan lekcji, plan zajęć, hegemonstudio, moderr, żeromskiego, zeromskiego, politechnika, technikum nr 19, tymon, woźniak"
 };
 
 type SeoProps = {
   date?: string;
   templateTitle?: string;
   keywords?: string;
+  author?: string;
 } & Partial<typeof defaultMeta>;
 
 export default function Seo(props: SeoProps) {
@@ -61,11 +62,7 @@ export default function Seo(props: SeoProps) {
             property="og:publish_date"
             content={meta.date}
           />
-          {/*<meta*/}
-          {/*  name='author'*/}
-          {/*  property='article:author'*/}
-          {/*  content='Tymon Woźniak'*/}
-          {/*/>*/}
+          { meta.author ? <meta name="author" property="article:author" content={meta.author} /> : <> </> }
         </>
       )}
 

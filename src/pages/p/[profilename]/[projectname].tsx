@@ -635,6 +635,7 @@ const ProjectPage = ({
           `@${username}/${project.name}: ` + (project.description ?? ``)
         }
         date={new Date(project.created_at).toISOString()}
+        author={username}
       />
       <div className="container mx-auto mb-5 md:mb-10">
         <div

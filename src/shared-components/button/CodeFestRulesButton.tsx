@@ -5,15 +5,15 @@ import UnstyledLink from "@/shared-components/link/UnstyledLink";
 
 const CodeFestRulesButton = () => {
   return (
-    <Tooltip content="Czytaj regulamin na stronie szkoły.">
-      <UnstyledLink href="/regulamin" className="w-1/2">
+    <Tooltip content="Przejdziesz na zewnętrzny regulamin na stronie szkoły.">
+      <UnstyledLink href="/regulamin">
         <Button
           variant="gradient"
           color="red"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          className="flex w-full min-w-fit flex-1 flex-row items-center justify-center gap-1"
+          className="flex flex-row items-center justify-between gap-1 px-4 py-2 font-semibold"
         >
           <Book className="size-6" /> Regulamin konkursu
         </Button>
