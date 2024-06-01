@@ -1,10 +1,10 @@
-import { Button } from '@material-tailwind/react';
-import { LogOut } from 'lucide-react';
+import { Button } from "@material-tailwind/react";
+import { LogOut } from "lucide-react";
 
-import CkziuLogo from '@/components/images/CkziuLogo';
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import Seo from '@/components/Seo';
+import CkziuLogo from "@/shared-components/icon/CkziuLogo";
+import DefaultLayout from "@/shared-components/layout/DefaultLayout";
+import Seo from "@/shared-components/layout/Seo";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
 
 // 404 Not Found Page
 const NotFound = () => {

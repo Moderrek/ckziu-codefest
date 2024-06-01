@@ -1,12 +1,11 @@
-import { Button } from '@material-tailwind/react';
-import { LogOut } from 'lucide-react';
+import { Button } from "@material-tailwind/react";
+import { LogOut } from "lucide-react";
 
-import CkziuLogo from '@/components/images/CkziuLogo';
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import Seo from '@/components/Seo';
-
-import { GetAPIStatus } from '@/utils/GetAPIStatus';
+import CkziuLogo from "@/shared-components/icon/CkziuLogo";
+import DefaultLayout from "@/shared-components/layout/DefaultLayout";
+import Seo from "@/shared-components/layout/Seo";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
+import { GetAPIStatus } from "@/utils/GetAPIStatus";
 
 interface ServiceStatusProps {
   name: string;
@@ -80,7 +79,7 @@ export async function getServerSideProps() {
   };
 }
 
-const statusUrl = '/status';
+const statusUrl = "/status";
 
 export { statusUrl };
 export default StatusPage;

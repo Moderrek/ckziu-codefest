@@ -1,4 +1,4 @@
-import { RedirectPage } from '@/components/RedirectPage';
+import { RedirectPage } from "@/components/RedirectPage";
 
 const DiscordRedirectPage = () => (
   <RedirectPage title="Discord" url="https://discord.gg/rRjW7SWXhS" />

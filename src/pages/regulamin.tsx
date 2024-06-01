@@ -1,6 +1,6 @@
-import { RedirectPage } from '@/components/RedirectPage';
+import { RedirectPage } from "@/components/RedirectPage";
 
-const RegulaminUrl = '/regulamin';
+const RegulaminUrl = "/regulamin";
 
 const RegulaminPage = () => (
   <RedirectPage

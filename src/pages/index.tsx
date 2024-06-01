@@ -1,21 +1,20 @@
-import { Tooltip } from '@material-tailwind/react';
-import { CalendarDays, Circle, CircleCheck, CircleHelp, Crown, TerminalIcon } from 'lucide-react';
-import { NextPage } from 'next';
+import { Button, Tooltip } from "@material-tailwind/react";
+import { CalendarDays, Circle, CircleCheck, CircleHelp, Crown, TerminalIcon, Vote } from "lucide-react";
+import { NextPage } from "next";
 
-import { CodeFestRulesButton } from '@/components/CodeFestRulesButton';
-import { CreateProjectRefButton } from '@/components/CreateProjectRefButton';
-import FaqSection from '@/components/FaqSection';
-import ArticleSection from '@/components/fetchable/articles';
-import { NewestProjects } from '@/components/fetchable/Projects';
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
-import { ParticipateButton } from '@/components/ParticipateButton';
-import { RewardCard } from '@/components/RewardCard';
-import Seo from '@/components/Seo';
+import ArticleSection from "@/components/fetchable/articles";
+import { NewestProjects } from "@/components/fetchable/Projects";
+import NextImage from "@/components/NextImage";
 
-import { REWARDS } from '@/config/constants';
-import { siteConfig } from '@/config/site';
+import { REWARDS } from "@/constants/constants";
+import { siteConfig } from "@/constants/site";
+import FaqSection from "@/pages-components/main/FaqSection";
+import { CodeFestRulesButton } from "@/shared-components/button/CodeFestRulesButton";
+import { CreateProjectRefButton } from "@/shared-components/button/CreateProjectRefButton";
+import { RewardCard } from "@/shared-components/contest/RewardCard";
+import DefaultLayout from "@/shared-components/layout/DefaultLayout";
+import Seo from "@/shared-components/layout/Seo";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
 
 // HomePage
 const Index: NextPage = () => {
@@ -30,18 +29,25 @@ const Index: NextPage = () => {
             {/* Left panel site info */}
             <div className="col-span-6 px-4 text-center sm:mb-6 lg:mb-0 lg:text-left">
               <h1
-                className="mb-2 font-title text-4xl leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl xl:text-6xl">
+                className="mb-1 font-title text-4xl leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl xl:text-6xl">
                 {siteConfig.name}
               </h1>
-              <h2 className="pb-2 text-3xl font-light text-gray-800 dark:text-gray-300 md:text-4xl">
+              <h2 className="mb-3 pb-2 text-3xl font-light text-gray-800 dark:text-gray-300 md:text-4xl">
                 {siteConfig.subtitle}
               </h2>
               <p
-                className="mx-auto mb-6 max-w-xl font-normal text-gray-900 dark:text-gray-50 md:text-lg lg:mx-0 xl:mb-2 xl:text-xl">
+                className="mx-auto mb-6 max-w-xl font-normal text-gray-900 dark:text-gray-50 md:text-lg lg:mx-0 xl:text-xl">
                 {siteConfig.description}
               </p>
-              <div className="flex flex-row gap-4">
-                <ParticipateButton />
+              <div className="flex flex-row gap-2">
+                <UnstyledLink href="/glosowanie">
+                  <Tooltip content="Przejdziesz na stronę głosowania">
+                    <Button variant="gradient" color="green"
+                            className="flex flex-row items-center justify-between gap-1 px-4 py-2 font-semibold"
+                            placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Vote className="size-6" /> Głosuj
+                      na projekty</Button>
+                  </Tooltip>
+                </UnstyledLink>
                 <CodeFestRulesButton />
               </div>
             </div>
@@ -64,6 +70,25 @@ const Index: NextPage = () => {
         </div>
       </section>
       {/* Main section end */}
+
+      <section className="flex justify-center">
+        <div
+          className="light:border-gradient dark:border-colorful mt-10 rounded-xl border-4 bg-blue-gray-50 px-8 py-6 drop-shadow-xl dark:bg-gray-900">
+          <h2 className="mb-1 font-title text-3xl text-gray-900 dark:text-gray-100">GŁOSOWANIE</h2>
+          <h3 className="mb-4 text-lg font-semibold tracking-tight text-gray-700 dark:text-gray-300">Zagłosuj na
+            dowolny projekt!</h3>
+          <p className="mb-4">Zakończenie głosowania <span className="font-semibold">7 czerwca</span>.<br />Oddaj
+            swój <span className="font-semibold">1 głos</span> na dowolny projekt, aby wyłonić 3 zwyciężców konkursu
+            CodeFest24</p>
+          <UnstyledLink href="/glosowanie">
+            <Tooltip content="Przejdziesz na stronę głosowania">
+              <Button variant="gradient" color="green"
+                      className="flex flex-row items-center justify-between gap-1 px-4 py-2" placeholder={undefined}
+                      onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Vote /> Zagłosuj</Button>
+            </Tooltip>
+          </UnstyledLink>
+        </div>
+      </section>
 
       {/* Section rewards */}
       <section className="main-section">
@@ -167,24 +192,24 @@ const Index: NextPage = () => {
               <br />
               <b>Zgłaszanie prac</b>
             </div>
-            <hr className="bg-primary" />
+            <hr className="bg-green-500" />
           </li>
           <li>
-            <hr className="bg-primary" />
+            <hr className="bg-green-500" />
             <div className="timeline-start">
               1 czerwca
               <br />
               <b>Koniec zgłaszania prac</b>
             </div>
             <div className="timeline-middle">
-              <Circle />
+              <CircleCheck className="text-green-600" />
             </div>
-            <hr className="bg-primary" />
+            <hr className="bg-green-500" />
           </li>
           <li>
-            <hr className="bg-primary" />
+            <hr className="bg-green-500" />
             <div className="timeline-middle">
-              <Circle />
+              <CircleCheck className="text-green-600" />
             </div>
             <div className="timeline-end">
               2 czerwca

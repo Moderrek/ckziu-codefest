@@ -1,5 +1,5 @@
 const createGateway = () => {
-  console.log('created gateway');
+  console.log("created gateway");
   return {
     socket: null
   };

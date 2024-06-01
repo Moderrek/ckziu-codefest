@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { API_V1 } from '@/lib/api/api';
+import { API_V1 } from "@/lib/api/api";
 
 const API_URL_USER_UPDATE_BIO = `${API_V1}/user/update/bio`;
 

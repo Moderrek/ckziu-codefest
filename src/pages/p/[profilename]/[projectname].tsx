@@ -1,6 +1,6 @@
-import { Button, Tooltip } from '@material-tailwind/react';
-import { Button as MaterialButton } from '@material-tailwind/react/components/Button';
-import axios from 'axios';
+import { Button, Tooltip } from "@material-tailwind/react";
+import { Button as MaterialButton } from "@material-tailwind/react/components/Button";
+import axios from "axios";
 import {
   CalendarPlus2,
   Github,
@@ -14,28 +14,25 @@ import {
   Trophy,
   UnlockIcon,
   User
-} from 'lucide-react';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import Markdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
-import remarkGfm from 'remark-gfm';
-import remarkImages from 'remark-images';
+} from "lucide-react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import Markdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkImages from "remark-images";
+import remarkMath from "remark-math";
 
-import { API_V1 } from '@/lib/api/api';
-import { useOwner, useSession } from '@/lib/auth/useSession';
-import { cn } from '@/lib/utils';
-import { isValidHttpUrl } from '@/lib/validate';
+import { API_V1 } from "@/lib/api/api";
+import { useOwner, useSession } from "@/lib/auth/useSession";
+import { cn } from "@/lib/utils";
+import { isValidHttpUrl } from "@/lib/validate";
 
-import CkziuLogo from '@/components/images/CkziuLogo';
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
-import { UserMention } from '@/components/profile/UserMention';
-import Seo from '@/components/Seo';
-import { Checkbox } from '@/components/ui/checkbox';
+import NextImage from "@/components/NextImage";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -44,13 +41,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 
-import { CodefestProject, FetchProject, FetchProjectAxios } from '@/utils/FetchProfile';
+import { UserMention } from "@/pages-components/profile/UserMention";
+import CkziuLogo from "@/shared-components/icon/CkziuLogo";
+import DefaultLayout from "@/shared-components/layout/DefaultLayout";
+import Seo from "@/shared-components/layout/Seo";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
+import { CodefestProject, FetchProject, FetchProjectAxios } from "@/utils/FetchProfile";
 
 interface ProjectPageProps {
   username: string;
@@ -72,7 +74,7 @@ const ProjectEdit = ({
   const { toast } = useToast();
   const [patchData, setPatchData] = useState({
     display_name: project.display_name,
-    description: project.description ?? '',
+    description: project.description ?? "",
     private: project.private,
     github_url: project.github_url,
     website_url: project.website_url,
@@ -94,22 +96,22 @@ const ProjectEdit = ({
       if (err.response && err.response.message) {
         const data = err.response.data;
         toast({
-          variant: 'destructive',
-          title: 'Wystąpił problem',
+          variant: "destructive",
+          title: "Wystąpił problem",
           description: `Nie udało się usunąć projektu. ${data.message}`
         });
         return;
       }
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił nieznany problem',
+        variant: "destructive",
+        title: "Wystąpił nieznany problem",
         description: `Nie udało się usunąć projektu. Sprawdź dostępność serwerów https://ckziucodefest.pl/status`
       });
       return;
     }
     toast({
-      variant: 'default',
-      title: 'Usunięto projekt',
+      variant: "default",
+      title: "Usunięto projekt",
       description: `Pomyślnie usunięto projekt ${project.display_name}!`
     });
 
@@ -138,15 +140,15 @@ const ProjectEdit = ({
       if (err.response && err.response.message) {
         const data = err.response.data;
         toast({
-          variant: 'destructive',
-          title: 'Wystąpił problem',
+          variant: "destructive",
+          title: "Wystąpił problem",
           description: `Nie udało się zaktualizować projektu. ${data.message}`
         });
         return;
       }
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił nieznany problem',
+        variant: "destructive",
+        title: "Wystąpił nieznany problem",
         description: `Nie udało się opublikować projektu. Sprawdź dostępność serwerów https://ckziucodefest.pl/status`
       });
       return;
@@ -154,17 +156,17 @@ const ProjectEdit = ({
     const data = response.data;
     if (!data.success) {
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem',
+        variant: "destructive",
+        title: "Wystąpił problem",
         description: `Nie udało się zaktualizować projektu. ${data.message}`
       });
       return;
     }
 
     toast({
-      variant: 'default',
-      title: 'Sukces!',
-      description: 'Pomyślnie zaktualizowano dane projektu!'
+      variant: "default",
+      title: "Sukces!",
+      description: "Pomyślnie zaktualizowano dane projektu!"
     });
     setProject({ ...project, ...patchData });
   };
@@ -175,7 +177,7 @@ const ProjectEdit = ({
         src="/images/park.jpg"
         width={3000}
         height={2250}
-        alt={project.display_name + ' tło'}
+        alt={project.display_name + " tło"}
         imgClassName="rounded-xl"
         useSkeleton={true}
         className="mb-2 w-full md:w-1/2"
@@ -220,17 +222,17 @@ const ProjectEdit = ({
       <div className="flex w-1/2 flex-row items-center gap-2">
         <Github className="size-10" />
         <Input
-          value={patchData.github_url ?? ''}
+          value={patchData.github_url ?? ""}
           onChange={(e) =>
             setPatchData({ ...patchData, github_url: e.target.value.trim() })
           }
           className={cn(
             patchData.github_url &&
             isValidHttpUrl(patchData.github_url) &&
-            patchData.github_url.startsWith('https://github.com/') &&
-            patchData.github_url.length >= 'https://github.com/'.length + 3
-              ? ''
-              : 'text-red-400'
+            patchData.github_url.startsWith("https://github.com/") &&
+            patchData.github_url.length >= "https://github.com/".length + 3
+              ? ""
+              : "text-red-400"
           )}
           placeholder="https://github.com/"
           maxLength={100}
@@ -238,12 +240,12 @@ const ProjectEdit = ({
         />
         <Link className="size-10" />
         <Input
-          value={patchData.website_url ?? ''}
+          value={patchData.website_url ?? ""}
           onChange={(e) =>
             setPatchData({ ...patchData, website_url: e.target.value.trim() })
           }
           className={cn(
-            isValidHttpUrl(patchData.website_url ?? '') ? '' : 'text-red-400'
+            isValidHttpUrl(patchData.website_url ?? "") ? "" : "text-red-400"
           )}
           placeholder="https://witryna.pl"
           maxLength={100}
@@ -309,7 +311,7 @@ const ProjectEdit = ({
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
               >
-                {uploadingChanges ? 'Usuwanie...' : 'USUŃ projekt'}
+                {uploadingChanges ? "Usuwanie..." : "USUŃ projekt"}
               </MaterialButton>
             </DialogFooter>
           </DialogContent>
@@ -354,13 +356,26 @@ const ProjectEdit = ({
                   </UnstyledLink>
                 </li>
               </ul>
-              {patchData.private ? 'Projekt musi być publiczny.' : ''}
+              <div className="text-red-400 underline">
+
+                {patchData.private ? <p>Projekt musi być publiczny.</p> : <></>}
+                {patchData.tournament ? <p>Projekt nie może byc już zgłoszony.</p> : <></>}
+
+                {!patchData.website_url ? <p>Projekt musi posiadać stronę internetową.</p> : <></>}
+                {!isValidHttpUrl(patchData.website_url ?? "") ?
+                  <p>Projekt musi prawidłowy link do strony internetowej.</p> : <></>}
+
+                {!patchData.github_url ? <p>Projekt musi posiadać projekt GitHub.</p> : <></>}
+                {!isValidHttpUrl(patchData.github_url ?? "") || !(patchData.github_url ?? "").startsWith("https://github.com/") ?
+                  <p>Projekt musi prawidłowy link do GitHub'a.</p> : <></>}
+              </div>
+              <p>Projekty niespełniające wymagań będą odrzucone.</p>
               <DialogFooter>
                 <MaterialButton
                   variant="gradient"
                   color="yellow"
                   loading={uploadingChanges}
-                  disabled={patchData.private}
+                  disabled={patchData.private || !patchData.website_url || !patchData.github_url || !isValidHttpUrl(patchData.website_url ?? "") || !isValidHttpUrl(patchData.github_url ?? "") || patchData.tournament || !patchData.github_url.startsWith("https://github.com/")}
                   onClick={() =>
                     setPatchData({ ...patchData, tournament: true })
                   }
@@ -378,6 +393,8 @@ const ProjectEdit = ({
         )}
       </div>
 
+      <p>Strona projektu wspiera znaczniki <b>HTML</b> oraz <b>Markdown</b>. Możesz wkleić swoje README z GitHub'a</p>
+
       <div className="border-gradient flex w-full flex-row justify-between gap-2 rounded-xl border-2 bg-accent p-4">
         <div className="min-w-1/2 min-h-full w-1/2 rounded-2xl">
           <Textarea
@@ -392,11 +409,11 @@ const ProjectEdit = ({
         <Markdown
           className="markdown w-1/2 rounded-2xl"
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-          rehypePlugins={[rehypeRaw, remarkImages, rehypeSanitize]}
+          rehypePlugins={[rehypeRaw, remarkImages, remarkMath, rehypeSanitize, rehypeStringify]}
           components={{
             code(props: any) {
               const { children, className, _, ...rest } = props;
-              const match = /language-(\w+)/.exec(className || '');
+              const match = /language-(\w+)/.exec(className || "");
               return match ? (
                 <SyntaxHighlighter
                   {...rest}
@@ -404,7 +421,7 @@ const ProjectEdit = ({
                   language={match[1]}
                   lineNumberContainerStyle={true}
                 >
-                  {String(children).replace(/\n$/, '')}
+                  {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
                 <code {...rest} className={className}>
@@ -436,7 +453,7 @@ const ProjectView = ({
         src="/images/park.jpg"
         width={3000}
         height={2250}
-        alt={project.display_name + ' tło'}
+        alt={project.display_name + " tło"}
         imgClassName="rounded-xl"
         useSkeleton={true}
         className="w-full md:w-1/2"
@@ -444,7 +461,7 @@ const ProjectView = ({
       <div className="overflow-hidden">
         <h1
           className={cn(
-            'font-title animate-uptitle flex flex-row items-center gap-2 text-6xl'
+            "font-title animate-uptitle flex flex-row items-center gap-2 text-6xl"
           )}
         >
           {project.private ? (
@@ -465,11 +482,11 @@ const ProjectView = ({
         </h1>
       </div>
       <div className="flex flex-row items-center text-muted-foreground">
-        <User /> Autorstwa{' '}
+        <User /> Autorstwa{" "}
         <UserMention userName={username} showAvatar={false} />
       </div>
       <div className="flex flex-row items-center text-muted-foreground">
-        <CalendarPlus2 /> Utworzono{' '}
+        <CalendarPlus2 /> Utworzono{" "}
         {new Date(project.created_at).toLocaleDateString()}
       </div>
       <div className="ml-1 mt-5 text-justify text-xl first-letter:text-2xl">
@@ -480,7 +497,7 @@ const ProjectView = ({
           className="flex min-w-fit flex-row items-center gap-1 font-bold"
           href={`/p/${username}`}
         >
-          <User className="size-8" />{' '}
+          <User className="size-8" />{" "}
           <UserMention userName={username} showAvatar={false} />
         </UnstyledLink>
         {project.github_url ? (
@@ -515,7 +532,7 @@ const ProjectView = ({
         components={{
           code(props: any) {
             const { children, className, _, ...rest } = props;
-            const match = /language-(\w+)/.exec(className || '');
+            const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter
                 {...rest}
@@ -523,7 +540,7 @@ const ProjectView = ({
                 language={match[1]}
                 lineNumberContainerStyle={true}
               >
-                {String(children).replace(/\n$/, '')}
+                {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
             ) : (
               <code {...rest} className={className}>
@@ -578,7 +595,7 @@ const ProjectPage = ({
               CODEFEST
             </h2>
             <h1 className="text-center text-2xl font-bold">
-              Nie znaleziono projektu{' '}
+              Nie znaleziono projektu{" "}
               <i>
                 @{username}/{projectname}
               </i>
@@ -618,6 +635,7 @@ const ProjectPage = ({
           `@${username}/${project.name}: ` + (project.description ?? ``)
         }
         date={new Date(project.created_at).toISOString()}
+        author={username}
       />
       <div className="container mx-auto mb-5 md:mb-10">
         <div
@@ -729,14 +747,14 @@ const getServerSideProps = async ({
   profilename = profilename
     .trimEnd()
     .trimStart()
-    .replace(' ', '-')
+    .replace(" ", "-")
     .trim()
     .toLowerCase();
 
   projectname = projectname
     .trimEnd()
     .trimStart()
-    .replace(' ', '-')
+    .replace(" ", "-")
     .trim()
     .toLowerCase();
 

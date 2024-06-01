@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from "react";
 
-import { isDev } from '@/lib/utils';
+import { isDev } from "@/lib/utils";
 
 class Gateway {
   private socket: WebSocket | undefined;
@@ -16,19 +16,19 @@ class Gateway {
     }
     this.socket = new WebSocket(
       isDev
-        ? 'ws://localhost:8080/gateway'
-        : 'wss://api.ckziucodefest.pl/gateway'
+        ? "ws://localhost:8080/gateway"
+        : "wss://api.ckziucodefest.pl/gateway"
     );
     this.socket.onopen = (event) => {
       this.connected = true;
       this.on_connect();
     };
     this.socket.onerror = (event) => {
-      console.error('Gateway error');
+      console.error("Gateway error");
     };
     this.socket.onclose = (event) => {
       this.connected = false;
-      console.log('Gateway close');
+      console.log("Gateway close");
     };
   }
 
@@ -45,8 +45,8 @@ class Gateway {
   }
 
   private on_connect() {
-    console.log('Gateway open');
-    this.socket!.send('hello');
+    console.log("Gateway open");
+    this.socket!.send("hello");
   }
 }
 

@@ -1,10 +1,10 @@
-import { Button as MaterialButton } from '@material-tailwind/react';
-import axios from 'axios';
-import { LockIcon, Plus, UnlockIcon } from 'lucide-react';
-import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { Button as MaterialButton } from "@material-tailwind/react";
+import axios from "axios";
+import { LockIcon, Plus, UnlockIcon } from "lucide-react";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
-import { API_V1 } from '@/lib/api/api';
+import { API_V1 } from "@/lib/api/api";
 
 import {
   Dialog,
@@ -14,57 +14,57 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import { FetchProject } from '@/utils/FetchProfile';
+import ProfileContext from "@/pages-components/profile/ProfileContext";
+import { FetchProject } from "@/utils/FetchProfile";
 
-import ProfileContext from '../profile/ProfileContext';
-import { Checkbox } from '../ui/checkbox';
-import { useToast } from '../ui/use-toast';
+import { Checkbox } from "../ui/checkbox";
+import { useToast } from "../ui/use-toast";
 
 const legalizeChars = new Map([
-  [' ', '-'],
-  ['ą', 'a'],
-  ['ć', 'c'],
-  ['ę', 'e'],
-  ['ó', 'o'],
-  ['ś', 's'],
-  ['ł', 'l'],
-  ['ż', 'z'],
-  ['ź', 'z'],
-  ['ń', 'n']
+  [" ", "-"],
+  ["ą", "a"],
+  ["ć", "c"],
+  ["ę", "e"],
+  ["ó", "o"],
+  ["ś", "s"],
+  ["ł", "l"],
+  ["ż", "z"],
+  ["ź", "z"],
+  ["ń", "n"]
 ]);
 
 const legalizeName = (name: string): string => {
   name = name.toLowerCase().trimStart().trimEnd();
-  const buffer = name.split('');
+  const buffer = name.split("");
   for (let i = 0; i < buffer.length; i += 1) {
     const char = buffer[i];
-    if (buffer[i - 1] === '-' && buffer[i] === '-') {
-      buffer[i] = '';
+    if (buffer[i - 1] === "-" && buffer[i] === "-") {
+      buffer[i] = "";
       continue;
     }
     if (legalizeChars.has(char)) {
-      buffer[i] = legalizeChars.get(char) ?? '';
+      buffer[i] = legalizeChars.get(char) ?? "";
       continue;
     }
     if (char.toUpperCase() !== char.toLowerCase()) continue;
-    buffer[i] = '';
+    buffer[i] = "";
   }
-  if (buffer[0] === '-') buffer[0] = '';
-  if (buffer[buffer.length - 1] === '-') buffer[buffer.length - 1] = '';
-  return buffer.join('').trim();
+  if (buffer[0] === "-") buffer[0] = "";
+  if (buffer[buffer.length - 1] === "-") buffer[buffer.length - 1] = "";
+  return buffer.join("").trim();
 };
 
 const DialogCreateProject = () => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const [projectName, setProjectName] = useState('');
-  const [projectDisplayname, setProjectDisplayname] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
+  const [projectName, setProjectName] = useState("");
+  const [projectDisplayname, setProjectDisplayname] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
   const [projectPrivate, setProjectPrivate] = useState(false);
   const [projectExists, setProjectExists] = useState(false);
 
@@ -91,15 +91,15 @@ const DialogCreateProject = () => {
       if (err.response && err.response.message) {
         const data = err.response.data;
         toast({
-          variant: 'destructive',
-          title: 'Wystąpił problem',
+          variant: "destructive",
+          title: "Wystąpił problem",
           description: `Nie udało się opublikować projektu. ${data.message}`
         });
         return;
       }
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił nieznany problem',
+        variant: "destructive",
+        title: "Wystąpił nieznany problem",
         description: `Nie udało się opublikować projektu. Sprawdź dostępnośc serwerów https://ckziucodefest.pl/status`
       });
       return;
@@ -107,22 +107,22 @@ const DialogCreateProject = () => {
     const data = response.data;
     if (!data.success || !data.created) {
       toast({
-        variant: 'destructive',
-        title: 'Wystąpił problem',
+        variant: "destructive",
+        title: "Wystąpił problem",
         description: `Nie udało się opublikować projektu. ${data.message}`
       });
       return;
     }
 
-    setProjectName('');
-    setProjectDisplayname('');
-    setProjectDescription('');
+    setProjectName("");
+    setProjectDisplayname("");
+    setProjectDescription("");
     setProjectPrivate(false);
 
     toast({
-      variant: 'default',
-      title: 'Sukces!',
-      description: 'Pomyślnie utworzono nowy projekt!'
+      variant: "default",
+      title: "Sukces!",
+      description: "Pomyślnie utworzono nowy projekt!"
     });
 
     await router.push(`/p/${user.name}/${projectName}`);
@@ -193,7 +193,7 @@ const DialogCreateProject = () => {
               </span>
             ) : (
               <span>
-                Projekt będzie wyświetlany pod nazwą:{' '}
+                Projekt będzie wyświetlany pod nazwą:{" "}
                 <b className="text-green-400">{projectName}</b>
               </span>
             )}
@@ -237,7 +237,7 @@ const DialogCreateProject = () => {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            {projectPublishing ? 'Publikowanie...' : 'Utwórz projekt'}
+            {projectPublishing ? "Publikowanie..." : "Utwórz projekt"}
           </MaterialButton>
         </DialogFooter>
       </DialogContent>

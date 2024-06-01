@@ -1,21 +1,21 @@
-import { Tooltip } from '@material-tailwind/react';
-import { CalendarDays, LockIcon, Trophy } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useContext } from 'react';
-import useSWR from 'swr';
+import { Tooltip } from "@material-tailwind/react";
+import { CalendarDays, LockIcon, Trophy } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useContext } from "react";
+import useSWR from "swr";
 
-import { API_V1 } from '@/lib/api/api';
-import { getRelativeTimeString } from '@/lib/utils';
+import { API_V1 } from "@/lib/api/api";
+import { getRelativeTimeString } from "@/lib/utils";
 
-import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
-import ProfileContext from '@/components/profile/ProfileContext';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import NextImage from "@/components/NextImage";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
-import { useUser } from '@/globalstate/useUser';
-import { CodefestProject, User } from '@/utils/FetchProfile';
-import { UserCreatedDate } from '@/utils/UserCreatedDate';
+import { useUser } from "@/globalstate/useUser";
+import ProfileContext from "@/pages-components/profile/ProfileContext";
+import UnstyledLink from "@/shared-components/link/UnstyledLink";
+import { CodefestProject, User } from "@/utils/FetchProfile";
+import { UserCreatedDate } from "@/utils/UserCreatedDate";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -140,7 +140,7 @@ export const ProjectAuthor = ({
               {user.bio}
             </p>
             <div className="flex space-x-1 text-sm text-gray-500 dark:text-white">
-              <CalendarDays className="mr-2 size-4 opacity-70" />{' '}
+              <CalendarDays className="mr-2 size-4 opacity-70" />{" "}
               <span className="text-xs text-muted-foreground">
                 Dołączył {UserCreatedDate(user)}
               </span>
@@ -253,6 +253,8 @@ const NewestProjects = () => {
         <ShadowProject />
         <ShadowProject />
         <ShadowProject />
+        <ShadowProject />
+        <ShadowProject />
       </>
     );
   }
@@ -290,6 +292,7 @@ const Projects = () => {
   return (
     <>
       {projects.map((project) => {
+        project.owner_name = user.name;
         return <Project project={project} key={project.id} showAuthor={false} />;
       })}
     </>

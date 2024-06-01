@@ -1,6 +1,6 @@
-import { Head, Html, Main, NextScript } from 'next/document';
+import { Head, Html, Main, NextScript } from "next/document";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export default function Document() {
   return (
@@ -12,7 +12,7 @@ export default function Document() {
       <Head />
       <body
         className={cn(
-          'bg-background font-codefest min-h-full scroll-smooth antialiased'
+          "bg-background font-codefest min-h-full scroll-smooth antialiased"
         )}
       >
       <Main />

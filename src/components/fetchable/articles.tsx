@@ -1,15 +1,15 @@
-import useSWR from 'swr';
+import useSWR from "swr";
 
-import { API_V1 } from '@/lib/api/api';
-import { ApiArticlesData } from '@/lib/api/api_responses';
+import { API_V1 } from "@/lib/api/api";
+import { ApiArticlesData } from "@/lib/api/api_responses";
 
-import Article from '@/components/article';
+import ArticleCard from "@/shared-components/card/ArticleCard";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ArticleSection() {
   const { data, error } = useSWR<ApiArticlesData, Error>(
-    API_V1 + '/ckziu/news',
+    API_V1 + "/ckziu/news",
     fetcher
   );
 
@@ -17,15 +17,15 @@ export default function ArticleSection() {
   if (!data || error)
     return (
       <>
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
-        <Article article={null} />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
+        <ArticleCard />
       </>
     );
 
@@ -33,7 +33,7 @@ export default function ArticleSection() {
   return (
     <>
       {data.map((article, idx) => {
-        return <Article key={idx} article={article} />;
+        return <ArticleCard key={idx} article={article} />;
       })}
     </>
   );

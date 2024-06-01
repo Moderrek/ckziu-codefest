@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 /**
  * Automatically redirects user to login page if not logged.
@@ -9,7 +9,7 @@ const useRequiredLogin = (isLoggedIn: boolean) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoggedIn) router.push('/zaloguj');
+    if (!isLoggedIn) router.push("/zaloguj");
   }, [isLoggedIn, router]);
 };
 

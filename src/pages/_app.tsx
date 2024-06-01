@@ -1,16 +1,16 @@
-import { config } from '@fortawesome/fontawesome-svg-core';
-import { ThemeProvider as MaterialThemeProvider } from '@material-tailwind/react';
-import { AppProps } from 'next/app';
-import { ThemeProvider as NextThemeProvider } from 'next-themes';
+import { config } from "@fortawesome/fontawesome-svg-core";
+import { ThemeProvider as MaterialThemeProvider } from "@material-tailwind/react";
+import { AppProps } from "next/app";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
 
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import '@/styles/globals.css';
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import "@/styles/globals.css";
 
-import { SessionContext } from '@/components/profile/SessionContext';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from "@/components/ui/toaster";
 
-import { GlobalStateProvider } from '@/globalstate/GlobalStateProvider';
+import { GlobalStateProvider } from "@/globalstate/GlobalStateProvider";
+import { SessionContext } from "@/pages-components/profile/SessionContext";
+import { NextThemesProvider } from "@/providers/NextThemesProvider";
 
 config.autoAddCss = false;
 
@@ -19,7 +19,7 @@ const CodeFestApp = ({ Component, pageProps }: AppProps) => {
     <GlobalStateProvider>
       {/*<GatewayProvider>*/}
       <MaterialThemeProvider>
-        <ThemeProvider
+        <NextThemesProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
@@ -30,7 +30,7 @@ const CodeFestApp = ({ Component, pageProps }: AppProps) => {
             </SessionContext.Provider>
             <Toaster />
           </NextThemeProvider>
-        </ThemeProvider>
+        </NextThemesProvider>
       </MaterialThemeProvider>
       {/*</GatewayProvider>*/}
     </GlobalStateProvider>
