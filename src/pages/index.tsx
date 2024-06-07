@@ -1,5 +1,5 @@
 import { Button, Tooltip } from "@material-tailwind/react";
-import { CalendarDays, Circle, CircleCheck, CircleHelp, Crown, TerminalIcon, Vote } from "lucide-react";
+import { CalendarDays, Circle, CircleCheck, CircleHelp, Crown, Eye, Medal, TerminalIcon, Vote } from "lucide-react";
 import { NextPage } from "next";
 
 import ArticleSection from "@/components/fetchable/articles";
@@ -39,17 +39,6 @@ const Index: NextPage = () => {
                 className="mx-auto mb-6 max-w-xl font-normal text-gray-900 dark:text-gray-50 md:text-lg lg:mx-0 xl:text-xl">
                 {siteConfig.description}
               </p>
-              <div className="flex flex-row gap-2">
-                <UnstyledLink href="/glosowanie">
-                  <Tooltip content="Przejdziesz na stronę głosowania">
-                    <Button variant="gradient" color="green"
-                            className="flex flex-row items-center justify-between gap-1 px-4 py-2 font-semibold"
-                            placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Vote className="size-6" /> Głosuj
-                      na projekty</Button>
-                  </Tooltip>
-                </UnstyledLink>
-                <CodeFestRulesButton />
-              </div>
             </div>
             {/* Right panel thumbnail image */}
             <div className="col-span-6">
@@ -71,22 +60,54 @@ const Index: NextPage = () => {
       </section>
       {/* Main section end */}
 
-      <section className="flex justify-center">
+      <section className="flex flex-row flex-wrap justify-center gap-4">
         <div
-          className="light:border-gradient dark:border-colorful mt-10 rounded-xl border-4 bg-blue-gray-50 px-8 py-6 drop-shadow-xl dark:bg-gray-900">
-          <h2 className="mb-1 font-title text-3xl text-gray-900 dark:text-gray-100">GŁOSOWANIE</h2>
-          <h3 className="mb-4 text-lg font-semibold tracking-tight text-gray-700 dark:text-gray-300">Zagłosuj na
-            dowolny projekt!</h3>
-          <p className="mb-4">Zakończenie głosowania <span className="font-semibold">7 czerwca</span>.<br />Oddaj
-            swój <span className="font-semibold">1 głos</span> na dowolny projekt, aby wyłonić 3 zwyciężców konkursu
-            CodeFest24</p>
-          <UnstyledLink href="/glosowanie">
-            <Tooltip content="Przejdziesz na stronę głosowania">
-              <Button variant="gradient" color="green"
-                      className="flex flex-row items-center justify-between gap-1 px-4 py-2" placeholder={undefined}
-                      onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Vote /> Zagłosuj</Button>
+          className="relative mt-10 flex flex-col rounded-xl border-[6px] border-amber-500 bg-blue-gray-50 px-8 py-6 drop-shadow-2xl dark:bg-gray-900">
+            <Crown className="absolute -left-3 -top-16 -z-10 size-20 rotate-12 text-amber-500"/>
+          <h2 className="mb-1 font-title text-3xl text-gray-900 dark:text-gray-100">1. @moderr: Star Eater</h2>
+          <h3 className="mb-4 text-lg font-semibold tracking-tight text-gray-700 dark:text-gray-300">8 głosów</h3>
+          <p className="mb-4">MiniGra polegająca na łapaniu punkcików<br/>poruszane symulowane fizycznym prawem powszechnego ciążenia.</p>
+          <div className="flex flex-1 grow items-end">
+          <UnstyledLink href="/p/moderr/star-eater">
+            <Tooltip content="Przejdziesz na stronę projektu">
+              <Button variant="gradient" color="amber"
+                      className="flex flex-row items-center justify-between gap-1 px-2 py-1 font-semibold" placeholder={undefined}
+                      onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Eye className="size-6" /> Zobacz</Button>
             </Tooltip>
           </UnstyledLink>
+          </div>
+        </div>
+        <div
+          className="relative mt-10 flex flex-col rounded-xl border-4 border-gray-400 bg-blue-gray-50 px-8 py-6 drop-shadow-xl dark:bg-gray-900">
+            <Medal className="absolute -left-4 -top-8 -z-10 size-16 rotate-12 text-gray-400"/>
+          <h2 className="mb-1 font-title text-3xl text-gray-900 dark:text-gray-100">2. @daimond113: biasdo</h2>
+          <h3 className="mb-4 text-lg font-semibold tracking-tight text-gray-700 dark:text-gray-300">6 głosów</h3>
+          <p className="mb-4">biasdo is an open source chat app made for users, by users.</p>
+          <div className="flex flex-1 grow items-end">
+          <UnstyledLink href="/p/daimond113/biasdo">
+            <Tooltip content="Przejdziesz na stronę projektu">
+            <Button variant="gradient" color="gray"
+                      className="flex flex-row items-center justify-between gap-1 px-2 py-1 font-semibold" placeholder={undefined}
+                      onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Eye className="size-6" /> Zobacz</Button>
+            </Tooltip>
+          </UnstyledLink>
+          </div>
+        </div>
+        <div
+          className="relative mt-10 flex flex-col rounded-xl border-2 border-brown-400 bg-blue-gray-50 px-8 py-6 drop-shadow-xl dark:bg-gray-900">
+            <Medal className="absolute -left-3 -top-7 -z-10 size-14 rotate-12 text-brown-400"/>
+          <h2 className="mb-1 font-title text-3xl text-gray-900 dark:text-gray-100">3. @rudnickivitek: historia</h2>
+          <h3 className="mb-4 text-lg font-semibold tracking-tight text-gray-700 dark:text-gray-300">4 głosów</h3>
+          <p className="mb-4">Strona ta została utworzona przy pomocy<br/>biblioteki Leaflet, która pozwala na wyświetlenie mapy na st</p>
+          <div className="flex flex-1 grow items-end">
+          <UnstyledLink href="/p/rudnickivitek/historia">
+            <Tooltip content="Przejdziesz na stronę projektu">
+            <Button variant="gradient" color="brown"
+                      className="flex flex-row items-center justify-between gap-1 px-2 py-1 font-semibold" placeholder={undefined}
+                      onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}><Eye className="size-6" /> Zobacz</Button>
+            </Tooltip>
+          </UnstyledLink>
+          </div>
         </div>
       </section>
 
@@ -139,8 +160,6 @@ const Index: NextPage = () => {
         </section>
         {/* Rewards subtitle information */}
         <p>
-          <span className="font-bold">Nagród może przybywać</span>
-          <br />
           Nagrody będą wybrane przez zwycięzców po kolei od pierwszego miejsca.
         </p>
       </section>
@@ -216,17 +235,17 @@ const Index: NextPage = () => {
               <br />
               <b>Rozpoczęcie głosowania na projekty</b>
             </div>
-            <hr className="bg-primary" />
+            <hr className="bg-green-500" />
           </li>
           <li>
-            <hr className="bg-primary" />
+            <hr className="bg-green-500" />
             <div className="timeline-start">
               7 czerwca
               <br />
-              <b>Koniec głosowania i ogłoszenie wyników</b>
+              <b>Koniec głosowania i ogłoszenie wyników<br/>Konkurs dobiegł końca!</b>
             </div>
             <div className="timeline-middle">
-              <Circle />
+              <CircleCheck className="text-green-600" />
             </div>
           </li>
         </ul>
