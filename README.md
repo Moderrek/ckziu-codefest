@@ -6,11 +6,11 @@ CKZiU CodeFest is a development platform where there are competitions and studen
 
 <div align="center">
 
-<img src="https://github.com/user-attachments/assets/8c713b21-d02e-4311-87c3-f085af19cf45" width="500px" height="500px">
+<img src="https://github.com/user-attachments/assets/8c713b21-d02e-4311-87c3-f085af19cf45" width="400px" height="400px">
 
-<img src="https://github.com/user-attachments/assets/090770e1-505c-43d5-a3f6-8c28d1609f88" width="500px" height="500px">
+<img src="https://github.com/user-attachments/assets/090770e1-505c-43d5-a3f6-8c28d1609f88" width="400px" height="400px">
 
-<img src="https://github.com/user-attachments/assets/6b3341e1-76b4-4bdb-8ce1-eeee26b2881a" width="500px" height="500px">
+<img src="https://github.com/user-attachments/assets/6b3341e1-76b4-4bdb-8ce1-eeee26b2881a" width="400px" height="400px">
 
 </div>
 
