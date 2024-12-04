@@ -1,37 +1,58 @@
 # CKZiU CodeFest
 
-Serwis konkursowy dla CKZiU w Łodzi.
-Opracowany przez Tymona Woźniaka
+CKZiU CodeFest is a development platform where there are competitions and student projects on various topics.
 
-## Wymagania
+[**API Repository**](https://github.com/Moderrek/ckziu-codefest-api)
 
-* NodeJS 22
-* pnpm
+<div align="center">
 
-Korzystamy z `pnpm` zamiast `npm`, poniewaz `pnpm` jest oszczędny na dysku. Pliki `node_modules/` są łączone na stałe z
-jednego magazynu na dysku, zamiast jak `npm` głupio instalować paczkę w kazdym projekcie na komputerze.
+<img src="https://github.com/user-attachments/assets/8c713b21-d02e-4311-87c3-f085af19cf45" width="500px" height="500px">
 
-* Połączenie z [oficjalnym API](https://api.ckziucodefest.pl/) albo
-  pobrać [własny serwer](https://github.com/Moderrek/ckziu-codefest-api)
+<img src="https://github.com/user-attachments/assets/090770e1-505c-43d5-a3f6-8c28d1609f88" width="500px" height="500px">
 
-* Jezeli produkcja => Klucze szyfrowania.
+<img src="https://github.com/user-attachments/assets/6b3341e1-76b4-4bdb-8ce1-eeee26b2881a" width="500px" height="500px">
 
-## Uruchomienie developerskie:
+</div>
+
+
+
+## Quick Start
 
 ```bash
-pnpm install
+git clone https://github.com/Moderrek/ckziu-codefest
+cd ckziu-codefest
+pnpm i
 pnpm run dev
 ```
 
-Otwórz [http://localhost:3000](http://localhost:3000) za pomocą przeglądarki.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-Możesz rozpocząć edycje od zmiany `src/pages/index.tsx`. Strona automatycznie zostanie za aktualizowana po zmianie
-pliku.
+## Requirements
 
-## Uruchomienie produkcyjne
+* [NodeJS 22](https://nodejs.org/en/download/package-manager)
+* [npm](https://nodejs.org/en/download/package-manager) or [pnpm](https://pnpm.io/)
+* Connection to [official API (api.ckziucodefest.pl)](https://api.ckziucodefest.pl/) or
+  host [local server](https://github.com/Moderrek/ckziu-codefest-api)
 
-Wymagane klucze w folderze `ssl/`
+* If production mode => private key and public certificate.
+
+## Production mode
+
+Required keys in directory: `ssl/`
+
+Private key: `ckziucodefest.key`  
+Public certificate: `ckziucodefest.csr`
 
 ```bash
 pnpm run prod
 ```
+
+## Libraries
+
+* Framework: [Next.js](https://nextjs.org/)
+* UI: [React.js](https://react.dev/)
+* CSS Preprocessor: [TailwindCSS](https://tailwindcss.com/)
+* HTTP Client: [axios](https://axios-http.com/)
+* Icons: [Lucide React](https://lucide.dev/)
+* Ready UI components [shadcn-ui](https://ui.shadcn.com/)
+* Uses TypeScript
